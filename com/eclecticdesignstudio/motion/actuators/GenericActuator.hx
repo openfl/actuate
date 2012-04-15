@@ -61,7 +61,11 @@ class GenericActuator implements IGenericActuator {
 		
 		for (i in Reflect.fields (properties)) {
 			
+			#if haxe_209
+			Reflect.setProperty (target, i, Reflect.field (properties, i));
+			#else
 			Reflect.setField (target, i, Reflect.field (properties, i));
+			#end
 			
 		}
 		
@@ -92,7 +96,16 @@ class GenericActuator implements IGenericActuator {
 		
 		if (_onUpdate != null) {
 			
+			#if (neko && haxe_209)
+			
+			var args = _onUpdateParams != null ? _onUpdateParams : [];
+			__dollar__call (_onUpdate , _onUpdate, args.__neko ());
+			
+			#else
+			
 			Reflect.callMethod (_onUpdate, _onUpdate, _onUpdateParams);
+			
+			#end
 			
 		}
 		
@@ -107,7 +120,16 @@ class GenericActuator implements IGenericActuator {
 			
 			if (_onComplete != null) {
 				
+				#if (neko && haxe_209)
+				
+				var args = _onCompleteParams != null ? _onCompleteParams : [];
+				untyped __dollar__call (_onComplete , _onComplete, args.__neko ());
+				
+				#else
+				
 				Reflect.callMethod (_onComplete, _onComplete, _onCompleteParams);
+				
+				#end
 				
 			}
 			

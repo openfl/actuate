@@ -111,7 +111,11 @@ class SimpleActuator extends GenericActuator {
 		
 		for (i in Reflect.fields (properties)) {
 			
+			#if haxe_209
+			start = Reflect.getProperty (target, i);
+			#else
 			start = Reflect.field (target, i);
+			#end
 			details = new PropertyDetails (target, i, start, Reflect.field (properties, i) - start);
 			propertyDetails.push (details);
 			
@@ -249,7 +253,11 @@ class SimpleActuator extends GenericActuator {
 					
 					details = propertyDetails[i];
 					
+					#if haxe_209
+					Reflect.setProperty (details.target, details.propertyName, details.start + (details.change * easing));
+					#else
 					Reflect.setField (details.target, details.propertyName, details.start + (details.change * easing));
+					#end
 					
 				}
 				
@@ -295,11 +303,19 @@ class SimpleActuator extends GenericActuator {
 					
 					if (!_snapping) {
 						
+						#if haxe_209
+						Reflect.setProperty (details.target, details.propertyName, endValue);
+						#else
 						Reflect.setField (details.target, details.propertyName, endValue);
+						#end
 						
 					} else {
 						
+						#if haxe_209
+						Reflect.setProperty (details.target, details.propertyName, Math.round (endValue));
+						#else
 						Reflect.setField (details.target, details.propertyName, Math.round (endValue));
+						#end
 						
 					}
 					
@@ -326,7 +342,16 @@ class SimpleActuator extends GenericActuator {
 					
 					if (_onRepeat != null) {
 						
+						#if (neko && haxe_209)
+						
+						var args = _onRepeatParams != null ? _onRepeatParams : [];
+						untyped __dollar__call (_onRepeat , _onRepeat, args.__neko ());
+						
+						#else
+						
 						Reflect.callMethod (_onRepeat, _onRepeat, _onRepeatParams);
+						
+						#end
 						
 					}
 					

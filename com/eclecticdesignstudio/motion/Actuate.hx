@@ -249,7 +249,7 @@ class Actuate {
 				
 				if (Std.is (properties, String)) {
 					
-					var temp = {};
+					var temp = { };
 					Reflect.setField (temp, properties, null);
 					properties = temp;
 					
@@ -624,7 +624,7 @@ private class ObjectHash <T> {
 			
 			key.___id___ = nextObjectID ++;
 			
-			if (nextObjectID == 2147483647) {
+			if (nextObjectID == 0x3FFFFFFF) {
 				
 				nextObjectID = 0;
 				

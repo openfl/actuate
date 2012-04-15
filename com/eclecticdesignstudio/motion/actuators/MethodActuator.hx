@@ -42,7 +42,15 @@ class MethodActuator extends SimpleActuator {
 	
 	public override function apply ():Void {
 		
+		#if (neko && haxe_209)
+		
+		untyped __dollar__call (target , null, properties.end);
+		
+		#else
+		
 		Reflect.callMethod (null, target, properties.end);
+		
+		#end
 		
 	}
 	
@@ -55,7 +63,15 @@ class MethodActuator extends SimpleActuator {
 			
 		}
 		
+		#if (neko && haxe_209)
+		
+		untyped __dollar__call (target , null, currentParameters);
+		
+		#else
+		
 		Reflect.callMethod (null, target, currentParameters);
+		
+		#end
 		
 		super.complete (sendEvent);
 		
@@ -102,7 +118,15 @@ class MethodActuator extends SimpleActuator {
 				
 			}
 			
+			#if (neko && haxe_209)
+			
+			untyped __dollar__call (target , null, currentParameters);
+			
+			#else
+			
 			Reflect.callMethod (null, target, currentParameters);
+			
+			#end
 			
 		}
 		
