@@ -1,7 +1,7 @@
-<project name="actuate" url="http://code.google.com/p/actuate/" license="GPL">
+<project name="actuate" url="http://code.google.com/p/actuate/" license="MIT">
     <user name="elyon"/>
     <tag v="flash"/>
     <tag v="cpp"/>
     <description>Actuate is a fast, flexible tween library with a jQuery-like syntax. It out-performs TweenLite, and is easy to extend if you need more features.</description>
-    <version name="1.38">Now you can pass actuator instances into Actuate.stop, Actuate.pause and Actuate.resume</version>
+    <version name="1.39">Updated for Haxe 2.09</version>
 </project>
