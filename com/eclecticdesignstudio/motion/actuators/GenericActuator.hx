@@ -99,7 +99,7 @@ class GenericActuator implements IGenericActuator {
 			#if (neko && haxe_209)
 			
 			var args = _onUpdateParams != null ? _onUpdateParams : [];
-			__dollar__call (_onUpdate , _onUpdate, args.__neko ());
+			untyped __dollar__call (_onUpdate , _onUpdate, args.__neko ());
 			
 			#else
 			
