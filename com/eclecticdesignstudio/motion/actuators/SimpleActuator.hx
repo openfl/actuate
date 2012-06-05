@@ -110,11 +110,14 @@ class SimpleActuator extends GenericActuator {
 		var start:Float;
 		
 		for (i in Reflect.fields (properties)) {
-			
+			#if js
+			start = Reflect.field (target, i);
+			#else
 			#if haxe_209
 			start = Reflect.getProperty (target, i);
 			#else
 			start = Reflect.field (target, i);
+			#end
 			#end
 			details = new PropertyDetails (target, i, start, Reflect.field (properties, i) - start);
 			propertyDetails.push (details);
@@ -253,10 +256,14 @@ class SimpleActuator extends GenericActuator {
 					
 					details = propertyDetails[i];
 					
+					#if js
+					Reflect.setField (details.target, details.propertyName, details.start + (details.change * easing));
+					#else
 					#if haxe_209
 					Reflect.setProperty (details.target, details.propertyName, details.start + (details.change * easing));
 					#else
 					Reflect.setField (details.target, details.propertyName, details.start + (details.change * easing));
+					#end
 					#end
 					
 				}
@@ -302,19 +309,25 @@ class SimpleActuator extends GenericActuator {
 					}
 					
 					if (!_snapping) {
-						
+						#if js
+						Reflect.setField (details.target, details.propertyName, endValue);
+						#else
 						#if haxe_209
 						Reflect.setProperty (details.target, details.propertyName, endValue);
 						#else
 						Reflect.setField (details.target, details.propertyName, endValue);
 						#end
+						#end
 						
 					} else {
-						
+						#if js
+						Reflect.setField (details.target, details.propertyName, Math.round (endValue));
+						#else
 						#if haxe_209
 						Reflect.setProperty (details.target, details.propertyName, Math.round (endValue));
 						#else
 						Reflect.setField (details.target, details.propertyName, Math.round (endValue));
+						#end
 						#end
 						
 					}
