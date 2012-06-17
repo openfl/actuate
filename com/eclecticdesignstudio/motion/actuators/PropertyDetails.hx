@@ -16,7 +16,7 @@ class PropertyDetails {
 	public var target:Dynamic;
 	
 	
-	public function new (target:Dynamic, propertyName:String, start:Float, change:Float, isField:Bool):Void {
+	public function new (target:Dynamic, propertyName:String, start:Float, change:Float, isField:Bool = true):Void {
 		
 		this.target = target;
 		this.propertyName = propertyName;
