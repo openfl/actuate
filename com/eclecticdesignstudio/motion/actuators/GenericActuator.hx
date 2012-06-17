@@ -62,9 +62,21 @@ class GenericActuator implements IGenericActuator {
 		for (i in Reflect.fields (properties)) {
 			
 			#if haxe_209
-			Reflect.setProperty (target, i, Reflect.field (properties, i));
+			
+			if (Reflect.hasField (target, i)) {
+				
+				Reflect.setField (target, i, Reflect.field (properties, i));
+				
+			} else {
+				
+				Reflect.setProperty (target, i, Reflect.field (properties, i));
+				
+			}
+			
 			#else
+			
 			Reflect.setField (target, i, Reflect.field (properties, i));
+			
 			#end
 			
 		}

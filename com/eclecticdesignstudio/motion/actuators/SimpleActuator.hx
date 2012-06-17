@@ -2,7 +2,6 @@
 
 
 import com.eclecticdesignstudio.motion.actuators.GenericActuator;
-//import com.joshuagranick.basic.Basic;
 import flash.display.DisplayObject;
 import flash.display.Shape;
 import flash.display.Sprite;
@@ -111,12 +110,28 @@ class SimpleActuator extends GenericActuator {
 		
 		for (i in Reflect.fields (properties)) {
 			
+			var isField = true;
+			
 			#if haxe_209
-			start = Reflect.getProperty (target, i);
+			
+			if (Reflect.hasField (target, i)) {
+				
+				start = Reflect.field (target, i);
+				
+			} else {
+				
+				isField = false;
+				start = Reflect.getProperty (target, i);
+				
+			}
+			
 			#else
+			
 			start = Reflect.field (target, i);
+			
 			#end
-			details = new PropertyDetails (target, i, start, Reflect.field (properties, i) - start);
+			
+			details = new PropertyDetails (target, i, start, Reflect.field (properties, i) - start, isField);
 			propertyDetails.push (details);
 			
 		}
@@ -253,11 +268,15 @@ class SimpleActuator extends GenericActuator {
 					
 					details = propertyDetails[i];
 					
-					#if haxe_209
-					Reflect.setProperty (details.target, details.propertyName, details.start + (details.change * easing));
-					#else
-					Reflect.setField (details.target, details.propertyName, details.start + (details.change * easing));
-					#end
+					if (details.isField) {
+						
+						Reflect.setField (details.target, details.propertyName, details.start + (details.change * easing));
+						
+					} else {
+						
+						Reflect.setProperty (details.target, details.propertyName, details.start + (details.change * easing));
+						
+					}
 					
 				}
 				
@@ -303,19 +322,27 @@ class SimpleActuator extends GenericActuator {
 					
 					if (!_snapping) {
 						
-						#if haxe_209
-						Reflect.setProperty (details.target, details.propertyName, endValue);
-						#else
-						Reflect.setField (details.target, details.propertyName, endValue);
-						#end
+						if (details.isField) {
+							
+							Reflect.setField (details.target, details.propertyName, endValue);
+							
+						} else {
+							
+							Reflect.setProperty (details.target, details.propertyName, endValue);
+							
+						}
 						
 					} else {
 						
-						#if haxe_209
-						Reflect.setProperty (details.target, details.propertyName, Math.round (endValue));
-						#else
-						Reflect.setField (details.target, details.propertyName, Math.round (endValue));
-						#end
+						if (details.isField) {
+							
+							Reflect.setField (details.target, details.propertyName, Math.round (endValue));
+							
+						} else {
+							
+							Reflect.setProperty (details.target, details.propertyName, Math.round (endValue));
+							
+						}
 						
 					}
 					

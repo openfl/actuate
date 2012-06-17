@@ -9,18 +9,20 @@ package com.eclecticdesignstudio.motion.actuators;
 class PropertyDetails {
 	
 	
-	public var target:Dynamic;
+	public var change:Float;
+	public var isField:Bool;
 	public var propertyName:String;
 	public var start:Float;
-	public var change:Float;
+	public var target:Dynamic;
 	
 	
-	public function new (target:Dynamic, propertyName:String, start:Float, change:Float):Void {
+	public function new (target:Dynamic, propertyName:String, start:Float, change:Float, isField:Bool):Void {
 		
 		this.target = target;
 		this.propertyName = propertyName;
 		this.start = start;
 		this.change = change;
+		this.isField = isField;
 		
 	}
 	
