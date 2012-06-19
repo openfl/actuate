@@ -1,4 +1,4 @@
-<project name="actuate" url="http://code.google.com/p/actuate/" license="MIT">
+<project name="actuate" url="http://github.com/jgranick/actuate" license="MIT">
     <user name="elyon"/>
     <tag v="flash"/>
     <tag v="cpp"/>
