@@ -274,7 +274,9 @@ class SimpleActuator extends GenericActuator {
 						
 					} else {
 						
+						#if haxe_209
 						Reflect.setProperty (details.target, details.propertyName, details.start + (details.change * easing));
+						#end
 						
 					}
 					
@@ -328,7 +330,9 @@ class SimpleActuator extends GenericActuator {
 							
 						} else {
 							
+							#if haxe_209
 							Reflect.setProperty (details.target, details.propertyName, endValue);
+							#end
 							
 						}
 						
@@ -340,7 +344,9 @@ class SimpleActuator extends GenericActuator {
 							
 						} else {
 							
+							#if haxe_209
 							Reflect.setProperty (details.target, details.propertyName, Math.round (endValue));
+							#end
 							
 						}
 						
