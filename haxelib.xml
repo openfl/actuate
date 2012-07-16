@@ -3,5 +3,5 @@
     <tag v="flash"/>
     <tag v="cpp"/>
     <description>Actuate is a fast, flexible tween library with a jQuery-like syntax. It out-performs TweenLite, and is easy to extend if you need more features.</description>
-    <version name="1.42">Guard calls for compatibility with older Haxe versions</version>
+    <version name="1.43">Added Bounce equations, fixed getter/setter properties for Flash</version>
 </project>
