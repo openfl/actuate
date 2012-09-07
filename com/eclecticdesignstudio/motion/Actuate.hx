@@ -175,10 +175,13 @@ class Actuate {
 		
 		for (library in targetLibraries) {
 			
-			for (actuator in library) {
-				
-				actuator.stop (null, false, false);
-				
+			var length:Int = library.length;
+			var actuator:GenericActuator;
+			for (i in 0 ... length) {
+
+				actuator = library[length - i - 1];
+ 				actuator.stop (null, false, false);
+
 			}
 			
 		}
@@ -267,12 +270,15 @@ class Actuate {
 					
 				}
 				
-				for (actuator in library) {
-					
+				var length:Int = library.length;
+				var actuator:GenericActuator;
+				for (i in 0 ... length) {
+
+					actuator = library[length - i - 1];
 					actuator.stop (properties, complete, sendEvent);
-					
+						
 				}
-				
+					
 			}
 			
 		}
