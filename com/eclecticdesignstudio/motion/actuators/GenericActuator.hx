@@ -196,7 +196,16 @@ class GenericActuator implements IGenericActuator {
 	public function onComplete (handler:Dynamic, parameters:Array <Dynamic> = null):IGenericActuator {
 		
 		_onComplete = handler;
-		_onCompleteParams = parameters;
+		
+		if (parameters == null) {
+			
+			_onCompleteParams = [];
+			
+		} else {
+			
+			_onCompleteParams = parameters;
+			
+		}
 		
 		if (duration == 0) {
 			
@@ -218,7 +227,16 @@ class GenericActuator implements IGenericActuator {
 	public function onRepeat (handler:Dynamic, parameters:Array <Dynamic> = null):IGenericActuator {
 		
 		_onRepeat = handler;
-		_onRepeatParams = parameters;
+		
+		if (parameters == null) {
+			
+			_onRepeatParams = [];
+			
+		} else {
+			
+			_onRepeatParams = parameters;
+			
+		}
 		
 		return this;
 		
@@ -234,7 +252,16 @@ class GenericActuator implements IGenericActuator {
 	public function onUpdate (handler:Dynamic, parameters:Array <Dynamic> = null):IGenericActuator {
 		
 		_onUpdate = handler;
-		_onUpdateParams = parameters;
+		
+		if (parameters == null) {
+			
+			_onUpdateParams = [];
+			
+		} else {
+			
+			_onUpdateParams = parameters;
+			
+		}
 		
 		return this;
 		
