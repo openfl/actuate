@@ -63,7 +63,7 @@ class GenericActuator implements IGenericActuator {
 			
 			#if haxe_209
 			
-			if (Reflect.hasField (target, i)) {
+			if (#if flash false && #end Reflect.hasField (target, i)) {
 				
 				Reflect.setField (target, i, Reflect.field (properties, i));
 				

@@ -428,7 +428,6 @@ class SimpleActuator extends GenericActuator {
 	private static function shape_onEnterFrame (event:Event):Void {
 		
 		var currentTime:Float = Lib.getTimer () / 1000;
-		
 		var actuator:SimpleActuator;
 		
 		var j:Int = 0;

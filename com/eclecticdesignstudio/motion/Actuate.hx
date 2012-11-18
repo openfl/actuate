@@ -1,6 +1,5 @@
 ﻿/**
  * @author Joshua Granick
- * @version 1.38
  */
 
 
@@ -10,6 +9,7 @@ package com.eclecticdesignstudio.motion;
 import com.eclecticdesignstudio.motion.actuators.FilterActuator;
 import com.eclecticdesignstudio.motion.actuators.GenericActuator;
 import com.eclecticdesignstudio.motion.actuators.MethodActuator;
+import com.eclecticdesignstudio.motion.actuators.MotionPathActuator;
 import com.eclecticdesignstudio.motion.actuators.SimpleActuator;
 import com.eclecticdesignstudio.motion.actuators.TransformActuator;
 import com.eclecticdesignstudio.motion.easing.Expo;
@@ -80,6 +80,12 @@ class Actuate {
 			
 		}
 		
+		if (actuator == MotionPathActuator) {
+			
+			return new MotionPathActuator (target, duration, properties);
+			
+		}
+		
 		return null;
 		
 	}
@@ -120,11 +126,11 @@ class Actuate {
 	 * @param	overwrite		Sets whether previous tweens for the same target and properties will be overwritten (Default is true)
 	 * @return		The current actuator instance, which can be used to apply properties like ease, delay, onComplete or onUpdate
 	 */
-	/*public static function motionPath (target:Dynamic, duration:Float, properties:Dynamic, overwrite:Bool = true):GenericActuator {
+	public static function motionPath (target:Dynamic, duration:Float, properties:Dynamic, overwrite:Bool = true):IGenericActuator {
 		
 		return tween (target, duration, properties, overwrite, MotionPathActuator);
 		
-	}*/
+	}
 	
 	
 	/**
@@ -282,7 +288,7 @@ class Actuate {
 	
 	/**
 	 * Creates a tween-based timer, which is useful for synchronizing function calls with other animations
-	 * @example		<code>Actuate.timer (1).onComplete (trace, "Timer is now complete");</code>
+	 * @example		<code>Actuate.timer (1).onComplete (trace, [ "Timer is now complete" ]);</code>
 	 * @param	duration		The length of the timer in seconds
 	 * @param	customActuator		A custom actuator to use instead of the default (Optional)
 	 * @return		The current actuator instance, which can be used to apply properties like onComplete or to gain a reference to the target timer object
@@ -311,7 +317,7 @@ class Actuate {
 	
 	/**
 	 * Creates a new tween
-	 * @example		<code>Actuate.tween (MyClip, 1, { alpha: 1 } ).onComplete (trace, "MyClip is now visible");</code>
+	 * @example		<code>Actuate.tween (MyClip, 1, { alpha: 1 } ).onComplete (trace, [ "MyClip is now visible" ]);</code>
 	 * @param	target		The object to tween
 	 * @param	duration		The length of the tween in seconds
 	 * @param	properties		The end values to tween the target to
@@ -396,7 +402,7 @@ class Actuate {
 	
 	/**
 	 * Creates a new tween that updates a method rather than setting the properties of an object
-	 * @example		<code>Actuate.update (trace, 1, ["Value: ", 0], ["", 1]).onComplete (trace, "Finished tracing values between 0 and 1");</code>
+	 * @example		<code>Actuate.update (trace, 1, ["Value: ", 0], ["", 1]).onComplete (trace, [ "Finished tracing values between 0 and 1" ]);</code>
 	 * @param	target		The method to update		
 	 * @param	duration		The length of the tween in seconds
 	 * @param	start		The starting parameters of the method call. You may use both numeric and non-numeric values
