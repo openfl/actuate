@@ -263,9 +263,9 @@ class Actuate {
 					
 					var temp = {};
 					
-					for (i in Reflect.fields (properties)) {
+					for (property in cast (properties, Array <Dynamic>)) {
 						
-						Reflect.setField (temp, i, null);
+						Reflect.setField (temp, property, null);
 						
 					}
 					
