@@ -1,9 +1,11 @@
 package;
 
 import com.eclecticdesignstudio.motion.Actuate;
+import com.eclecticdesignstudio.motion.MotionPath;
 import com.eclecticdesignstudio.motion.actuators.FilterActuator;
 import com.eclecticdesignstudio.motion.actuators.GenericActuator;
 import com.eclecticdesignstudio.motion.actuators.MethodActuator;
+import com.eclecticdesignstudio.motion.actuators.MotionPathActuator;
 import com.eclecticdesignstudio.motion.actuators.PropertyDetails;
 import com.eclecticdesignstudio.motion.actuators.SimpleActuator;
 import com.eclecticdesignstudio.motion.actuators.TransformActuator;

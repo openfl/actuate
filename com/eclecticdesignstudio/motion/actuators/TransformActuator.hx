@@ -145,6 +145,12 @@ class TransformActuator extends SimpleActuator {
 	
 	private function initializeSound ():Void {
 		
+		if (target.soundTransform == null) {
+			
+			target.soundTransform = new SoundTransform ();
+			
+		}
+		
 		var start:SoundTransform = target.soundTransform;
 		endSoundTransform = target.soundTransform;
 		tweenSoundTransform = new SoundTransform ();
