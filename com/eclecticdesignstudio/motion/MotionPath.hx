@@ -3,21 +3,27 @@
 	
 /**
  * @author Joshua Granick
+ * @author Aleš Tomeček (for RotationPath)
  */
 class MotionPath {
 	
 	
 	public var x (getX, null):IComponentPath;
 	public var y (getY, null):IComponentPath;
+	public var rotation (getRotation, null):RotationPath;
 	
 	private var _x:ComponentPath;
 	private var _y:ComponentPath;
+	private var _rotation:RotationPath;
 	
 	
 	public function new () {
 		
 		_x = new ComponentPath ();
 		_y = new ComponentPath ();
+
+		//we use lazy initialization
+		_rotation = null;
 		
 	}
 	
@@ -77,8 +83,65 @@ class MotionPath {
 		return _y;
 		
 	}
+
+	private function getRotation ():RotationPath {
+		
+		if( _rotation == null ) {
+
+			_rotation = new RotationPath(_x, _y);
+
+		}
+
+		return _rotation;
+		
+	}	
 	
 	
+}
+
+
+class RotationPath implements IComponentPath {
+
+	public var start:Float;
+	public var end (getEnd, null):Float;
+	public var offset:Float;
+
+	private var _x:ComponentPath;
+	private var _y:ComponentPath;
+
+	private var step = 0.01;
+
+	public function new ( x:ComponentPath, y:ComponentPath) {
+
+		_x = x;
+		_y = y;
+
+		offset = 0;
+
+		start = calculate( 0.0 );
+
+	}
+
+	public function calculate (k:Float):Float {
+
+		var dX = _x.calculate(k) - _x.calculate(k + step);
+		var dY = _y.calculate(k) - _y.calculate(k + step);
+
+		var angle;
+
+		angle = Math.atan2(dY, dX) * (180 / Math.PI);
+
+		angle = (angle + offset) % 360;
+
+		return angle;
+	}
+
+	public function getEnd ():Float {
+
+		return calculate( 1.0 );
+
+	}
+
 }
 
 
