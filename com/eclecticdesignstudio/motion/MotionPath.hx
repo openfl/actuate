@@ -9,15 +9,20 @@ class MotionPath {
 	
 	public var x (getX, null):IComponentPath;
 	public var y (getY, null):IComponentPath;
+	public var rotation (getRotation, null):IComponentPath;
 	
 	private var _x:ComponentPath;
 	private var _y:ComponentPath;
+	private var _rotation:RotationPath;
 	
 	
 	public function new () {
 		
 		_x = new ComponentPath ();
 		_y = new ComponentPath ();
+
+		//we use lazy initialization
+		_rotation = null;
 		
 	}
 	
@@ -77,8 +82,55 @@ class MotionPath {
 		return _y;
 		
 	}
+
+	private function getRotation ():IComponentPath {
+		
+		if( _rotation == null ) {
+
+			_rotation = new RotationPath(_x, _y);
+
+		}
+
+		return _rotation;
+		
+	}	
 	
 	
+}
+
+
+class RotationPath implements IComponentPath {
+
+
+	public var start:Float;
+	public var end (getEnd, null):Float;
+
+	private var _x:ComponentPath;
+	private var _y:ComponentPath;
+
+	private var step = 0.01;
+
+	public function new ( x:ComponentPath, y:ComponentPath) {
+
+		_x = x;
+		_y = y;
+
+		//todo: calculate start
+
+	}
+
+	public function calculate (k:Float):Float {
+		//todo: 
+		return 180;
+	}
+
+	public function getEnd ():Float {
+
+		//todo:
+		return 0;
+
+	}
+
 }
 
 
