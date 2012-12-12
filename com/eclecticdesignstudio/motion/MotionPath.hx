@@ -9,7 +9,7 @@ class MotionPath {
 	
 	public var x (getX, null):IComponentPath;
 	public var y (getY, null):IComponentPath;
-	public var rotation (getRotation, null):IComponentPath;
+	public var rotation (getRotation, null):RotationPath;
 	
 	private var _x:ComponentPath;
 	private var _y:ComponentPath;
@@ -83,7 +83,7 @@ class MotionPath {
 		
 	}
 
-	private function getRotation ():IComponentPath {
+	private function getRotation ():RotationPath {
 		
 		if( _rotation == null ) {
 
@@ -103,6 +103,7 @@ class RotationPath implements IComponentPath {
 
 	public var start:Float;
 	public var end (getEnd, null):Float;
+	public var offset:Float;
 
 	private var _x:ComponentPath;
 	private var _y:ComponentPath;
@@ -113,6 +114,8 @@ class RotationPath implements IComponentPath {
 
 		_x = x;
 		_y = y;
+
+		offset = 0;
 
 		start = calculate( 0.0 );
 
@@ -126,6 +129,8 @@ class RotationPath implements IComponentPath {
 		var angle;
 
 		angle = Math.atan2(dY, dX) * (180 / Math.PI);
+
+		angle = (angle + offset) % 360;
 
 		return angle;
 	}
