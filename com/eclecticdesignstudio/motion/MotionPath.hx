@@ -101,7 +101,6 @@ class MotionPath {
 
 class RotationPath implements IComponentPath {
 
-
 	public var start:Float;
 	public var end (getEnd, null):Float;
 
@@ -115,19 +114,25 @@ class RotationPath implements IComponentPath {
 		_x = x;
 		_y = y;
 
-		//todo: calculate start
+		start = calculate( 0.0 );
 
 	}
 
 	public function calculate (k:Float):Float {
-		//todo: 
-		return 180;
+
+		var dX = _x.calculate(k) - _x.calculate(k + step);
+		var dY = _y.calculate(k) - _y.calculate(k + step);
+
+		var angle;
+
+		angle = Math.atan2(dY, dX) * (180 / Math.PI);
+
+		return angle;
 	}
 
 	public function getEnd ():Float {
 
-		//todo:
-		return 0;
+		return calculate( 1.0 );
 
 	}
 
