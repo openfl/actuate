@@ -3,6 +3,7 @@
 	
 /**
  * @author Joshua Granick
+ * @author Aleš Tomeček (for RotationPath)
  */
 class MotionPath {
 	
