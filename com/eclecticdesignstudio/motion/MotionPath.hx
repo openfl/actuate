@@ -7,8 +7,8 @@
 class MotionPath {
 	
 	
-	public var x (getX, null):IComponentPath;
-	public var y (getY, null):IComponentPath;
+	public var x (get_x, null):IComponentPath;
+	public var y (get_y, null):IComponentPath;
 	
 	private var _x:ComponentPath;
 	private var _y:ComponentPath;
@@ -65,14 +65,14 @@ class MotionPath {
 	
 	
 	
-	private function getX ():IComponentPath {
+	private function get_x ():IComponentPath {
 		
 		return _x;
 		
 	}
 	
 	
-	private function getY ():IComponentPath {
+	private function get_y ():IComponentPath {
 		
 		return _y;
 		
@@ -86,7 +86,7 @@ class ComponentPath implements IComponentPath {
 	
 	
 	public var start:Float;
-	public var end (getEnd, null):Float;
+	public var end (get_end, null):Float;
 	
 	private var paths:Array <BezierPath>;
 	private var totalStrength:Float;
@@ -148,7 +148,7 @@ class ComponentPath implements IComponentPath {
 	
 	
 	
-	private function getEnd ():Float {
+	private function get_end ():Float {
 		
 		if (paths.length > 0) {
 			
@@ -170,7 +170,7 @@ class ComponentPath implements IComponentPath {
 interface IComponentPath {
 	
 	
-	var end (getEnd, null):Float;
+	var end (get_end, null):Float;
 	var start:Float;
 	
 	function calculate (k:Float):Float;

@@ -89,7 +89,7 @@ class MotionPathActuator extends SimpleActuator {
 	}
 	
 	
-	public override function update (currentTime:Float):Void {
+	private override function update (currentTime:Float):Void {
 		
 		if (!paused) {
 			
@@ -231,7 +231,9 @@ class MotionPathActuator extends SimpleActuator {
 }
 
 
+#if !haxe3
 import com.eclecticdesignstudio.motion.MotionPath;
+#end
 
 
 class PropertyPathDetails extends PropertyDetails {
