@@ -185,9 +185,11 @@ class Actuate {
 		
 		for (library in targetLibraries) {
 			
-			for (actuator in library) {
+			var length = library.length;
+			
+			for (i in 0...length) {
 				
-				actuator.stop (null, false, false);
+				library[i].stop (null, false, false);
 				
 			}
 			
@@ -241,7 +243,7 @@ class Actuate {
 	/**
 	 * Stops all tweens for an individual object
 	 * @param	target		The target object which will have its tweens stopped, or a generic actuator instance
-	 * @param  properties		A string, array or object which contains the properties you wish to stop, like "alpha", [ "x", "y" ] or { alpha: null }. Passing no value removes all tweens for the object (Optional)
+	 * @param	properties		A string, array or object which contains the properties you wish to stop, like "alpha", [ "x", "y" ] or { alpha: null }. Passing no value removes all tweens for the object (Optional)
 	 * @param	complete		If tweens should apply their final target values before stopping. Default is false (Optional) 
 	 * @param	sendEvent	If a complete() event should be dispatched for the specified target. Default is true (Optional)
 	 */
@@ -277,9 +279,11 @@ class Actuate {
 					
 				}
 				
-				for (actuator in library) {
+				var length = library.length;
+				
+				for (i in 0...length) {
 					
-					actuator.stop (properties, complete, sendEvent);
+					library[i].stop (properties, complete, sendEvent);
 					
 				}
 				
@@ -341,14 +345,16 @@ class Actuate {
 					
 				}
 				
-				var actuator:GenericActuator = createInstance (customActuator, target, duration, properties);
-				var library:Array <GenericActuator> = getLibrary (actuator.target);
+				var actuator = createInstance (customActuator, target, duration, properties);
+				var library = getLibrary (actuator.target);
 				
 				if (overwrite) {
 					
-					for (childActuator in library) {
+					var length = library.length;
+					
+					for (i in 0...length) {
 						
-						childActuator.stop (actuator.properties, false, false);
+						library[i].stop (actuator.properties, false, false);
 						
 					}
 					
