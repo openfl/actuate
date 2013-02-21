@@ -21,7 +21,7 @@ class MotionPathActuator extends SimpleActuator {
 		
 		for (propertyName in Reflect.fields (properties)) {
 			
-			#if haxe_209
+			#if (haxe_209 || haxe3)
 			
 			if (#if flash false && #end Reflect.hasField (target, propertyName)) {
 				
@@ -57,7 +57,7 @@ class MotionPathActuator extends SimpleActuator {
 				
 				var isField = true;
 				
-				#if haxe_209
+				#if (haxe_209 || haxe3)
 				
 				if (#if flash false && #end Reflect.hasField (target, propertyName)) {
 					
@@ -122,7 +122,7 @@ class MotionPathActuator extends SimpleActuator {
 						
 					} else {
 						
-						#if haxe_209
+						#if (haxe_209 || haxe3)
 						Reflect.setProperty (details.target, details.propertyName, cast (details, PropertyPathDetails).path.calculate (easing));
 						#end
 						
@@ -154,7 +154,7 @@ class MotionPathActuator extends SimpleActuator {
 							
 						} else {
 							
-							#if haxe_209
+							#if (haxe_209 || haxe3)
 							Reflect.setProperty (details.target, details.propertyName, cast (details, PropertyPathDetails).path.calculate (easing));
 							#end
 							
@@ -168,7 +168,7 @@ class MotionPathActuator extends SimpleActuator {
 							
 						} else {
 							
-							#if haxe_209
+							#if (haxe_209 || haxe3)
 							Reflect.setProperty (details.target, details.propertyName, Math.round (cast (details, PropertyPathDetails).path.calculate (easing)));
 							#end
 							

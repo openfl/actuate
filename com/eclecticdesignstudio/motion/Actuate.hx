@@ -60,7 +60,7 @@ class Actuate {
 		
 		// Type.createInstance isn't working properly on CPP, so have to create manually
 		
-		if (actuator == SimpleActuator) {
+		if (actuator == SimpleActuator || true) {
 			
 			return new SimpleActuator (target, duration, properties);
 			
@@ -564,7 +564,10 @@ private class TweenTimer {
 }
 
 
-#if (flash && !haxe3)
+#if !haxe3
+
+
+#if flash
 import flash.utils.TypedDictionary;
 #end
 
@@ -715,3 +718,8 @@ private class ObjectHash <T> {
 	
 	
 }
+
+
+#else
+typedef ObjectHash<T> = haxe.ds.ObjectMap<Dynamic, T>;
+#end

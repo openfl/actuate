@@ -112,7 +112,7 @@ class SimpleActuator extends GenericActuator {
 			
 			var isField = true;
 			
-			#if haxe_209
+			#if (haxe_209 || haxe3)
 			
 			if (#if flash false && #end Reflect.hasField (target, i)) {
 				
@@ -274,7 +274,7 @@ class SimpleActuator extends GenericActuator {
 						
 					} else {
 						
-						#if haxe_209
+						#if (haxe_209 || haxe3)
 						Reflect.setProperty (details.target, details.propertyName, details.start + (details.change * easing));
 						#end
 						
@@ -330,7 +330,7 @@ class SimpleActuator extends GenericActuator {
 							
 						} else {
 							
-							#if haxe_209
+							#if (haxe_209 || haxe3)
 							Reflect.setProperty (details.target, details.propertyName, endValue);
 							#end
 							
@@ -344,7 +344,7 @@ class SimpleActuator extends GenericActuator {
 							
 						} else {
 							
-							#if haxe_209
+							#if (haxe_209 || haxe3)
 							Reflect.setProperty (details.target, details.propertyName, Math.round (endValue));
 							#end
 							
@@ -375,7 +375,7 @@ class SimpleActuator extends GenericActuator {
 					
 					if (_onRepeat != null) {
 						
-						#if (neko && haxe_209)
+						#if (neko && (haxe_209 || haxe3))
 						
 						var args = _onRepeatParams != null ? _onRepeatParams : [];
 						untyped __dollar__call (_onRepeat , _onRepeat, args.__neko ());
