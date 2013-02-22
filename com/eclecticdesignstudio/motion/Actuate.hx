@@ -17,10 +17,6 @@ import com.eclecticdesignstudio.motion.easing.IEasing;
 import flash.display.DisplayObject;
 import flash.events.Event;
 
-#if flash
-import flash.utils.TypedDictionary;
-#end
-
 
 class Actuate {
 	
