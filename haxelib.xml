@@ -3,5 +3,5 @@
     <tag v="flash"/>
     <tag v="cpp"/>
     <description>Actuate is a fast, flexible tween library with a jQuery-like syntax. It out-performs TweenLite, and is easy to extend if you need more features.</description>
-    <version name="1.53">Fixed Haxe 3 support for HTML5</version>
+    <version name="1.60">Moved to "motion.*" package, enabled support for custom actuators, Haxe 3 fixes</version>
 </project>
