@@ -42,59 +42,10 @@ class Actuate {
 			
 		}
 		
-		var actuator = createInstance (customActuator, target, 0, properties);
+		var actuator = Type.createInstance (customActuator, [ target, 0, properties ]);
 		actuator.apply ();
 		
 		return actuator;
-		
-	}
-	
-	
-	private static function createInstance (actuator:Class <GenericActuator>, target:Dynamic, duration:Float, properties:Dynamic):GenericActuator {
-		
-		#if haxe3
-		
-		// seems to work now
-		
-		return Type.createInstance (actuator, [ target, duration, properties ]);
-		
-		#else
-		
-		// Type.createInstance isn't working properly on CPP, so have to create manually
-		
-		if (actuator == SimpleActuator) {
-			
-			return new SimpleActuator (target, duration, properties);
-			
-		}
-		
-		if (actuator == FilterActuator) {
-			
-			return new FilterActuator (target, duration, properties);
-			
-		}
-		
-		if (actuator == TransformActuator) {
-			
-			return new TransformActuator (target, duration, properties);
-			
-		}
-		
-		if (actuator == MethodActuator) {
-			
-			return new MethodActuator (target, duration, properties);
-			
-		}
-		
-		if (actuator == MotionPathActuator) {
-			
-			return new MotionPathActuator (target, duration, properties);
-			
-		}
-		
-		return null;
-		
-		#end
 		
 	}
 	
@@ -349,7 +300,7 @@ class Actuate {
 					
 				}
 				
-				var actuator = createInstance (customActuator, target, duration, properties);
+				var actuator = Type.createInstance (customActuator, [ target, duration, properties ]);
 				var library = getLibrary (actuator.target);
 				
 				if (overwrite) {
