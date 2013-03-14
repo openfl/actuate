@@ -2,12 +2,18 @@
 
 
 import motion.actuators.GenericActuator;
+
+#if (flash || nme)
 import flash.display.DisplayObject;
-import flash.display.Shape;
-import flash.display.Sprite;
 import flash.events.Event;
 import flash.Lib;
-import flash.text.TextField;
+#else
+#if neko
+import haxe.Log;
+import haxe.PosInfos;
+#end
+import haxe.Timer;
+#end
 
 
 /**
@@ -21,7 +27,11 @@ class SimpleActuator extends GenericActuator {
 	
 	private static var actuators:Array <SimpleActuator> = new Array <SimpleActuator> ();
 	private static var actuatorsLength:Int = 0;
-	private static var shape:Shape;
+	private static var addedEvent:Bool = false;
+	
+	#if (!flash && !nme)
+	private static var timer:Timer;
+	#end
 	
 	private var active:Bool;
 	private var cacheVisible:Bool;
@@ -46,14 +56,25 @@ class SimpleActuator extends GenericActuator {
 		initialized = false;
 		setVisible = false;
 		toggleVisible = false;
+		
+		#if (flash || nme)
 		startTime = Lib.getTimer () / 1000;
+		#else
+		startTime = Timer.stamp ();
+		#end
 		
 		super (target, duration, properties);
 		
-		if (shape == null) {
+		if (!addedEvent) {
 			
-			shape = new Shape ();
-			Lib.current.stage.addEventListener (Event.ENTER_FRAME, shape_onEnterFrame);
+			addedEvent = true;
+			
+			#if (flash || nme)
+			Lib.current.stage.addEventListener (Event.ENTER_FRAME, stage_onEnterFrame);
+			#else
+			timer = new Timer (1000 / 30);
+			timer.run = stage_onEnterFrame;
+			#end
 			
 		}
 		
@@ -144,7 +165,11 @@ class SimpleActuator extends GenericActuator {
 	
 	public override function move ():Void {
 		
+		#if (flash || nme)
 		toggleVisible = (Reflect.hasField (properties, "alpha") && Std.is (target, DisplayObject));
+		#else
+		toggleVisible = (Reflect.hasField (properties, "alpha") && Reflect.hasField (properties, "visible"));
+		#end
 		
 		if (toggleVisible && !target.visible && properties.alpha != 0) {
 			
@@ -178,7 +203,12 @@ class SimpleActuator extends GenericActuator {
 	public override function pause ():Void {
 		
 		paused = true;
+		
+		#if (flash || nme)
 		pauseTime = Lib.getTimer ();
+		#else
+		pauseTime = Timer.stamp ();
+		#end
 		
 	}
 	
@@ -188,7 +218,12 @@ class SimpleActuator extends GenericActuator {
 		if (paused) {
 			
 			paused = false;
+			
+			#if (flash || nme)
 			timeOffset += (Lib.getTimer () - pauseTime) / 1000;
+			#else
+			timeOffset += (Timer.stamp () - pauseTime) / 1000;
+			#end
 			
 		}
 		
@@ -425,9 +460,14 @@ class SimpleActuator extends GenericActuator {
 	
 	
 	
-	private static function shape_onEnterFrame (event:Event):Void {
+	private static function stage_onEnterFrame (#if (flash || nme) event:Event #end):Void {
 		
+		#if (flash || nme)
 		var currentTime:Float = Lib.getTimer () / 1000;
+		#else
+		var currentTime = Timer.stamp ();
+		#end
+		
 		var actuator:SimpleActuator;
 		
 		var j:Int = 0;
@@ -459,3 +499,94 @@ class SimpleActuator extends GenericActuator {
 	
 	
 }
+
+
+#if (!nme && neko)
+
+
+// Custom haxe.Timer implementation for C++ and Neko
+
+typedef TimerList = Array <Timer>;
+
+
+class Timer {
+	
+	
+	static var sRunningTimers:TimerList = [];
+	
+	var mTime:Float;
+	var mFireAt:Float;
+	var mRunning:Bool;
+	
+	
+	public function new (time:Float) {
+		
+		mTime = time;
+		sRunningTimers.push (this);
+		mFireAt = GetMS () + mTime;
+		mRunning = true;
+		
+	}
+	
+	
+	public static function measure<T>( f : Void -> T, ?pos : PosInfos ) : T {
+		var t0 = stamp();
+		var r = f();
+		Log.trace((stamp() - t0) + "s", pos);
+		return r;
+	}
+	
+	
+	// Set this with "run=..."
+	dynamic public function run () {
+		
+		
+		
+	}
+   
+	
+	public function stop ():Void {
+		
+		if (mRunning) {
+			
+			mRunning = false;
+			sRunningTimers.remove (this);
+			
+		}
+		
+	}
+	
+	
+	static function GetMS ():Float {
+		
+		return stamp () * 1000.0;
+		
+	}
+	
+
+   // From std/haxe/Timer.hx
+	public static function delay (f:Void -> Void, time:Int) {
+		
+		var t = new Timer (time);
+		
+		t.run = function () {
+			t.stop ();
+			f ();
+		};
+		
+		return t;
+		
+	}
+	
+	
+	static public function stamp ():Float {
+		
+		return Date.now().getTime ();
+		
+	}
+	
+	
+}
+
+
+#end

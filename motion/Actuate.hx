@@ -12,8 +12,10 @@ import motion.actuators.SimpleActuator;
 import motion.actuators.TransformActuator;
 import motion.easing.Expo;
 import motion.easing.IEasing;
+
+#if (flash || nme)
 import flash.display.DisplayObject;
-import flash.events.Event;
+#end
 
 
 class Actuate {
@@ -50,6 +52,8 @@ class Actuate {
 	}
 	
 	
+	#if (flash || nme)
+	
 	/**
 	 * Creates a new effects tween 
 	 * @param	target		The object to tween
@@ -62,6 +66,8 @@ class Actuate {
 		return new EffectsOptions (target, duration, overwrite);
 		
 	}
+	
+	#end
 	
 	
 	private static function getLibrary (target:Dynamic):Array <GenericActuator> {
@@ -263,6 +269,8 @@ class Actuate {
 	}
 	
 	
+	#if (flash || nme)
+	
 	/**
 	 * Creates a new transform tween
 	 * @example		<code>Actuate.transform (MyClip, 1).color (0xFF0000);</code>
@@ -276,6 +284,8 @@ class Actuate {
 		return new TransformOptions (target, duration, overwrite);
 		
 	}
+	
+	#end
 	
 	
 	/**
@@ -399,6 +409,8 @@ import flash.geom.Matrix;
 #end
 
 
+#if (flash || nme)
+
 private class EffectsOptions {
 
 
@@ -501,6 +513,8 @@ private class TransformOptions {
 
 
 }
+
+#end
 
 
 private class TweenTimer {

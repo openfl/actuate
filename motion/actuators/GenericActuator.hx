@@ -9,7 +9,6 @@ package motion.actuators;
 
 import motion.easing.IEasing;
 import motion.Actuate;
-import flash.events.Event;
 
 
 class GenericActuator implements IGenericActuator {

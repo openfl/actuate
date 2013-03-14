@@ -1,4 +1,5 @@
 ﻿package motion.actuators;
+#if (flash || nme)
 
 
 import flash.display.DisplayObject;
@@ -191,3 +192,6 @@ class TransformActuator extends SimpleActuator {
 	
 	
 }
+
+
+#end

@@ -1,4 +1,5 @@
 ﻿package motion.actuators;
+#if (flash || nme)
 
 
 import flash.display.DisplayObject;
@@ -119,3 +120,6 @@ class FilterActuator extends SimpleActuator {
 	
 	
 }
+
+
+#end
