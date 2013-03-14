@@ -11,26 +11,26 @@ import com.eclecticdesignstudio.motion.easing.IEasing;
 	
 class Bounce {
 
-	static public var easeIn (getEaseIn, never):IEasing;
-	static public var easeInOut (getEaseInOut, never):IEasing;
-	static public var easeOut (getEaseOut, never):IEasing;
+	static public var easeIn (get_easeIn, never):IEasing;
+	static public var easeInOut (get_easeInOut, never):IEasing;
+	static public var easeOut (get_easeOut, never):IEasing;
 	
 	
-	private static function getEaseIn ():IEasing {
+	private static function get_easeIn ():IEasing {
 		
 		return new BounceEaseIn ();
 		
 	}
 	
 	
-	private static function getEaseInOut ():IEasing {
+	private static function get_easeInOut ():IEasing {
 		
 		return new BounceEaseInOut ();
 		
 	}
 	
 	
-	private static function getEaseOut ():IEasing {
+	private static function get_easeOut ():IEasing {
 		
 		return new BounceEaseOut ();
 		
