@@ -13,7 +13,7 @@ import motion.actuators.TransformActuator;
 import motion.easing.Expo;
 import motion.easing.IEasing;
 
-#if (flash || nme)
+#if (flash || nme || pazu)
 import flash.display.DisplayObject;
 #end
 
@@ -52,7 +52,7 @@ class Actuate {
 	}
 	
 	
-	#if (flash || nme)
+	#if (flash || nme || pazu)
 	
 	/**
 	 * Creates a new effects tween 
@@ -269,7 +269,7 @@ class Actuate {
 	}
 	
 	
-	#if (flash || nme)
+	#if (flash || nme || pazu)
 	
 	/**
 	 * Creates a new transform tween
@@ -409,7 +409,7 @@ import flash.geom.Matrix;
 #end
 
 
-#if (flash || nme)
+#if (flash || nme || pazu)
 
 private class EffectsOptions {
 
