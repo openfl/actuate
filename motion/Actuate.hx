@@ -146,12 +146,10 @@ class Actuate {
 		
 		for (library in targetLibraries) {
 			
-			var length = library.length;
-			
-			for (i in 0...length) {
-				
+			var i = library.length - 1;
+			while (i >= 0) {
 				library[i].stop (null, false, false);
-				
+				i--;
 			}
 			
 		}
@@ -240,12 +238,10 @@ class Actuate {
 					
 				}
 				
-				var length = library.length;
-				
-				for (i in 0...length) {
-					
+				var i = library.length - 1;
+				while (i >= 0) {
 					library[i].stop (properties, complete, sendEvent);
-					
+					i--;
 				}
 				
 			}
@@ -315,12 +311,11 @@ class Actuate {
 				
 				if (overwrite) {
 					
-					var length = library.length;
+					var i = library.length - 1;
 					
-					for (i in 0...length) {
-						
+					while (i >= 0) {
 						library[i].stop (actuator.properties, false, false);
-						
+						i--;
 					}
 					
 				}
