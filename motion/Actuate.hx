@@ -13,7 +13,7 @@ import motion.actuators.TransformActuator;
 import motion.easing.Expo;
 import motion.easing.IEasing;
 
-#if (flash || nme || pazu)
+#if (flash || nme || openfl)
 import flash.display.DisplayObject;
 #end
 
@@ -52,7 +52,7 @@ class Actuate {
 	}
 	
 	
-	#if (flash || nme || pazu)
+	#if (flash || nme || openfl)
 	
 	/**
 	 * Creates a new effects tween 
@@ -269,7 +269,7 @@ class Actuate {
 	}
 	
 	
-	#if (flash || nme || pazu)
+	#if (flash || nme || openfl)
 	
 	/**
 	 * Creates a new transform tween
@@ -319,7 +319,11 @@ class Actuate {
 					
 					for (i in 0...length) {
 						
-						library[i].stop (actuator.properties, false, false);
+						if (library[i] != null) {
+							
+							library[i].stop (actuator.properties, false, false);
+							
+						}
 						
 					}
 					
@@ -409,7 +413,7 @@ import flash.geom.Matrix;
 #end
 
 
-#if (flash || nme || pazu)
+#if (flash || nme || openfl)
 
 private class EffectsOptions {
 

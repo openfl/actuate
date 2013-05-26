@@ -3,7 +3,7 @@
 
 import motion.actuators.GenericActuator;
 
-#if (flash || nme || pazu)
+#if (flash || nme || openfl)
 import flash.display.DisplayObject;
 import flash.events.Event;
 import flash.Lib;
@@ -29,7 +29,7 @@ class SimpleActuator extends GenericActuator {
 	private static var actuatorsLength:Int = 0;
 	private static var addedEvent:Bool = false;
 	
-	#if (!flash && !nme && !pazu)
+	#if (!flash && !nme && !openfl)
 	private static var timer:Timer;
 	#end
 	
@@ -57,7 +57,7 @@ class SimpleActuator extends GenericActuator {
 		setVisible = false;
 		toggleVisible = false;
 		
-		#if (flash || nme || pazu)
+		#if (flash || nme || openfl)
 		startTime = Lib.getTimer () / 1000;
 		#else
 		startTime = Timer.stamp ();
@@ -69,7 +69,7 @@ class SimpleActuator extends GenericActuator {
 			
 			addedEvent = true;
 			
-			#if (flash || nme || pazu)
+			#if (flash || nme || openfl)
 			Lib.current.stage.addEventListener (Event.ENTER_FRAME, stage_onEnterFrame);
 			#else
 			timer = new Timer (1000 / 30);
@@ -165,7 +165,7 @@ class SimpleActuator extends GenericActuator {
 	
 	public override function move ():Void {
 		
-		#if (flash || nme || pazu)
+		#if (flash || nme || openfl)
 		toggleVisible = (Reflect.hasField (properties, "alpha") && Std.is (target, DisplayObject));
 		#else
 		toggleVisible = (Reflect.hasField (properties, "alpha") && Reflect.hasField (properties, "visible"));
@@ -204,7 +204,7 @@ class SimpleActuator extends GenericActuator {
 		
 		paused = true;
 		
-		#if (flash || nme || pazu)
+		#if (flash || nme || openfl)
 		pauseTime = Lib.getTimer ();
 		#else
 		pauseTime = Timer.stamp ();
@@ -219,7 +219,7 @@ class SimpleActuator extends GenericActuator {
 			
 			paused = false;
 			
-			#if (flash || nme || pazu)
+			#if (flash || nme || openfl)
 			timeOffset += (Lib.getTimer () - pauseTime) / 1000;
 			#else
 			timeOffset += (Timer.stamp () - pauseTime) / 1000;
@@ -460,9 +460,9 @@ class SimpleActuator extends GenericActuator {
 	
 	
 	
-	private static function stage_onEnterFrame (#if (flash || nme || pazu) event:Event #end):Void {
+	private static function stage_onEnterFrame (#if (flash || nme || openfl) event:Event #end):Void {
 		
-		#if (flash || nme || pazu)
+		#if (flash || nme || openfl)
 		var currentTime:Float = Lib.getTimer () / 1000;
 		#else
 		var currentTime = Timer.stamp ();

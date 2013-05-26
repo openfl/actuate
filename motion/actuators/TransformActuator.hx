@@ -1,5 +1,5 @@
 ﻿package motion.actuators;
-#if (flash || nme || pazu)
+#if (flash || nme || openfl)
 
 
 import flash.display.DisplayObject;
