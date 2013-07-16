@@ -230,6 +230,31 @@ class SimpleActuator extends GenericActuator {
 	}
 	
 	
+	private inline function setField (details:PropertyDetails, value:Dynamic):Void {
+		
+		#if flash
+		
+		untyped details.target[details.propertyName] = value;
+		
+		#else
+		
+		if (details.isField) {
+			
+			Reflect.setField (details.target, details.propertyName, value);
+			
+		} else {
+			
+			#if (haxe_209 || haxe3)
+			Reflect.setProperty (details.target, details.propertyName, value);
+			#end
+			
+		}
+		
+		#end
+		
+	}
+	
+	
 	public override function stop (properties:Dynamic, complete:Bool, sendEvent:Bool):Void {
 		
 		if (active) {
@@ -302,18 +327,7 @@ class SimpleActuator extends GenericActuator {
 				for (i in 0...detailsLength) {
 					
 					details = propertyDetails[i];
-					
-					if (details.isField) {
-						
-						Reflect.setField (details.target, details.propertyName, details.start + (details.change * easing));
-						
-					} else {
-						
-						#if (haxe_209 || haxe3)
-						Reflect.setProperty (details.target, details.propertyName, details.start + (details.change * easing));
-						#end
-						
-					}
+					setField (details, details.start + (details.change * easing));
 					
 				}
 				
@@ -359,31 +373,11 @@ class SimpleActuator extends GenericActuator {
 					
 					if (!_snapping) {
 						
-						if (details.isField) {
-							
-							Reflect.setField (details.target, details.propertyName, endValue);
-							
-						} else {
-							
-							#if (haxe_209 || haxe3)
-							Reflect.setProperty (details.target, details.propertyName, endValue);
-							#end
-							
-						}
+						setField (details, endValue);
 						
 					} else {
 						
-						if (details.isField) {
-							
-							Reflect.setField (details.target, details.propertyName, Math.round (endValue));
-							
-						} else {
-							
-							#if (haxe_209 || haxe3)
-							Reflect.setProperty (details.target, details.propertyName, Math.round (endValue));
-							#end
-							
-						}
+						setField (details, Math.round (endValue));
 						
 					}
 					
@@ -471,6 +465,7 @@ class SimpleActuator extends GenericActuator {
 		var actuator:SimpleActuator;
 		
 		var j:Int = 0;
+		var cleanup = false;
 		
 		for (i in 0...actuatorsLength) {
 			
