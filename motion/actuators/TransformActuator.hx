@@ -5,6 +5,7 @@
 import flash.display.DisplayObject;
 import flash.display.Sprite;
 import flash.geom.ColorTransform;
+import flash.geom.Transform;
 import flash.media.SoundTransform;
 
 
@@ -34,13 +35,14 @@ class TransformActuator extends SimpleActuator {
 		
 		if (endColorTransform != null) {
 			
-			target.transform.colorTransform = endColorTransform;
+			var transform:Transform = getField (target, "transform");
+			setField (transform, "colorTransform", endColorTransform);
 			
 		}
 		
 		if (endSoundTransform != null) {
 			
-			target.soundTransform = endSoundTransform;
+			setField (target, "soundTransform", endSoundTransform);
 			
 		}
 		
@@ -122,11 +124,12 @@ class TransformActuator extends SimpleActuator {
 			
 		} else {
 			
-			endColorTransform.alphaMultiplier = target.alpha;
+			endColorTransform.alphaMultiplier = getField (target, "alpha");
 			
 		}
 		
-		var begin:ColorTransform = target.transform.colorTransform;
+		var transform:Transform = getField (target, "transform");
+		var begin:ColorTransform = getField (transform, "colorTransform");
 		tweenColorTransform = new ColorTransform ();
 		
 		var details:PropertyDetails;
@@ -134,8 +137,8 @@ class TransformActuator extends SimpleActuator {
 		
 		for (propertyName in propertyNames) {
 			
-			start = Reflect.field (begin, propertyName);
-			details = new PropertyDetails (tweenColorTransform, propertyName, start, Reflect.field (endColorTransform, propertyName) - start);
+			start = getField (begin, propertyName);
+			details = new PropertyDetails (tweenColorTransform, propertyName, start, getField (endColorTransform, propertyName) - start);
 			propertyDetails.push (details);
 			
 		}
@@ -145,14 +148,14 @@ class TransformActuator extends SimpleActuator {
 	
 	private function initializeSound ():Void {
 		
-		if (target.soundTransform == null) {
+		if (getField (target, "soundTransform") == null) {
 			
-			target.soundTransform = new SoundTransform ();
+			setField (target, "soundTransform", new SoundTransform ());
 			
 		}
 		
-		var start:SoundTransform = target.soundTransform;
-		endSoundTransform = target.soundTransform;
+		var start:SoundTransform = getField (target, "soundTransform");
+		endSoundTransform = getField (target, "soundTransform");
 		tweenSoundTransform = new SoundTransform ();
 		
 		if (Reflect.hasField (properties, "soundVolume")) {
@@ -178,13 +181,14 @@ class TransformActuator extends SimpleActuator {
 		
 		if (endColorTransform != null) {
 			
-			target.transform.colorTransform = tweenColorTransform;
+			var transform:Transform = getField (target, "transform");
+			setField (transform, "colorTransform", tweenColorTransform);
 			
 		}
 		
 		if (endSoundTransform != null) {
 			
-			target.soundTransform = tweenSoundTransform;
+			setField (target, "soundTransform", tweenSoundTransform);
 			
 		}
 		
