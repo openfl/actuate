@@ -124,6 +124,37 @@ class SimpleActuator extends GenericActuator {
 	}
 	
 	
+	private inline function getField (target:Dynamic, propertyName:String):Dynamic {
+		
+		#if flash
+		
+		return untyped target[propertyName];
+		
+		#elseif (haxe_209 || haxe3)
+		
+		var value = null;
+		
+		if (#if flash false && #end Reflect.hasField (target, propertyName)) {
+			
+			value = Reflect.field (target, propertyName);
+			
+		} else {
+			
+			value = Reflect.getProperty (target, propertyName);
+			
+		}
+		
+		return value;
+		
+		#else
+		
+		return Reflect.field (target, propertyName);
+		
+		#end
+		
+	}
+	
+	
 	private function initialize ():Void {
 		
 		var details:PropertyDetails;
@@ -171,7 +202,7 @@ class SimpleActuator extends GenericActuator {
 		toggleVisible = (Reflect.hasField (properties, "alpha") && Reflect.hasField (properties, "visible"));
 		#end
 		
-		if (toggleVisible && !target.visible && properties.alpha != 0) {
+		if (toggleVisible && properties.alpha != 0 && !getField (target, "visible")) {
 			
 			setVisible = true;
 			cacheVisible = target.visible;
@@ -391,9 +422,25 @@ class SimpleActuator extends GenericActuator {
 					
 					active = false;
 					
-					if (toggleVisible && target.alpha == 0) {
+					if (toggleVisible && getField (target, "alpha") == 0) {
 						
-						target.visible = false;
+						#if (haxe_209 || haxe3)
+						
+						if (#if flash false && #end Reflect.hasField (target, "visible")) {
+							
+							Reflect.setField (target, "visible", false);
+							
+						} else {
+							
+							Reflect.setProperty (target, "visible", false);
+							
+						}
+						
+						#else
+						
+						Reflect.setField (target, "visible", false);
+						
+						#end
 						
 					}
 					
