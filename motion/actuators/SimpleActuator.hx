@@ -100,7 +100,7 @@ class SimpleActuator extends GenericActuator {
 			
 			if (setVisible) {
 				
-				target.visible = cacheVisible;
+				setField (target, "visible", cacheVisible);
 				
 			}
 			
@@ -205,8 +205,8 @@ class SimpleActuator extends GenericActuator {
 		if (toggleVisible && properties.alpha != 0 && !getField (target, "visible")) {
 			
 			setVisible = true;
-			cacheVisible = target.visible;
-			target.visible = true;
+			cacheVisible = getField (target, "visible");
+			setField (target, "visible", true);
 			
 		}
 		
