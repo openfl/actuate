@@ -126,17 +126,17 @@ class SimpleActuator extends GenericActuator {
 	
 	private inline function getField (target:Dynamic, propertyName:String):Dynamic {
 		
-		#if flash
-		
-		return untyped target[propertyName];
-		
-		#elseif (haxe_209 || haxe3)
+		#if (haxe_209 || haxe3)
 		
 		var value = null;
 		
-		if (#if flash false && #end Reflect.hasField (target, propertyName)) {
+		if (Reflect.hasField (target, propertyName)) {
 			
+			#if flash
+			value = untyped target[propertyName];
+			#else
 			value = Reflect.field (target, propertyName);
+			#end
 			
 		} else {
 			
@@ -166,7 +166,7 @@ class SimpleActuator extends GenericActuator {
 			
 			#if (haxe_209 || haxe3)
 			
-			if (#if flash false && #end Reflect.hasField (target, i)) {
+			if (Reflect.hasField (target, i)) {
 				
 				start = Reflect.field (target, i);
 				
@@ -263,15 +263,13 @@ class SimpleActuator extends GenericActuator {
 	
 	private inline function setField (target:Dynamic, propertyName:String, value:Dynamic):Void {
 		
-		#if flash
-		
-		untyped target[propertyName] = value;
-		
-		#else
-		
 		if (Reflect.hasField (target, propertyName)) {
 			
+			#if flash
+			untyped target[propertyName] = value;
+			#else
 			Reflect.setField (target, propertyName, value);
+			#end
 			
 		} else {
 			
@@ -281,22 +279,18 @@ class SimpleActuator extends GenericActuator {
 			
 		}
 		
-		#end
-		
 	}
 	
 	
 	private inline function setProperty (details:PropertyDetails, value:Dynamic):Void {
 		
-		#if flash
-		
-		untyped details.target[details.propertyName] = value;
-		
-		#else
-		
 		if (details.isField) {
 			
+			#if flash
+			untyped details.target[details.propertyName] = value;
+			#else
 			Reflect.setField (details.target, details.propertyName, value);
+			#end
 			
 		} else {
 			
@@ -305,8 +299,6 @@ class SimpleActuator extends GenericActuator {
 			#end
 			
 		}
-		
-		#end
 		
 	}
 	
