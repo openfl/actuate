@@ -460,16 +460,7 @@ class SimpleActuator extends GenericActuator {
 					
 					if (_onRepeat != null) {
 						
-						#if (neko && (haxe_209 || haxe3))
-						
-						var args = _onRepeatParams != null ? _onRepeatParams : [];
-						untyped __dollar__call (_onRepeat , _onRepeat, args.__neko ());
-						
-						#else
-						
-						Reflect.callMethod (_onRepeat, _onRepeat, _onRepeatParams);
-						
-						#end
+						callMethod (_onRepeat, _onRepeatParams);
 						
 					}
 					
