@@ -223,7 +223,17 @@ class SimpleActuator extends GenericActuator {
 	public override function onUpdate (handler:Dynamic, parameters:Array <Dynamic> = null):IGenericActuator {
 		
 		_onUpdate = handler;
-		_onUpdateParams = parameters;
+		
+		if (parameters == null) {
+			
+			_onUpdateParams = [];
+			
+		} else {
+			
+			_onUpdateParams = parameters;
+			
+		}
+		
 		sendChange = true;
 		
 		return this;
