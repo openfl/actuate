@@ -4,8 +4,8 @@
   "license": "MIT",
   "tags": [ "flash", "cpp", "neko", "js" ],
   "description": "Actuate is a fast and flexible tween library that uses a jQuery-style \"chaining\" syntax. It out-performs other libraries (such as TweenLite) and is easy to extend with custom actuators.",
-  "version": "1.6.7",
-  "releasenote": "Flash fix for getter/setters",
+  "version": "1.6.8",
+  "releasenote": "Minor crash fix",
   "contributors": [ "singmajesty" ],
   "dependencies": {}
 }
