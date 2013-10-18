@@ -8,13 +8,13 @@
 class MotionPath {
 	
 	
+	public var rotation (get_rotation, null):RotationPath;
 	public var x (get_x, null):IComponentPath;
 	public var y (get_y, null):IComponentPath;
-	public var rotation (getRotation, null):RotationPath;
 	
+	private var _rotation:RotationPath;
 	private var _x:ComponentPath;
 	private var _y:ComponentPath;
-	private var _rotation:RotationPath;
 	
 	
 	public function new () {
@@ -70,6 +70,19 @@ class MotionPath {
 	
 	
 	
+	private function get_rotation ():RotationPath {
+		
+		if (_rotation == null) {
+			
+			_rotation = new RotationPath (_x, _y);
+			
+		}
+		
+		return _rotation;
+		
+	}
+	
+	
 	private function get_x ():IComponentPath {
 		
 		return _x;
@@ -80,19 +93,6 @@ class MotionPath {
 	private function get_y ():IComponentPath {
 		
 		return _y;
-		
-	}
-	
-	
-	private function getRotation ():RotationPath {
-		
-		if (_rotation == null) {
-			
-			_rotation = new RotationPath (_x, _y);
-			
-		}
-		
-		return _rotation;
 		
 	}
 	
@@ -247,9 +247,9 @@ class LinearPath extends BezierPath {
 class RotationPath implements IComponentPath {
 	
 	
-	public var start:Float;
-	public var end (get, null):Float;
+	public var end (get_end, null):Float;
 	public var offset:Float;
+	public var start:Float;
 	
 	private var step = 0.01;
 	private var _x:ComponentPath;
