@@ -3,21 +3,26 @@
 	
 /**
  * @author Joshua Granick
+ * @author Aleš Tomeček (for RotationPath)
  */
 class MotionPath {
 	
 	
 	public var x (get_x, null):IComponentPath;
 	public var y (get_y, null):IComponentPath;
+	public var rotation (getRotation, null):RotationPath;
 	
 	private var _x:ComponentPath;
 	private var _y:ComponentPath;
+	private var _rotation:RotationPath;
 	
 	
 	public function new () {
 		
 		_x = new ComponentPath ();
 		_y = new ComponentPath ();
+		
+		_rotation = null;
 		
 	}
 	
@@ -75,6 +80,19 @@ class MotionPath {
 	private function get_y ():IComponentPath {
 		
 		return _y;
+		
+	}
+	
+	
+	private function getRotation ():RotationPath {
+		
+		if (_rotation == null) {
+			
+			_rotation = new RotationPath (_x, _y);
+			
+		}
+		
+		return _rotation;
 		
 	}
 	
@@ -179,8 +197,6 @@ interface IComponentPath {
 }
 
 
-
-
 class BezierPath {
 	
 	
@@ -221,6 +237,60 @@ class LinearPath extends BezierPath {
 	public override function calculate (start:Float, k:Float):Float {
 		
 		return start + k * (end - start);
+		
+	}
+	
+	
+}
+
+
+class RotationPath implements IComponentPath {
+	
+	
+	public var start:Float;
+	public var end (get, null):Float;
+	public var offset:Float;
+	
+	private var step = 0.01;
+	private var _x:ComponentPath;
+	private var _y:ComponentPath;
+	
+	
+	public function new (x:ComponentPath, y:ComponentPath) {
+		
+		_x = x;
+		_y = y;
+		
+		offset = 0;
+		
+		start = calculate (0.0);
+		
+	}
+	
+	
+	public function calculate (k:Float):Float {
+		
+		var dX = _x.calculate (k) - _x.calculate (k + step);
+		var dY = _y.calculate (k) - _y.calculate (k + step);
+		
+		var angle = Math.atan2(dY, dX) * (180 / Math.PI);
+		angle = (angle + offset) % 360;
+		
+		return angle;
+		
+	}
+	
+	
+	
+	
+	// Get & Set Methods
+	
+	
+	
+	
+	public function get_end ():Float {
+		
+		return calculate (1.0);
 		
 	}
 	
