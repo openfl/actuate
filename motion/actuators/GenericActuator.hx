@@ -11,6 +11,7 @@ import motion.easing.IEasing;
 import motion.Actuate;
 
 
+@:keepSub
 class GenericActuator implements IGenericActuator {
 	
 	
