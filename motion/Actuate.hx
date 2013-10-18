@@ -70,9 +70,9 @@ class Actuate {
 	#end
 	
 	
-	private static function getLibrary (target:Dynamic):Array <GenericActuator> {
+	private static function getLibrary (target:Dynamic, allowCreation:Bool = true):Array <GenericActuator> {
 		
-		if (!targetLibraries.exists (target)) {
+		if (!targetLibraries.exists (target) && allowCreation) {
 			
 			targetLibraries.set (target, new Array <GenericActuator> ());
 			
@@ -111,7 +111,7 @@ class Actuate {
 			
 		} else {
 			
-			var library:Array <GenericActuator> = getLibrary (target);
+			var library:Array <GenericActuator> = getLibrary (target, false);
 			
 			for (actuator in library) {
 				
@@ -171,7 +171,7 @@ class Actuate {
 			
 		} else {
 			
-			var library:Array <GenericActuator> = getLibrary (target);
+			var library:Array <GenericActuator> = getLibrary (target, false);
 			
 			for (actuator in library) {
 				
@@ -216,32 +216,36 @@ class Actuate {
 				
 			} else {
 				
-				var library:Array <GenericActuator> = getLibrary (target);
+				var library:Array <GenericActuator> = getLibrary (target, false);
 				
-				if (Std.is (properties, String)) {
+				if (library != null) {
 					
-					var temp = { };
-					Reflect.setField (temp, properties, null);
-					properties = temp;
-					
-				} else if (Std.is (properties, Array)) {
-					
-					var temp = {};
-					
-					for (property in cast (properties, Array <Dynamic>)) {
+					if (Std.is (properties, String)) {
 						
-						Reflect.setField (temp, property, null);
+						var temp = { };
+						Reflect.setField (temp, properties, null);
+						properties = temp;
+						
+					} else if (Std.is (properties, Array)) {
+						
+						var temp = {};
+						
+						for (property in cast (properties, Array <Dynamic>)) {
+							
+							Reflect.setField (temp, property, null);
+							
+						}
+						
+						properties = temp;
 						
 					}
 					
-					properties = temp;
+					var i = library.length - 1;
+					while (i >= 0) {
+						library[i].stop (properties, complete, sendEvent);
+						i--;
+					}
 					
-				}
-				
-				var i = library.length - 1;
-				while (i >= 0) {
-					library[i].stop (properties, complete, sendEvent);
-					i--;
 				}
 				
 			}
