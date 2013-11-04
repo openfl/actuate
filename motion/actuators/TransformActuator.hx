@@ -56,6 +56,12 @@ class TransformActuator extends SimpleActuator {
 			initializeColor ();
 			
 		}
+
+		if (Reflect.hasField (properties, "redMultiplier") && Std.is (target, DisplayObject)) {
+			
+			initializeColorMultiply ();
+			
+		}
 		
 		if (Reflect.hasField (properties, "soundVolume") || Reflect.hasField (properties, "soundPan")) {
 			
@@ -114,6 +120,45 @@ class TransformActuator extends SimpleActuator {
 			endColorTransform.blueOffset = (color & 0xFF);
 			
 		}
+		
+		var propertyNames:Array <String> = [ "redMultiplier", "greenMultiplier", "blueMultiplier", "redOffset", "greenOffset", "blueOffset" ];
+		
+		if (Reflect.hasField (properties, "colorAlpha")) {
+			
+			endColorTransform.alphaMultiplier = properties.colorAlpha;
+			propertyNames.push ("alphaMultiplier");
+			
+		} else {
+			
+			endColorTransform.alphaMultiplier = getField (target, "alpha");
+			
+		}
+		
+		var transform:Transform = getField (target, "transform");
+		var begin:ColorTransform = getField (transform, "colorTransform");
+		tweenColorTransform = new ColorTransform ();
+		
+		var details:PropertyDetails;
+		var start:Float;
+		
+		for (propertyName in propertyNames) {
+			
+			start = getField (begin, propertyName);
+			details = new PropertyDetails (tweenColorTransform, propertyName, start, getField (endColorTransform, propertyName) - start);
+			propertyDetails.push (details);
+			
+		}
+		
+	}
+
+
+	private function initializeColorMultiply ():Void {
+		
+		endColorTransform = new ColorTransform ();
+		
+		endColorTransform.redMultiplier = properties.redMultiplier;
+		endColorTransform.greenMultiplier = properties.greenMultiplier;
+		endColorTransform.blueMultiplier = properties.blueMultiplier;
 		
 		var propertyNames:Array <String> = [ "redMultiplier", "greenMultiplier", "blueMultiplier", "redOffset", "greenOffset", "blueOffset" ];
 		
