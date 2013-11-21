@@ -106,13 +106,13 @@ class GenericActuator implements IGenericActuator {
 	
 	private inline function callMethod (method:Dynamic, params:Array<Dynamic> = null):Dynamic {
 		
-		#if neko
-		
 		if (params == null) {
 			
 			params = [];
 			
 		}
+		
+		#if neko
 		
 		var diff = untyped ($nargs)(method) - params.length;
 		
