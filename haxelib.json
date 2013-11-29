@@ -4,8 +4,8 @@
   "license": "MIT",
   "tags": [ "flash", "cpp", "neko", "js" ],
   "description": "Actuate is a fast and flexible tween library that uses a jQuery-style \"chaining\" syntax. It out-performs other libraries (such as TweenLite) and is easy to extend with custom actuators.",
-  "version": "1.7.0",
-  "releasenote": "Added rotation to MotionPath tweens",
+  "version": "1.7.1",
+  "releasenote": "Minor Actuate.pause/Actuate.resume fix",
   "contributors": [ "singmajesty" ],
   "dependencies": {}
 }

@@ -113,9 +113,13 @@ class Actuate {
 			
 			var library:Array <GenericActuator> = getLibrary (target, false);
 			
-			for (actuator in library) {
+			if (library != null) {
 				
-				actuator.pause ();
+				for (actuator in library) {
+					
+					actuator.pause ();
+					
+				}
 				
 			}
 			
@@ -173,9 +177,13 @@ class Actuate {
 			
 			var library:Array <GenericActuator> = getLibrary (target, false);
 			
-			for (actuator in library) {
+			if (library != null) {
 				
-				actuator.resume ();
+				for (actuator in library) {
+					
+					actuator.resume ();
+					
+				}
 				
 			}
 			
