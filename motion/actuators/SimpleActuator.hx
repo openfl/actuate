@@ -183,8 +183,12 @@ class SimpleActuator extends GenericActuator {
 			
 			#end
 			
-			details = new PropertyDetails (target, i, start, Reflect.field (properties, i) - start, isField);
-			propertyDetails.push (details);
+			if (Std.is (start, Float)) {
+				
+				details = new PropertyDetails (target, i, start, getField (properties, i) - start, isField);
+				propertyDetails.push (details);
+				
+			}
 			
 		}
 		
