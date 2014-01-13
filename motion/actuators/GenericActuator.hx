@@ -11,6 +11,7 @@ import motion.easing.IEasing;
 import motion.Actuate;
 
 
+@:keepSub
 class GenericActuator implements IGenericActuator {
 	
 	
@@ -103,20 +104,42 @@ class GenericActuator implements IGenericActuator {
 	}
 	
 	
+	private inline function callMethod (method:Dynamic, params:Array<Dynamic> = null):Dynamic {
+		
+		if (params == null) {
+			
+			params = [];
+			
+		}
+		
+		#if neko
+		
+		var diff = untyped ($nargs)(method) - params.length;
+		
+		if (diff > 0) {
+			
+			params = params.copy ();
+			
+			for (i in 0...diff) {
+				
+				params.push (null);
+				
+			}
+			
+		}
+		
+		#end
+		
+		return Reflect.callMethod (method, method, params);
+		
+	}
+	
+	
 	private function change ():Void {
 		
 		if (_onUpdate != null) {
 			
-			#if (neko && (haxe_209 || haxe3))
-			
-			var args = _onUpdateParams != null ? _onUpdateParams : [];
-			untyped __dollar__call (_onUpdate , _onUpdate, args.__neko ());
-			
-			#else
-			
-			Reflect.callMethod (_onUpdate, _onUpdate, _onUpdateParams);
-			
-			#end
+			callMethod (_onUpdate, _onUpdateParams);
 			
 		}
 		
@@ -131,16 +154,7 @@ class GenericActuator implements IGenericActuator {
 			
 			if (_onComplete != null) {
 				
-				#if (neko && (haxe_209 || haxe3))
-				
-				var args = _onCompleteParams != null ? _onCompleteParams : [];
-				untyped __dollar__call (_onComplete , _onComplete, args.__neko ());
-				
-				#else
-				
-				Reflect.callMethod (_onComplete, _onComplete, _onCompleteParams);
-				
-				#end
+				callMethod (_onComplete, _onCompleteParams);
 				
 			}
 			

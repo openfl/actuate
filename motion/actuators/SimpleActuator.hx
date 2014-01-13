@@ -99,7 +99,7 @@ class SimpleActuator extends GenericActuator {
 			
 			if (setVisible) {
 				
-				target.visible = cacheVisible;
+				setField (target, "visible", cacheVisible);
 				
 			}
 			
@@ -123,6 +123,37 @@ class SimpleActuator extends GenericActuator {
 	}
 	
 	
+	private inline function getField (target:Dynamic, propertyName:String):Dynamic {
+		
+		#if (haxe_209 || haxe3)
+		
+		var value = null;
+		
+		if (Reflect.hasField (target, propertyName)) {
+			
+			#if flash
+			value = untyped target[propertyName];
+			#else
+			value = Reflect.field (target, propertyName);
+			#end
+			
+		} else {
+			
+			value = Reflect.getProperty (target, propertyName);
+			
+		}
+		
+		return value;
+		
+		#else
+		
+		return Reflect.field (target, propertyName);
+		
+		#end
+		
+	}
+	
+	
 	private function initialize ():Void {
 		
 		var details:PropertyDetails;
@@ -134,7 +165,7 @@ class SimpleActuator extends GenericActuator {
 			
 			#if (haxe_209 || haxe3)
 			
-			if (#if flash false && #end Reflect.hasField (target, i)) {
+			if (Reflect.hasField (target, i)) {
 				
 				start = Reflect.field (target, i);
 				
@@ -150,8 +181,12 @@ class SimpleActuator extends GenericActuator {
 			
 			#end
 			
-			details = new PropertyDetails (target, i, start, Reflect.field (properties, i) - start, isField);
-			propertyDetails.push (details);
+			if (Std.is (start, Float)) {
+				
+				details = new PropertyDetails (target, i, start, getField (properties, i) - start, isField);
+				propertyDetails.push (details);
+				
+			}
 			
 		}
 		
@@ -169,11 +204,11 @@ class SimpleActuator extends GenericActuator {
 		toggleVisible = (Reflect.hasField (properties, "alpha") && Reflect.hasField (properties, "visible"));
 		#end
 		
-		if (toggleVisible && !target.visible && properties.alpha != 0) {
+		if (toggleVisible && properties.alpha != 0 && !getField (target, "visible")) {
 			
 			setVisible = true;
-			cacheVisible = target.visible;
-			target.visible = true;
+			cacheVisible = getField (target, "visible");
+			setField (target, "visible", true);
 			
 		}
 		
@@ -190,7 +225,17 @@ class SimpleActuator extends GenericActuator {
 	public override function onUpdate (handler:Dynamic, parameters:Array <Dynamic> = null):IGenericActuator {
 		
 		_onUpdate = handler;
-		_onUpdateParams = parameters;
+		
+		if (parameters == null) {
+			
+			_onUpdateParams = [];
+			
+		} else {
+			
+			_onUpdateParams = parameters;
+			
+		}
+		
 		sendChange = true;
 		
 		return this;
@@ -228,12 +273,41 @@ class SimpleActuator extends GenericActuator {
 	}
 	
 	
-	private inline function setField (details:PropertyDetails, value:Dynamic):Void {
+	private inline function setField (target:Dynamic, propertyName:String, value:Dynamic):Void {
+		
+		if (Reflect.hasField (target, propertyName)) {
+			
+			#if flash
+			untyped target[propertyName] = value;
+			#else
+			Reflect.setField (target, propertyName, value);
+			#end
+			
+		} else {
+			
+			#if (haxe_209 || haxe3)
+			Reflect.setProperty (target, propertyName, value);
+			#end
+			
+		}
+		
+	}
+	
+	
+	private inline function setProperty (details:PropertyDetails, value:Dynamic):Void {
+		
 		if (details.isField) {
+			
+			#if flash
+			untyped details.target[details.propertyName] = value;
+			#else
 			Reflect.setField (details.target, details.propertyName, value);
+			#end
+			
 		} else {
 			Reflect.setProperty (details.target, details.propertyName, value);
 		}
+		
 	}
 	
 	
@@ -309,7 +383,7 @@ class SimpleActuator extends GenericActuator {
 				for (i in 0...detailsLength) {
 					
 					details = propertyDetails[i];
-					setField (details, details.start + (details.change * easing));
+					setProperty (details, details.start + (details.change * easing));
 					
 				}
 				
@@ -355,11 +429,11 @@ class SimpleActuator extends GenericActuator {
 					
 					if (!_snapping) {
 						
-						setField (details, endValue);
+						setProperty (details, endValue);
 						
 					} else {
 						
-						setField (details, Math.round (endValue));
+						setProperty (details, Math.round (endValue));
 						
 					}
 					
@@ -373,9 +447,9 @@ class SimpleActuator extends GenericActuator {
 					
 					active = false;
 					
-					if (toggleVisible && target.alpha == 0) {
+					if (toggleVisible && getField (target, "alpha") == 0) {
 						
-						target.visible = false;
+						setField (target, "visible", false);
 						
 					}
 					
@@ -386,16 +460,7 @@ class SimpleActuator extends GenericActuator {
 					
 					if (_onRepeat != null) {
 						
-						#if (neko && (haxe_209 || haxe3))
-						
-						var args = _onRepeatParams != null ? _onRepeatParams : [];
-						untyped __dollar__call (_onRepeat , _onRepeat, args.__neko ());
-						
-						#else
-						
-						Reflect.callMethod (_onRepeat, _onRepeat, _onRepeatParams);
-						
-						#end
+						callMethod (_onRepeat, _onRepeatParams);
 						
 					}
 					

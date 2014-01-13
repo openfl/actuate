@@ -60,9 +60,9 @@ class FilterActuator extends SimpleActuator {
 			
 		}
 		
-		var filters:Array <BitmapFilter> = target.filters;
+		var filters:Array <BitmapFilter> = getField (target, "filters");
 		Reflect.setField (filters, properties.filter, filter);
-		target.filters = filters;
+		setField (target, "filters", filters);
 		
 	}
 	
@@ -76,7 +76,7 @@ class FilterActuator extends SimpleActuator {
 			
 			if (propertyName != "filter") {
 				
-				start = Reflect.field (filter, propertyName);
+				start = getField (filter, propertyName);
 				details = new PropertyDetails (filter, propertyName, start, Reflect.field (properties, propertyName) - start);
 				propertyDetails.push (details);
 				
@@ -114,7 +114,7 @@ class FilterActuator extends SimpleActuator {
 			
 		}
 		
-		target.filters = filters;
+		setField (target, "filters", filters);
 		
 	}
 	
