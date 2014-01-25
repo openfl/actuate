@@ -72,7 +72,7 @@ class SimpleActuator extends GenericActuator {
 			#if (flash || nme || openfl)
 			Lib.current.stage.addEventListener (Event.ENTER_FRAME, stage_onEnterFrame);
 			#else
-			timer = new Timer (1000 / 30);
+			timer = new Timer (Std.int(1000 / 60));
 			timer.run = stage_onEnterFrame;
 			#end
 			
