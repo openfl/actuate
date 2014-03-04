@@ -108,7 +108,7 @@ Calls a function when the tween is finished. You can also define parameters to b
 
 ### onRepeat
 
-	Actuate.tween (MySprite, 1, { alpha: 1 }).onComplete (trace, "Tween finished");
+	Actuate.tween (MySprite, 1, { alpha: 1 }).repeat().onRepeat (trace, ["Tween finished"]);
 
 Calls a function when the tween repeats. You can also define parameters to be used when calling the function
 
