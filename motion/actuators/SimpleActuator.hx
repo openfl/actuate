@@ -524,7 +524,7 @@ class SimpleActuator extends GenericActuator {
 			
 			actuator = actuators[j];
 			
-			if (actuator.active) {
+			if (actuator != null && actuator.active) {
 				
 				if (currentTime > actuator.timeOffset) {
 					
