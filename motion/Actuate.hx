@@ -330,6 +330,8 @@ class Actuate {
 						i--;
 					}
 					
+					library = getLibrary (actuator.target);
+					
 				}
 				
 				library.push (actuator);
