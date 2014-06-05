@@ -166,7 +166,7 @@ class SimpleActuator extends GenericActuator {
 			
 			#if (haxe_209 || haxe3)
 			
-			if (Reflect.hasField (target, i)) {
+			if (Reflect.hasField (target, i) #if flash && !target.hasOwnProperty ("set_" + i) #end) {
 				
 				start = Reflect.field (target, i);
 				
