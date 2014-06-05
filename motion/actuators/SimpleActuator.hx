@@ -47,7 +47,6 @@ class SimpleActuator extends GenericActuator {
 	
 	
 	public function new (target:Dynamic, duration:Float, properties:Dynamic) {
-		
 		active = true;
 		propertyDetails = new Array <PropertyDetails> ();
 		sendChange = false;
@@ -171,7 +170,6 @@ class SimpleActuator extends GenericActuator {
 				start = Reflect.field (target, i);
 				
 			} else {
-				
 				isField = false;
 				start = Reflect.getProperty (target, i);
 				
@@ -307,11 +305,7 @@ class SimpleActuator extends GenericActuator {
 			#end
 			
 		} else {
-			
-			#if (haxe_209 || haxe3)
 			Reflect.setProperty (details.target, details.propertyName, value);
-			#end
-			
 		}
 		
 	}
