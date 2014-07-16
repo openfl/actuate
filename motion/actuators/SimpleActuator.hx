@@ -549,8 +549,7 @@ class SimpleActuator extends GenericActuator {
 }
 
 
-#if (!nme && neko)
-
+#if (!nme && neko || !nme && cpp)
 
 // Custom haxe.Timer implementation for C++ and Neko
 
