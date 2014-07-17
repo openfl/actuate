@@ -28,6 +28,10 @@ class FilterActuator extends SimpleActuator {
 			
 			filterClass = properties.filter;
 			
+			if (target.filters.length == 0) {
+				target.filters = [Type.createInstance(filterClass, [])];
+			}
+			
 			for (filter in cast (target, DisplayObject).filters) {
 				
 				if (Std.is (filter, filterClass)) {
