@@ -276,7 +276,6 @@ class SimpleActuator extends GenericActuator {
 	
 	
 	private inline function setField (target:Dynamic, propertyName:String, value:Dynamic):Void {
-		
 		if (Reflect.hasField (target, propertyName)) {
 			
 			#if flash
@@ -297,23 +296,9 @@ class SimpleActuator extends GenericActuator {
 	
 	
 	private inline function setProperty (details:PropertyDetails, value:Dynamic):Void {
-		
-		if (details.isField) {
-			
-			#if flash
-			untyped details.target[details.propertyName] = value;
-			#else
-			Reflect.setField (details.target, details.propertyName, value);
-			#end
-			
-		} else {
-			
-			#if (haxe_209 || haxe3)
-			Reflect.setProperty (details.target, details.propertyName, value);
-			#end
-			
-		}
-		
+        #if (haxe_209 || haxe3)
+        Reflect.setProperty (details.target, details.propertyName, value);
+        #end
 	}
 	
 	
