@@ -247,13 +247,21 @@ class SimpleActuator extends GenericActuator {
 	
 	public override function pause ():Void {
 		
-		paused = true;
+		if (!paused)
+		{
+			paused = true;
 		
-		#if (flash || nme || openfl)
-		pauseTime = Lib.getTimer ();
-		#else
-		pauseTime = Timer.stamp ();
-		#end
+			super.pause();
+			
+			
+			
+			#if (flash || nme || openfl)
+			pauseTime = Lib.getTimer ();
+			#else
+			pauseTime = Timer.stamp ();
+			#end
+		}
+		
 		
 	}
 	
@@ -262,6 +270,7 @@ class SimpleActuator extends GenericActuator {
 		
 		if (paused) {
 			
+			
 			paused = false;
 			
 			#if (flash || nme || openfl)
@@ -269,6 +278,9 @@ class SimpleActuator extends GenericActuator {
 			#else
 			timeOffset += (Timer.stamp () - pauseTime) / 1000;
 			#end
+			
+			super.resume();
+			
 			
 		}
 		

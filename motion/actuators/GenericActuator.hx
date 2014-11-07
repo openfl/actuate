@@ -29,6 +29,10 @@ class GenericActuator implements IGenericActuator {
 	private var _onRepeatParams:Array <Dynamic>;
 	private var _onUpdate:Dynamic;
 	private var _onUpdateParams:Array <Dynamic>;
+	private var _onResume:Dynamic;
+	private var _onResumeParams:Array <Dynamic>;
+	private var _onPause:Dynamic;
+	private var _onPauseParams:Array <Dynamic>;
 	private var _reflect:Bool;
 	private var _repeat:Int;
 	private var _reverse:Bool;
@@ -280,10 +284,59 @@ class GenericActuator implements IGenericActuator {
 		
 	}
 	
+	/**
+	 * Defines a function which will be called when the tween is paused
+	 * @param	handler		The function you would like to be called
+	 * @param	parameters		Parameters you would like to pass to the handler function when it is called
+	 * @return		The current actuator instance
+	 */
+	public function onPause (handler:Dynamic, parameters:Array <Dynamic> = null):IGenericActuator {
+		
+		_onPause = handler;
+		
+		if (parameters == null) {
+			
+			_onPauseParams = [];
+			
+		} else {
+			
+			_onPauseParams = parameters;
+			
+		}
+		
+		return this;
+		
+	}
+	
+	/**
+	 * Defines a function which will be called when the tween resumed after pause
+	 * @param	handler		The function you would like to be called
+	 * @param	parameters		Parameters you would like to pass to the handler function when it is called
+	 * @return		The current actuator instance
+	 */
+	public function onResume (handler:Dynamic, parameters:Array <Dynamic> = null):IGenericActuator {
+		
+		_onResume = handler;
+		
+		if (parameters == null) {
+			
+			_onResumeParams = [];
+			
+		} else {
+			
+			_onResumeParams = parameters;
+			
+		}
+		
+		return this;
+		
+	}
+	
 	
 	public function pause ():Void {
 		
-		
+		if (_onPause != null)
+			callMethod(_onPause, _onPauseParams);
 		
 	}
 	
@@ -331,7 +384,8 @@ class GenericActuator implements IGenericActuator {
 	
 	public function resume ():Void {
 		
-		
+		if (_onResume != null)
+			callMethod(_onResume, _onResumeParams);
 		
 	}
 	
@@ -491,4 +545,19 @@ interface IGenericActuator {
 	 */
 	public function snapping (?value:Null<Bool>):IGenericActuator;
 	
+	/**
+	 * Defines a function which will be called when the tween is paused
+	 * @param	handler		The function you would like to be called
+	 * @param	parameters		Parameters you would like to pass to the handler function when it is called
+	 * @return		The current actuator instance
+	 */
+	public function onPause (handler:Dynamic, ?parameters:Array <Dynamic>):IGenericActuator;
+	
+	/**
+	 * Defines a function which will be called when the tween resumed after pause
+	 * @param	handler		The function you would like to be called
+	 * @param	parameters		Parameters you would like to pass to the handler function when it is called
+	 * @return		The current actuator instance
+	 */
+	public function onResume (handler:Dynamic, ?parameters:Array <Dynamic>):IGenericActuator;
 }
