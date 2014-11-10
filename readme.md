@@ -120,7 +120,7 @@ Calls a function when the tween is paused. You can also define parameters to be 
 
 ### onResume
 
-	Actuate.tween (MySprite, 1, { alpha: 1 }).repeat().onPause (trace, ["Tween resumed"]);
+	Actuate.tween (MySprite, 1, { alpha: 1 }).repeat().onResume (trace, ["Tween resumed"]);
 
 Calls a function when the tween is resumed after being paused. You can also define parameters to be used when calling the function
 
