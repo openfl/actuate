@@ -112,6 +112,18 @@ Calls a function when the tween is finished. You can also define parameters to b
 
 Calls a function when the tween repeats. You can also define parameters to be used when calling the function
 
+### onPause
+
+	Actuate.tween (MySprite, 1, { alpha: 1 }).repeat().onPause (trace, ["Tween paused"]);
+
+Calls a function when the tween is paused. You can also define parameters to be used when calling the function
+
+### onResume
+
+	Actuate.tween (MySprite, 1, { alpha: 1 }).repeat().onPause (trace, ["Tween resumed"]);
+
+Calls a function when the tween is resumed after being paused. You can also define parameters to be used when calling the function
+
 ### onUpdate
 
 	Actuate.tween (MySprite, 1, { alpha: 1 }).onUpdate (trace, "Tween updated");
