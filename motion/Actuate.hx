@@ -69,7 +69,14 @@ class Actuate {
 	
 	#end
 	
-	
+	public static function isRunning():Bool {
+		var result:Bool = false;
+		for (library in targetLibraries) {
+			result = true;
+			break;
+		}
+		return result;
+	}
 	private static function getLibrary (target:Dynamic, allowCreation:Bool = true):Array <GenericActuator> {
 		
 		if (!targetLibraries.exists (target) && allowCreation) {
