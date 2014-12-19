@@ -22,6 +22,9 @@ import haxe.Timer;
  */
 class SimpleActuator extends GenericActuator {
 	
+	#if actuate_manual_time
+	public static var getTime:Void->Float;
+	#end
 	
 	private var timeOffset:Float;
 	
@@ -57,10 +60,14 @@ class SimpleActuator extends GenericActuator {
 		setVisible = false;
 		toggleVisible = false;
 		
-		#if (flash || nme || openfl)
-		startTime = Lib.getTimer () / 1000;
+		#if !actuate_manual_time
+			#if (flash || nme || openfl)
+			startTime = Lib.getTimer () / 1000;
+			#else
+			startTime = Timer.stamp ();
+			#end
 		#else
-		startTime = Timer.stamp ();
+		startTime = getTime();
 		#end
 		
 		super (target, duration, properties);
@@ -68,14 +75,14 @@ class SimpleActuator extends GenericActuator {
 		if (!addedEvent) {
 			
 			addedEvent = true;
-			
-			#if (flash || nme || openfl)
-			Lib.current.stage.addEventListener (Event.ENTER_FRAME, stage_onEnterFrame);
-			#else
-			timer = new Timer (Std.int(1000 / 30));
-			timer.run = stage_onEnterFrame;
+			#if !actuate_manual_update
+				#if (flash || nme || openfl)
+				Lib.current.stage.addEventListener (Event.ENTER_FRAME, stage_onEnterFrame);
+				#else
+				timer = new Timer (Std.int(1000 / 30));
+				timer.run = stage_onEnterFrame;
+				#end			
 			#end
-			
 		}
 		
 	}
@@ -254,11 +261,14 @@ class SimpleActuator extends GenericActuator {
 			super.pause();
 			
 			
-			
-			#if (flash || nme || openfl)
-			pauseTime = Lib.getTimer ();
+			#if !actuate_manual_time
+				#if (flash || nme || openfl)
+				pauseTime = Lib.getTimer ();
+				#else
+				pauseTime = Timer.stamp ();
+				#end
 			#else
-			pauseTime = Timer.stamp ();
+			pauseTime = getTime();
 			#end
 		}
 		
@@ -273,10 +283,14 @@ class SimpleActuator extends GenericActuator {
 			
 			paused = false;
 			
-			#if (flash || nme || openfl)
-			timeOffset += (Lib.getTimer () - pauseTime) / 1000;
+			#if !actuate_manual_time
+				#if (flash || nme || openfl)
+				timeOffset += (Lib.getTimer () - pauseTime) / 1000;
+				#else
+				timeOffset += (Timer.stamp () - pauseTime) / 1000;
+				#end
 			#else
-			timeOffset += (Timer.stamp () - pauseTime) / 1000;
+			timeOffset += (getTime() - pauseTime) / 1000;
 			#end
 			
 			super.resume();
@@ -517,16 +531,22 @@ class SimpleActuator extends GenericActuator {
 	// Event Handlers
 	
 	
-	
-	
-	private static function stage_onEnterFrame (#if (flash || nme || openfl) event:Event #end):Void {
-		
-		#if (flash || nme || openfl)
-		var currentTime:Float = Lib.getTimer () / 1000;
+	#if actuate_manual_update 
+	public 
+	#else 
+	private 
+	#end
+	static function stage_onEnterFrame (#if (flash || nme || openfl) event:Event #end):Void {
+		#if !actuate_manual_time
+			#if (flash || nme || openfl)
+			var currentTime:Float = Lib.getTimer () / 1000;
+			#else
+			var currentTime = Timer.stamp ();
+			#end
 		#else
-		var currentTime = Timer.stamp ();
+			var currentTime = getTime();
 		#end
-		
+
 		var actuator:SimpleActuator;
 		
 		var j:Int = 0;
