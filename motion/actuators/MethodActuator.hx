@@ -33,10 +33,10 @@ class MethodActuator extends SimpleActuator {
 		
 		for (i in 0...this.properties.start.length) {
 			
-			currentParameters.push (null);
+			currentParameters.push (this.properties.start[i]);
 			
 		}
-		
+
 	}
 	
 	
@@ -49,13 +49,17 @@ class MethodActuator extends SimpleActuator {
 	
 	private override function complete (sendEvent:Bool = true):Void {
 		
-		for (i in 0...properties.start.length) {
+		if (initialized)
+		{
+			for (i in 0...properties.start.length) {
 			
-			currentParameters[i] = Reflect.field (tweenProperties, "param" + i);
+				currentParameters[i] = Reflect.field (tweenProperties, "param" + i);
 			
+			}
+		
+			callMethod (target, currentParameters);
 		}
 		
-		callMethod (target, currentParameters);
 		
 		super.complete (sendEvent);
 		
