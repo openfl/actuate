@@ -395,7 +395,7 @@ class Actuate {
 	 * @return		The current actuator instance, which can be used to apply properties like ease, delay, onComplete or onUpdate
 	 */
 	public static function update (target:Dynamic, duration:Float, start:Array <Dynamic> = null, end:Array <Dynamic> = null, overwrite:Bool = true):IGenericActuator {
-		
+				
 		var properties:Dynamic = { start: start, end: end };
 		
 		return tween (target, duration, properties, overwrite, MethodActuator);

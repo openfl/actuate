@@ -198,6 +198,12 @@ class MotionPathActuator extends SimpleActuator {
 					
 				} else {
 					
+					if (_onRepeat != null) {
+						
+						callMethod (_onRepeat, _onRepeatParams);
+						
+					}
+					
 					if (_reflect) {
 						
 						_reverse = !_reverse;
