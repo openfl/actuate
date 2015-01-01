@@ -6,11 +6,7 @@ import flash.display.DisplayObject;
 import flash.filters.BitmapFilter;
 
 
-/**
- * @author Joshua Granick
- * @version 1.2
- */
-class FilterActuator extends SimpleActuator {
+class FilterActuator extends SimpleActuator<DisplayObject, BitmapFilter> {
 	
 	
 	private var filter:BitmapFilter;
@@ -18,7 +14,7 @@ class FilterActuator extends SimpleActuator {
 	private var filterIndex:Int;
 	
 	
-	public function new (target:Dynamic, duration:Float, properties:Dynamic) {
+	public function new (target:DisplayObject, duration:Float, properties:Dynamic) {
 		
 		filterIndex = -1;
 		
@@ -32,7 +28,7 @@ class FilterActuator extends SimpleActuator {
 				target.filters = [Type.createInstance(filterClass, [])];
 			}
 			
-			for (filter in cast (target, DisplayObject).filters) {
+			for (filter in target.filters) {
 				
 				if (Std.is (filter, filterClass)) {
 					
@@ -45,14 +41,14 @@ class FilterActuator extends SimpleActuator {
 		} else {
 			
 			filterIndex = properties.filter;
-			this.filter = cast (target, DisplayObject).filters [filterIndex];
+			this.filter = target.filters [filterIndex];
 			
 		}
 		
 	}
 	
 	
-	public override function apply ():Void {
+	private override function apply ():Void {
 		
 		for (propertyName in Reflect.fields (properties)) {
 			
@@ -73,7 +69,7 @@ class FilterActuator extends SimpleActuator {
 	
 	private override function initialize ():Void {
 		
-		var details:PropertyDetails;
+		var details:PropertyDetails<BitmapFilter>;
 		var start:Float;
 		
 		for (propertyName in Reflect.fields (properties)) {
@@ -98,7 +94,7 @@ class FilterActuator extends SimpleActuator {
 		
 		super.update (currentTime);
 		
-		var filters:Array <Dynamic> = cast (target, DisplayObject).filters;
+		var filters = target.filters;
 		
 		if (filterIndex > -1) {
 			

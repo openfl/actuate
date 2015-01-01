@@ -2,7 +2,6 @@
 
 
 import motion.actuators.GenericActuator;
-
 #if (flash || nme || openfl)
 import flash.display.DisplayObject;
 import flash.events.Event;
@@ -16,11 +15,8 @@ import haxe.Timer;
 #end
 
 
-/**
- * @author Joshua Granick
- * @version 1.2
- */
-class SimpleActuator extends GenericActuator {
+class SimpleActuator<T, U> extends GenericActuator<T> {
+	
 	
 	#if actuate_manual_time
 	public static var getTime:Void->Float;
@@ -28,9 +24,9 @@ class SimpleActuator extends GenericActuator {
 	
 	private var timeOffset:Float;
 	
-	private static var actuators:Array <SimpleActuator> = new Array <SimpleActuator> ();
-	private static var actuatorsLength:Int = 0;
-	private static var addedEvent:Bool = false;
+	private static var actuators = new Array<SimpleActuator<Dynamic, Dynamic>> ();
+	private static var actuatorsLength = 0;
+	private static var addedEvent = false;
 	
 	#if (!flash && !nme && !openfl)
 	private static var timer:Timer;
@@ -42,17 +38,17 @@ class SimpleActuator extends GenericActuator {
 	private var initialized:Bool;
 	private var paused:Bool;
 	private var pauseTime:Float;
-	private var propertyDetails:Array <PropertyDetails>;
+	private var propertyDetails:Array <PropertyDetails<U>>;
 	private var sendChange:Bool;
 	private var setVisible:Bool;
 	private var startTime:Float;
 	private var toggleVisible:Bool;
 	
 	
-	public function new (target:Dynamic, duration:Float, properties:Dynamic) {
+	public function new (target:T, duration:Float, properties:Dynamic) {
 		
 		active = true;
-		propertyDetails = new Array <PropertyDetails> ();
+		propertyDetails = new Array ();
 		sendChange = false;
 		paused = false;
 		cacheVisible = false;
@@ -91,7 +87,7 @@ class SimpleActuator extends GenericActuator {
 	/**
 	 * @inheritDoc
 	 */
-	public override function autoVisible (?value:Null<Bool>):IGenericActuator {
+	public override function autoVisible (?value:Null<Bool>):GenericActuator<T> {
 		
 		if (value == null) {
 			
@@ -121,7 +117,7 @@ class SimpleActuator extends GenericActuator {
 	/**
 	 * @inheritDoc
 	 */
-	public override function delay (duration:Float):IGenericActuator {
+	public override function delay (duration:Float):GenericActuator<T> {
 		
 		_delay = duration;
 		timeOffset = startTime + duration;
@@ -131,7 +127,7 @@ class SimpleActuator extends GenericActuator {
 	}
 	
 	
-	private inline function getField (target:Dynamic, propertyName:String):Dynamic {
+	private inline function getField<V> (target:V, propertyName:String):Dynamic {
 		
 		#if (haxe_209 || haxe3)
 		
@@ -164,7 +160,7 @@ class SimpleActuator extends GenericActuator {
 	
 	private function initialize ():Void {
 		
-		var details:PropertyDetails;
+		var details:PropertyDetails<U>;
 		var start:Float;
 		
 		for (i in Reflect.fields (properties)) {
@@ -173,7 +169,7 @@ class SimpleActuator extends GenericActuator {
 			
 			#if (haxe_209 || haxe3)
 			
-			if (Reflect.hasField (target, i) #if flash && !target.hasOwnProperty ("set_" + i) #elseif html5 && (!target.__properties__ || untyped !target.__properties__["set_" + i]) #end) {
+			if (Reflect.hasField (target, i) #if flash && !untyped (target).hasOwnProperty ("set_" + i) #elseif html5 && (!untyped (target).__properties__ || !untyped (target).__properties__["set_" + i]) #end) {
 				
 				start = Reflect.field (target, i);
 				
@@ -192,7 +188,7 @@ class SimpleActuator extends GenericActuator {
 			
 			if (Std.is (start, Float)) {
 				
-				details = new PropertyDetails (target, i, start, getField (properties, i) - start, isField);
+				details = new PropertyDetails (cast target, i, start, getField (properties, i) - start, isField);
 				propertyDetails.push (details);
 				
 			}
@@ -205,7 +201,7 @@ class SimpleActuator extends GenericActuator {
 	}
 	
 	
-	public override function move ():Void {
+	private override function move ():Void {
 		
 		#if (flash || nme || openfl)
 		toggleVisible = (Reflect.hasField (properties, "alpha") && Std.is (target, DisplayObject));
@@ -231,7 +227,7 @@ class SimpleActuator extends GenericActuator {
 	/**
 	 * @inheritDoc
 	 */
-	public override function onUpdate (handler:Dynamic, parameters:Array <Dynamic> = null):IGenericActuator {
+	public override function onUpdate (handler:Dynamic, parameters:Array <Dynamic> = null):GenericActuator<T> {
 		
 		_onUpdate = handler;
 		
@@ -252,7 +248,7 @@ class SimpleActuator extends GenericActuator {
 	}
 	
 	
-	public override function pause ():Void {
+	private override function pause ():Void {
 		
 		if (!paused)
 		{
@@ -276,7 +272,7 @@ class SimpleActuator extends GenericActuator {
 	}
 	
 	
-	public override function resume ():Void {
+	private override function resume ():Void {
 		
 		if (paused) {
 			
@@ -301,7 +297,7 @@ class SimpleActuator extends GenericActuator {
 	}
 	
 	
-	private inline function setField (target:Dynamic, propertyName:String, value:Dynamic):Void {
+	@:generic private inline function setField<V> (target:V, propertyName:String, value:Dynamic):Void {
 		
 		if (Reflect.hasField (target, propertyName)) {
 			
@@ -322,7 +318,7 @@ class SimpleActuator extends GenericActuator {
 	}
 	
 	
-	private inline function setProperty (details:PropertyDetails, value:Dynamic):Void {
+	private inline function setProperty (details:PropertyDetails<U>, value:Dynamic):Void {
 		
 		if (details.isField) {
 			
@@ -343,7 +339,7 @@ class SimpleActuator extends GenericActuator {
 	}
 	
 	
-	public override function stop (properties:Dynamic, complete:Bool, sendEvent:Bool):Void {
+	private override function stop (properties:Dynamic, complete:Bool, sendEvent:Bool):Void {
 		
 		if (active) {
 			
@@ -390,7 +386,7 @@ class SimpleActuator extends GenericActuator {
 		
 		if (!paused) {
 			
-			var details:PropertyDetails;
+			var details:PropertyDetails<U>;
 			var easing:Float;
 			var i:Int;
 			
@@ -547,7 +543,7 @@ class SimpleActuator extends GenericActuator {
 			var currentTime = getTime();
 		#end
 
-		var actuator:SimpleActuator;
+		var actuator:SimpleActuator<Dynamic, Dynamic>;
 		
 		var j:Int = 0;
 		var cleanup = false;

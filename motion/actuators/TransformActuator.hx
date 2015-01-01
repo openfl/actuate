@@ -9,11 +9,7 @@ import flash.geom.Transform;
 import flash.media.SoundTransform;
 
 
-/**
- * @author Joshua Granick
- * @version 1.2
- */
-class TransformActuator extends SimpleActuator {
+class TransformActuator<T> extends SimpleActuator<T, Dynamic> {
 	
 	
 	private var endColorTransform:ColorTransform;
@@ -22,14 +18,14 @@ class TransformActuator extends SimpleActuator {
 	private var tweenSoundTransform:SoundTransform;
 	
 	
-	public function new (target:Dynamic, duration:Float, properties:Dynamic) {
+	public function new (target:T, duration:Float, properties:Dynamic) {
 		
 		super (target, duration, properties);
 		
 	}
 	
 	
-	public override function apply ():Void {
+	private override function apply ():Void {
 		
 		initialize ();
 		
@@ -132,7 +128,7 @@ class TransformActuator extends SimpleActuator {
 		var begin:ColorTransform = getField (transform, "colorTransform");
 		tweenColorTransform = new ColorTransform ();
 		
-		var details:PropertyDetails;
+		var details:PropertyDetails<Dynamic>;
 		var start:Float;
 		
 		for (propertyName in propertyNames) {
