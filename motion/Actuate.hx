@@ -162,7 +162,7 @@ class Actuate {
 			
 		}
 		
-		targetLibraries = new ObjectMap<Array<IGenericActuator>> ();
+		targetLibraries = new ObjectMap<Dynamic, Array<IGenericActuator>> ();
 		
 	}
 	
