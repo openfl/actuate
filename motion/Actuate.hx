@@ -495,6 +495,29 @@ private class TransformOptions {
 
 
 	/**
+	 * Creates a new ColorTransform tween
+	 * @param	r		The r color value
+	 * @param	g		The g color value
+	 * @param	b		The b color value
+	 * @param	alpha		The end alpha of the target. If you wish to tween alpha and tint simultaneously, you must do them both as part of the ColorTransform. A value of null will make no change to the alpha of the object (Default is null)
+	 * @return		The current actuator instance, which can be used to apply properties like ease, delay, onComplete or onUpdate
+	 */
+	public function multiplyColor (r:Float, g:Float, b:Float, alpha:Null <Float> = null):IGenericActuator {
+		
+		var properties:Dynamic = { redMultiplier: r, greenMultiplier: g, blueMultiplier: b };
+		
+		if (alpha != null) {
+			
+			properties.colorAlpha = alpha;
+			
+		}
+		
+		return Actuate.tween (target, duration, properties, overwrite, TransformActuator);
+		
+	}
+
+
+	/**
 	 * Creates a new SoundTransform tween
 	 * @param	volume		The end volume for the target, or null if you would like to ignore this property (Default is null)
 	 * @param	pan		The end pan for the target, or null if you would like to ignore this property (Default is null)
