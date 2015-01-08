@@ -1,18 +1,14 @@
 ﻿package motion.actuators;
 
 
-/**
- * @author Joshua Granick
- * @version 1.2
- */
-class MethodActuator extends SimpleActuator {
+class MethodActuator<T> extends SimpleActuator<T, T> {
 	
 	
 	private var currentParameters:Array <Dynamic>;
 	private var tweenProperties:Dynamic;
 	
 	
-	public function new (target:Dynamic, duration:Float, properties:Dynamic) {
+	public function new (target:T, duration:Float, properties:Dynamic) {
 		
 		currentParameters = new Array <Dynamic> ();
 		tweenProperties = { };
@@ -33,14 +29,14 @@ class MethodActuator extends SimpleActuator {
 		
 		for (i in 0...this.properties.start.length) {
 			
-			currentParameters.push (null);
+			currentParameters.push (this.properties.start[i]);
 			
 		}
 		
 	}
 	
 	
-	public override function apply ():Void {
+	private override function apply ():Void {
 		
 		callMethod (target, properties.end);
 		
@@ -49,13 +45,18 @@ class MethodActuator extends SimpleActuator {
 	
 	private override function complete (sendEvent:Bool = true):Void {
 		
-		for (i in 0...properties.start.length) {
+		if (initialized) {
 			
-			currentParameters[i] = Reflect.field (tweenProperties, "param" + i);
+			for (i in 0...properties.start.length) {
+				
+				currentParameters[i] = Reflect.field (tweenProperties, "param" + i);
+				
+			}
+			
+			callMethod (target, currentParameters);
 			
 		}
 		
-		callMethod (target, currentParameters);
 		
 		super.complete (sendEvent);
 		
@@ -64,7 +65,7 @@ class MethodActuator extends SimpleActuator {
 	
 	private override function initialize ():Void {
 		
-		var details:PropertyDetails;
+		var details:PropertyDetails<T>;
 		var propertyName:String;
 		var start:Dynamic;
 		

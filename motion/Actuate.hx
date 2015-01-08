@@ -4,8 +4,10 @@
 package motion;
 
 
+import haxe.ds.ObjectMap;
 import motion.actuators.FilterActuator;
 import motion.actuators.GenericActuator;
+import motion.actuators.IGenericActuator;
 import motion.actuators.MethodActuator;
 import motion.actuators.MotionPathActuator;
 import motion.actuators.SimpleActuator;
@@ -17,13 +19,17 @@ import motion.easing.IEasing;
 import flash.display.DisplayObject;
 #end
 
+@:access(motion.actuators)
+
 
 class Actuate {
 	
 	
 	public static var defaultActuator:Class <GenericActuator> = SimpleActuator;
+	public static var defaultActuator:Class<IGenericActuator> = SimpleActuator;
 	public static var defaultEase:IEasing = Expo.easeOut;
 	private static var targetLibraries:ObjectHash <Array <GenericActuator>> = new ObjectHash <Array <GenericActuator>> ();
+	private static var targetLibraries = new ObjectMap<Dynamic, Array<IGenericActuator>> ();
 	
 	
 	/**
@@ -35,23 +41,33 @@ class Actuate {
 	 * @return		The current actuator instance, which can be used to apply properties like onComplete or onUpdate handlers
 	 */
 	public static function apply (target:Dynamic, properties:Dynamic, customActuator:Class <GenericActuator> = null):IGenericActuator {
+	@:generic public static function apply<T> (target:T, properties:Dynamic, customActuator:Class<GenericActuator<T>> = null):GenericActuator<T> {
 		
 		stop (target, properties);
 		
 		if (customActuator == null) {
 			
 			customActuator = defaultActuator;
+			customActuator = cast defaultActuator;
 			
 		}
 		
 		var actuator = Type.createInstance (customActuator, [ target, 0, properties ]);
+		var actuator:GenericActuator<T> = Type.createInstance (customActuator, [ target, 0, properties ]);
 		actuator.apply ();
 		
 		return actuator;
 		
 	}
 	
-	
+	public static function isRunning():Bool {
+		var result:Bool = false;
+		for (library in targetLibraries) {
+			result = true;
+			break;
+		}
+		return result;
+	}
 	#if (flash || nme || openfl)
 	
 	/**
@@ -69,19 +85,14 @@ class Actuate {
 	
 	#end
 	
-	public static function isRunning():Bool {
-		var result:Bool = false;
-		for (library in targetLibraries) {
-			result = true;
-			break;
-		}
-		return result;
-	}
+	
 	private static function getLibrary (target:Dynamic, allowCreation:Bool = true):Array <GenericActuator> {
+	private static function getLibrary<T> (target:T, allowCreation:Bool = true):Array<IGenericActuator> {
 		
 		if (!targetLibraries.exists (target) && allowCreation) {
 			
 			targetLibraries.set (target, new Array <GenericActuator> ());
+			targetLibraries.set (target, new Array<IGenericActuator> ());
 			
 		}
 		
@@ -99,6 +110,7 @@ class Actuate {
 	 * @return		The current actuator instance, which can be used to apply properties like ease, delay, onComplete or onUpdate
 	 */
 	public static function motionPath (target:Dynamic, duration:Float, properties:Dynamic, overwrite:Bool = true):IGenericActuator {
+	@:generic public static function motionPath<T> (target:T, duration:Float, properties:Dynamic, overwrite:Bool = true):GenericActuator<T> {
 		
 		return tween (target, duration, properties, overwrite, MotionPathActuator);
 		
@@ -111,14 +123,20 @@ class Actuate {
 	 */
 	//public static function pause (... targets:Array):void {
 	public static function pause (target:Dynamic):Void {
+	//@:generic public static function pause (... targets:Array):void {
+	@:generic public static function pause<T> (target:T):Void {
 		
 		if (Std.is (target, GenericActuator)) {
+		if (Std.is (target, IGenericActuator)) {
 			
 			cast (target, GenericActuator).pause ();
+			var actuator:IGenericActuator = cast target;
+			actuator.pause ();
 			
 		} else {
 			
 			var library:Array <GenericActuator> = getLibrary (target, false);
+			var library = getLibrary (target, false);
 			
 			if (library != null) {
 				
@@ -158,14 +176,18 @@ class Actuate {
 		for (library in targetLibraries) {
 			
 			var i = library.length - 1;
+			
 			while (i >= 0) {
+				
 				library[i].stop (null, false, false);
 				i--;
+				
 			}
 			
 		}
 		
 		targetLibraries = new ObjectHash <Array <GenericActuator>> ();
+		targetLibraries = new ObjectMap<Dynamic, Array<IGenericActuator>> ();
 		
 	}
 	
@@ -175,14 +197,19 @@ class Actuate {
 	 * @param	... targets		The target objects which will have their tweens resumed. Passing no value resumes tweens for all objects
 	 */
 	public static function resume (target:Dynamic):Void {
+	@:generic public static function resume<T> (target:T):Void {
 		
 		if (Std.is (target, GenericActuator)) {
+		if (Std.is (target, IGenericActuator)) {
 			
 			cast (target, GenericActuator).resume ();
+			var actuator:IGenericActuator = cast target;
+			actuator.resume ();
 			
 		} else {
 			
 			var library:Array <GenericActuator> = getLibrary (target, false);
+			var library = getLibrary (target, false);
 			
 			if (library != null) {
 				
@@ -222,16 +249,21 @@ class Actuate {
 	 * @param	sendEvent	If a complete() event should be dispatched for the specified target. Default is true (Optional)
 	 */
 	public static function stop (target:Dynamic, properties:Dynamic = null, complete:Bool = false, sendEvent:Bool = true):Void {
+	@:generic public static function stop<T> (target:T, properties:Dynamic = null, complete:Bool = false, sendEvent:Bool = true):Void {
 		
 		if (target != null) {
 			
 			if (Std.is (target, GenericActuator)) {
+			if (Std.is (target, IGenericActuator)) {
 				
 				cast (target, GenericActuator).stop (null, complete, sendEvent);
+				var actuator:IGenericActuator = cast target;
+				actuator.stop (null, complete, sendEvent);
 				
 			} else {
 				
 				var library:Array <GenericActuator> = getLibrary (target, false);
+				var library = getLibrary (target, false);
 				
 				if (library != null) {
 					
@@ -256,9 +288,12 @@ class Actuate {
 					}
 					
 					var i = library.length - 1;
+					
 					while (i >= 0) {
+						
 						library[i].stop (properties, complete, sendEvent);
 						i--;
+						
 					}
 					
 				}
@@ -278,8 +313,10 @@ class Actuate {
 	 * @return		The current actuator instance, which can be used to apply properties like onComplete or to gain a reference to the target timer object
 	 */
 	public static function timer (duration:Float, customActuator:Class <GenericActuator> = null):IGenericActuator {
+	public static function timer (duration:Float, customActuator:Class<GenericActuator<TweenTimer>> = null):GenericActuator<TweenTimer> {
 		
 		return tween (new TweenTimer (0), duration, new TweenTimer (1), false, customActuator);
+		return cast tween (new TweenTimer (0), duration, new TweenTimer (1), false, cast customActuator);
 		
 	}
 	
@@ -295,6 +332,7 @@ class Actuate {
 	 * @return		A TransformOptions instance, which is used to select the kind of transform you would like to apply to the target
 	 */
 	public static function transform (target:Dynamic, duration:Float = 0, overwrite:Bool = true):TransformOptions {
+	@:generic public static function transform<T> (target:T, duration:Float = 0, overwrite:Bool = true):TransformOptions<T> {
 		
 		return new TransformOptions (target, duration, overwrite);
 		
@@ -314,6 +352,7 @@ class Actuate {
 	 * @return		The current actuator instance, which can be used to apply properties like ease, delay, onComplete or onUpdate
 	 */ 
 	public static function tween (target:Dynamic, duration:Float, properties:Dynamic, overwrite:Bool = true, customActuator:Class <GenericActuator> = null):IGenericActuator {
+	@:generic public static function tween<T> (target:T, duration:Float, properties:Dynamic, overwrite:Bool = true, customActuator:Class<GenericActuator<T>> = null):GenericActuator<T> {
 		
 		if (target != null) {
 			
@@ -322,10 +361,12 @@ class Actuate {
 				if (customActuator == null) {
 					
 					customActuator = defaultActuator;
+					customActuator = cast defaultActuator;
 					
 				}
 				
 				var actuator = Type.createInstance (customActuator, [ target, duration, properties ]);
+				var actuator:GenericActuator<T> = Type.createInstance (customActuator, [ target, duration, properties ]);
 				var library = getLibrary (actuator.target);
 				
 				if (overwrite) {
@@ -373,6 +414,7 @@ class Actuate {
 	
 	
 	public static function unload (actuator:GenericActuator):Void {
+	@:generic public static function unload<T> (actuator:GenericActuator<T>):Void {
 		
 		var target = actuator.target;
 		
@@ -403,6 +445,8 @@ class Actuate {
 	 */
 	public static function update (target:Dynamic, duration:Float, start:Array <Dynamic> = null, end:Array <Dynamic> = null, overwrite:Bool = true):IGenericActuator {
 		
+	@:generic public static function update<T> (target:T, duration:Float, start:Array <Dynamic> = null, end:Array <Dynamic> = null, overwrite:Bool = true):GenericActuator<T> {
+				
 		var properties:Dynamic = { start: start, end: end };
 		
 		return tween (target, duration, properties, overwrite, MethodActuator);
@@ -463,14 +507,17 @@ private class EffectsOptions {
 
 
 private class TransformOptions {
+private class TransformOptions<T> {
 
 
 	private var duration:Float;
 	private var overwrite:Bool;
 	private var target:Dynamic;
+	private var target:T;
 
 
 	public function new (target:Dynamic, duration:Float, overwrite:Bool) {
+	public function new (target:T, duration:Float, overwrite:Bool) {
 		
 		this.target = target;
 		this.duration = duration;
@@ -708,3 +755,4 @@ private class ObjectHash <T> {
 #else
 typedef ObjectHash<T> = haxe.ds.ObjectMap<Dynamic, T>;
 #end
+}
