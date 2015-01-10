@@ -1,3 +1,5 @@
+[![Haxelib Version](https://img.shields.io/github/tag/openfl/actuate.svg?style=flat&label=release)](http://lib.haxe.org/p/actuate)
+
 # Actuate
 
 Actuate is the best library for animating Haxe projects. Power through your everyday needs using no-nonsense, lightweight tweens, then extend when you need more, through the swappable custom actuator system
