@@ -1,4 +1,4 @@
-[![Haxelib Version](https://img.shields.io/github/tag/openfl/actuate.svg?style=flat&label=release)](http://lib.haxe.org/p/actuate)
+[![Haxelib Version](https://img.shields.io/github/tag/openfl/actuate.svg?style=flat&label=haxelib)](http://lib.haxe.org/p/actuate)
 
 # Actuate
 
