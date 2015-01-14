@@ -34,7 +34,7 @@ class Actuate {
 	 * @param	customActuator		A custom actuator to use instead of the default (Optional)
 	 * @return		The current actuator instance, which can be used to apply properties like onComplete or onUpdate handlers
 	 */
-	@:generic public static function apply<T> (target:T, properties:Dynamic, customActuator:Class<GenericActuator<T>> = null):GenericActuator<T> {
+	/*@:generic*/ public static function apply<T> (target:T, properties:Dynamic, customActuator:Class<GenericActuator<T>> = null):GenericActuator<T> {
 		
 		stop (target, properties);
 		
@@ -91,7 +91,7 @@ class Actuate {
 	 * @param	overwrite		Sets whether previous tweens for the same target and properties will be overwritten (Default is true)
 	 * @return		The current actuator instance, which can be used to apply properties like ease, delay, onComplete or onUpdate
 	 */
-	@:generic public static function motionPath<T> (target:T, duration:Float, properties:Dynamic, overwrite:Bool = true):GenericActuator<T> {
+	/*@:generic*/ public static function motionPath<T> (target:T, duration:Float, properties:Dynamic, overwrite:Bool = true):GenericActuator<T> {
 		
 		return tween (target, duration, properties, overwrite, MotionPathActuator);
 		
@@ -102,8 +102,8 @@ class Actuate {
 	 * Pauses tweens for the specified target objects
 	 * @param	... targets		The target objects which will have their tweens paused. Passing no value pauses tweens for all objects
 	 */
-	//@:generic public static function pause (... targets:Array):void {
-	@:generic public static function pause<T> (target:T):Void {
+	///*@:generic*/ public static function pause (... targets:Array):void {
+	/*@:generic*/ public static function pause<T> (target:T):Void {
 		
 		if (Std.is (target, IGenericActuator)) {
 			
@@ -171,7 +171,7 @@ class Actuate {
 	 * Resumes paused tweens for the specified target objects
 	 * @param	... targets		The target objects which will have their tweens resumed. Passing no value resumes tweens for all objects
 	 */
-	@:generic public static function resume<T> (target:T):Void {
+	/*@:generic*/ public static function resume<T> (target:T):Void {
 		
 		if (Std.is (target, IGenericActuator)) {
 			
@@ -219,7 +219,7 @@ class Actuate {
 	 * @param	complete		If tweens should apply their final target values before stopping. Default is false (Optional) 
 	 * @param	sendEvent	If a complete() event should be dispatched for the specified target. Default is true (Optional)
 	 */
-	@:generic public static function stop<T> (target:T, properties:Dynamic = null, complete:Bool = false, sendEvent:Bool = true):Void {
+	/*@:generic*/ public static function stop<T> (target:T, properties:Dynamic = null, complete:Bool = false, sendEvent:Bool = true):Void {
 		
 		if (target != null) {
 			
@@ -296,7 +296,7 @@ class Actuate {
 	 * @param	overwrite		Sets whether previous tweens for the same target and properties will be overwritten (Default is true)
 	 * @return		A TransformOptions instance, which is used to select the kind of transform you would like to apply to the target
 	 */
-	@:generic public static function transform<T> (target:T, duration:Float = 0, overwrite:Bool = true):TransformOptions<T> {
+	/*@:generic*/ public static function transform<T> (target:T, duration:Float = 0, overwrite:Bool = true):TransformOptions<T> {
 		
 		return new TransformOptions (target, duration, overwrite);
 		
@@ -315,7 +315,7 @@ class Actuate {
 	 * @param	customActuator		A custom actuator to use instead of the default (Optional)
 	 * @return		The current actuator instance, which can be used to apply properties like ease, delay, onComplete or onUpdate
 	 */ 
-	@:generic public static function tween<T> (target:T, duration:Float, properties:Dynamic, overwrite:Bool = true, customActuator:Class<GenericActuator<T>> = null):GenericActuator<T> {
+	/*@:generic*/ public static function tween<T> (target:T, duration:Float, properties:Dynamic, overwrite:Bool = true, customActuator:Class<GenericActuator<T>> = null):GenericActuator<T> {
 		
 		if (target != null) {
 			
@@ -361,7 +361,7 @@ class Actuate {
 	}
 	
 	
-	@:generic public static function unload<T> (actuator:GenericActuator<T>):Void {
+	/*@:generic*/ public static function unload<T> (actuator:GenericActuator<T>):Void {
 		
 		var target = actuator.target;
 		
@@ -390,7 +390,7 @@ class Actuate {
 	 * @param	overwrite		Sets whether previous tweens for the same target and properties will be overwritten (Default is true)
 	 * @return		The current actuator instance, which can be used to apply properties like ease, delay, onComplete or onUpdate
 	 */
-	@:generic public static function update<T> (target:T, duration:Float, start:Array <Dynamic> = null, end:Array <Dynamic> = null, overwrite:Bool = true):GenericActuator<T> {
+	/*@:generic*/ public static function update<T> (target:T, duration:Float, start:Array <Dynamic> = null, end:Array <Dynamic> = null, overwrite:Bool = true):GenericActuator<T> {
 				
 		var properties:Dynamic = { start: start, end: end };
 		
