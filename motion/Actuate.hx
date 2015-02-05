@@ -53,7 +53,14 @@ class Actuate {
 		return actuator;
 		
 	}
-	
+	public static function isRunning():Bool {
+		var result:Bool = false;
+		for (library in targetLibraries) {
+			result = true;
+			break;
+		}
+		return result;
+	}
 	
 	#if (flash || nme || openfl)
 	
