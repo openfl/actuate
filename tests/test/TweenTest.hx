@@ -16,6 +16,8 @@ class TweenTest {
 	private var objectDynamic:Dynamic;
 	private var objectGetterSetter:ObjectGetterSetter;
 	private var objectSetter:ObjectSetter;
+	private var objectSubClassGetterSetter:ObjectSubClassGetterSetter;
+	private var objectSubClassSetter:ObjectSubClassSetter;
 	private var objectTypedef:ObjectTypedef;
 	private var timer:Timer;
 	
@@ -34,6 +36,8 @@ class TweenTest {
 		objectClass = new ObjectClass (100);
 		objectSetter = new ObjectSetter (100);
 		objectGetterSetter = new ObjectGetterSetter (100);
+		objectSubClassSetter = new ObjectSubClassSetter (100);
+		objectSubClassGetterSetter = new ObjectSubClassGetterSetter (100);
 		
 	}
 	
@@ -163,6 +167,56 @@ class TweenTest {
 	}
 	
 	
+	@Test public function testSubClassSetter ():Void {
+		
+		Assert.areEqual (100, objectSubClassSetter.x);
+		
+		update (0);
+		
+		Actuate.tween (objectSubClassSetter, 2, { x: 300 }).ease (Linear.easeNone);
+		
+		update (0.5);
+		
+		Assert.areEqual (150, objectSubClassSetter.x);
+		
+		update (1);
+		
+		Assert.areEqual (200, objectSubClassSetter.x);
+		
+		Actuate.stop (objectSubClassSetter);
+		
+		update (2);
+		
+		Assert.areEqual (200, objectSubClassSetter.x);
+		
+	}
+	
+	
+	@Test public function testSubClassGetterSetter ():Void {
+		
+		Assert.areEqual (100, objectSubClassGetterSetter.x);
+		
+		update (0);
+		
+		Actuate.tween (objectSubClassGetterSetter, 2, { x: 300 }).ease (Linear.easeNone);
+		
+		update (0.5);
+		
+		Assert.areEqual (150, objectSubClassGetterSetter.x);
+		
+		update (1);
+		
+		Assert.areEqual (200, objectSubClassGetterSetter.x);
+		
+		Actuate.stop (objectSubClassGetterSetter);
+		
+		update (2);
+		
+		Assert.areEqual (200, objectSubClassGetterSetter.x);
+		
+	}
+	
+	
 	private function update (time:Float):Void {
 		
 		SimpleActuator.getTime = function () return time;
@@ -249,6 +303,32 @@ private class ObjectGetterSetter {
 	private function set_x (value:Float):Float {
 		
 		return _x = value;
+		
+	}
+	
+	
+}
+
+
+private class ObjectSubClassSetter extends ObjectSetter {
+	
+	
+	public function new (x:Float) {
+		
+		super (x);
+		
+	}
+	
+	
+}
+
+
+private class ObjectSubClassGetterSetter extends ObjectGetterSetter {
+	
+	
+	public function new (x:Float) {
+		
+		super (x);
 		
 	}
 	
