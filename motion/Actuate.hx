@@ -24,6 +24,9 @@ class Actuate {
 	public static var defaultActuator:Class<IGenericActuator> = SimpleActuator;
 	public static var defaultEase:IEasing = Expo.easeOut;
 	private static var targetLibraries = new ObjectMap<Dynamic, Array<IGenericActuator>> ();
+	#if neko
+	private static var methodLibraries = new FunctionMap<Dynamic, Array<IGenericActuator>> ();
+	#end
 	
 	
 	/**
@@ -71,6 +74,22 @@ class Actuate {
 	
 	
 	private static function getLibrary<T> (target:T, allowCreation:Bool = true):Array<IGenericActuator> {
+		
+		#if neko
+		
+		if (Reflect.isFunction (target)) {
+			
+			if (!methodLibraries.exists (target) && allowCreation) {
+				
+				methodLibraries.set (target, new Array<IGenericActuator> ());
+				
+			}
+			
+			return methodLibraries.get (target);
+			
+		}
+			
+		#end
 		
 		if (!targetLibraries.exists (target) && allowCreation) {
 			
@@ -131,6 +150,20 @@ class Actuate {
 	
 	public static function pauseAll ():Void {
 		
+		#if neko
+		
+		for (library in methodLibraries) {
+			
+			for (actuator in library) {
+				
+				actuator.pause ();
+				
+			}
+			
+		}
+		
+		#end
+		
 		for (library in targetLibraries) {
 			
 			for (actuator in library) {
@@ -148,6 +181,25 @@ class Actuate {
 	 * Resets Actuate by stopping and removing tweens for all objects
 	 */
 	public static function reset ():Void {
+		
+		#if neko
+		
+		for (library in methodLibraries) {
+			
+			var i = library.length - 1;
+			
+			while (i >= 0) {
+				
+				library[i].stop (null, false, false);
+				i--;
+				
+			}
+			
+		}
+		
+		methodLibraries = new FunctionMap<Dynamic, Array<IGenericActuator>> ();
+		
+		#end
 		
 		for (library in targetLibraries) {
 			
@@ -198,6 +250,20 @@ class Actuate {
 	
 	
 	public static function resumeAll ():Void {
+		
+		#if neko
+		
+		for (library in methodLibraries) {
+			
+			for (actuator in library) {
+				
+				actuator.resume ();
+				
+			}
+			
+		}
+		
+		#end
 		
 		for (library in targetLibraries) {
 			
@@ -364,6 +430,28 @@ class Actuate {
 	/*@:generic*/ public static function unload<T> (actuator:GenericActuator<T>):Void {
 		
 		var target = actuator.target;
+		
+		#if neko
+		
+		if (Reflect.isFunction (target)) {
+			
+			if (methodLibraries.exists (target)) {
+				
+				methodLibraries.get (target).remove (actuator);
+				
+				if (methodLibraries.get (target).length == 0) {
+					
+					methodLibraries.remove (target);
+					
+				}
+				
+			}
+			
+			return;
+			
+		}
+		
+		#end
 		
 		if (targetLibraries.exists (target)) {
 			
@@ -536,3 +624,68 @@ private class TweenTimer {
 
 
 }
+
+
+#if neko
+private class KVPairMap<K, V>  {
+	var keyList:Array<K>;
+	var valList:Array<V>;
+	public function new() {
+		this.keyList = [];
+		this.valList = [];
+	}
+	function equals(k1:K, k2:K):Bool 
+		return throw 'base';
+	
+	function indexOf(k:K):Int {
+		for (i in 0...keyList.length)
+			if (equals(k, keyList[i])) return i;
+		return -1;
+	}
+	public function get(k:K):Null<V> 
+		return valList[indexOf(k)];
+	
+	public function set(k:K, v:V):V {
+		var i = indexOf(k);
+		if (i == -1) {
+			keyList.push(k);
+			valList.push(v);
+		}
+		else {
+			keyList[i] = k;
+			valList[i] = v;
+		}
+		return v;
+	}
+	public function exists(k:K):Bool 
+		return indexOf(k) != -1;
+	
+	public function remove(k:K):Bool {
+		var i = indexOf(k);
+		return
+			if (i == -1) false;
+			else {
+				keyList.splice(i, 1);
+				valList.splice(i, 1);
+				true;
+			}
+	}
+	public inline function keys():Iterator<K> 
+		return keyList.iterator();
+	
+	public inline function iterator():Iterator<V> 
+		return valList.iterator();
+	
+	public function toString() {
+		return [for (i in 0...keyList.length) Std.string(keyList[i]) => valList[i]].toString();
+	}
+	
+}
+
+       private class FunctionMap < K, V > extends KVPairMap < K, V > {
+                override function equals(k1:K, k2:K):Bool {
+                        return Reflect.compareMethods(k1, k2);
+                }
+        }
+
+#end

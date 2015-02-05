@@ -44,13 +44,19 @@ class TweenTest {
 		
 		update (0);
 		
-		Actuate.tween (objectDynamic, 1, { x: 200 }).ease (Linear.easeNone);
+		Actuate.tween (objectDynamic, 2, { x: 300 }).ease (Linear.easeNone);
 		
 		update (0.5);
 		
 		Assert.areEqual (150, objectDynamic.x);
 		
 		update (1);
+		
+		Assert.areEqual (200, objectDynamic.x);
+		
+		Actuate.stop (objectDynamic);
+		
+		update (2);
 		
 		Assert.areEqual (200, objectDynamic.x);
 		
@@ -63,13 +69,19 @@ class TweenTest {
 		
 		update (0);
 		
-		Actuate.tween (objectTypedef, 1, { x: 200 }).ease (Linear.easeNone);
+		Actuate.tween (objectTypedef, 2, { x: 300 }).ease (Linear.easeNone);
 		
 		update (0.5);
 		
 		Assert.areEqual (150, objectTypedef.x);
 		
 		update (1);
+		
+		Assert.areEqual (200, objectTypedef.x);
+		
+		Actuate.stop (objectTypedef);
+		
+		update (2);
 		
 		Assert.areEqual (200, objectTypedef.x);
 		
@@ -82,13 +94,19 @@ class TweenTest {
 		
 		update (0);
 		
-		Actuate.tween (objectClass, 1, { x: 200 }).ease (Linear.easeNone);
+		Actuate.tween (objectClass, 2, { x: 300 }).ease (Linear.easeNone);
 		
 		update (0.5);
 		
 		Assert.areEqual (150, objectClass.x);
 		
 		update (1);
+		
+		Assert.areEqual (200, objectClass.x);
+		
+		Actuate.stop (objectClass);
+		
+		update (2);
 		
 		Assert.areEqual (200, objectClass.x);
 		
@@ -101,13 +119,19 @@ class TweenTest {
 		
 		update (0);
 		
-		Actuate.tween (objectSetter, 1, { x: 200 }).ease (Linear.easeNone);
+		Actuate.tween (objectSetter, 2, { x: 300 }).ease (Linear.easeNone);
 		
 		update (0.5);
 		
 		Assert.areEqual (150, objectSetter.x);
 		
 		update (1);
+		
+		Assert.areEqual (200, objectSetter.x);
+		
+		Actuate.stop (objectSetter);
+		
+		update (2);
 		
 		Assert.areEqual (200, objectSetter.x);
 		
@@ -120,13 +144,19 @@ class TweenTest {
 		
 		update (0);
 		
-		Actuate.tween (objectGetterSetter, 1, { x: 200 }).ease (Linear.easeNone);
+		Actuate.tween (objectGetterSetter, 2, { x: 300 }).ease (Linear.easeNone);
 		
 		update (0.5);
 		
 		Assert.areEqual (150, objectGetterSetter.x);
 		
 		update (1);
+		
+		Assert.areEqual (200, objectGetterSetter.x);
+		
+		Actuate.stop (objectGetterSetter);
+		
+		update (2);
 		
 		Assert.areEqual (200, objectGetterSetter.x);
 		

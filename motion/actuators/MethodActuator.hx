@@ -1,27 +1,17 @@
 ﻿package motion.actuators;
 
 
-#if neko
-import haxe.ds.ObjectMap;
-@:access(haxe.ds.ObjectMap)
-#end
-
-
 class MethodActuator<T> extends SimpleActuator<T, T> {
 	
 	
 	private var currentParameters:Array <Dynamic>;
-	private var tweenProperties:Dynamic; 
+	private var tweenProperties:Dynamic;
 	
 	
 	public function new (target:T, duration:Float, properties:Dynamic) {
 		
 		currentParameters = new Array <Dynamic> ();
 		tweenProperties = { };
-		
-		#if neko
-		target = untyped { method: target };
-		#end
 		
 		super (target, duration, properties);
 		
@@ -48,35 +38,7 @@ class MethodActuator<T> extends SimpleActuator<T, T> {
 	
 	private override function apply ():Void {
 		
-		#if neko
-		callMethod (untyped target.method, properties.end);
-		#else
 		callMethod (target, properties.end);
-		#end
-		
-	}
-	
-	
-	private override function complete (sendEvent:Bool = true):Void {
-		
-		if (initialized) {
-			
-			for (i in 0...properties.start.length) {
-				
-				currentParameters[i] = Reflect.field (tweenProperties, "param" + i);
-				
-			}
-			
-			#if neko
-			callMethod (untyped target.method, currentParameters);
-			#else
-			callMethod (target, currentParameters);
-			#end
-			
-		}
-		
-		
-		super.complete (sendEvent);
 		
 	}
 	
@@ -121,11 +83,7 @@ class MethodActuator<T> extends SimpleActuator<T, T> {
 				
 			}
 			
-			#if neko
-			callMethod (untyped target.method, currentParameters);
-			#else
 			callMethod (target, currentParameters);
-			#end
 			
 		}
 		

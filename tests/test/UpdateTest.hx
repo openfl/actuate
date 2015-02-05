@@ -31,7 +31,7 @@ class UpdateTest {
 		
 		update (0);
 		
-		Actuate.update (callback, 1, [ 100 ], [ 200 ]).ease (Linear.easeNone);
+		Actuate.update (callback, 2, [ 100 ], [ 300 ]).ease (Linear.easeNone);
 		
 		update (0);
 		
@@ -46,6 +46,12 @@ class UpdateTest {
 		
 		Assert.areEqual (200, x);
 		
+		Actuate.stop (callback);
+		
+		update (2);
+		
+		Assert.areEqual (200, x);
+		
 	}
 	
 	
@@ -55,7 +61,7 @@ class UpdateTest {
 		
 		update (0);
 		
-		Actuate.update (objectClass.update, 1, [ 100 ], [ 200 ]).ease (Linear.easeNone);
+		Actuate.update (objectClass.update, 2, [ 100 ], [ 300 ]).ease (Linear.easeNone);
 		
 		update (0);
 		
@@ -67,6 +73,12 @@ class UpdateTest {
 		Assert.areEqual (150, objectClass.x);
 		
 		update (1);
+		
+		Assert.areEqual (200, objectClass.x);
+		
+		Actuate.stop (objectClass);
+		
+		update (2);
 		
 		Assert.areEqual (200, objectClass.x);
 		
