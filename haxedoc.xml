@@ -5434,118 +5434,27 @@
 		<new public="1" set="method" line="114"><f a=""><x path="Void"/></f></new>
 	</class>
 	<class path="motion.Actuate" params="" file="../motion/Actuate.hx">
-		<tween_motion__Actuate_TransformOptions_T public="1" set="method" line="318" static="1">
-			<f a="target:duration:properties:?overwrite:?customActuator" v=":::true:null">
-				<c path="motion._Actuate.TransformOptions.T"/>
-				<x path="Float"/>
-				<d/>
-				<x path="Bool"/>
-				<x path="Class"><c path="motion.actuators.GenericActuator"><c path="motion._Actuate.TransformOptions.T"/></c></x>
-				<c path="motion.actuators.GenericActuator"><c path="motion._Actuate.TransformOptions.T"/></c>
-			</f>
-			<meta>
-				<m n=":noCompletion"/>
-				<m n=":noUsing"/>
-			</meta>
-		</tween_motion__Actuate_TransformOptions_T>
-		<tween_flash_display_DisplayObject public="1" set="method" line="318" static="1">
-			<f a="target:duration:properties:?overwrite:?customActuator" v=":::true:null">
-				<c path="flash.display.DisplayObject"/>
-				<x path="Float"/>
-				<d/>
-				<x path="Bool"/>
-				<x path="Class"><c path="motion.actuators.GenericActuator"><c path="flash.display.DisplayObject"/></c></x>
-				<c path="motion.actuators.GenericActuator"><c path="flash.display.DisplayObject"/></c>
-			</f>
-			<meta>
-				<m n=":noCompletion"/>
-				<m n=":noUsing"/>
-			</meta>
-		</tween_flash_display_DisplayObject>
-		<tween_update_T public="1" set="method" line="318" static="1">
-			<f a="target:duration:properties:?overwrite:?customActuator" v=":::true:null">
-				<c path="update.T"/>
-				<x path="Float"/>
-				<d/>
-				<x path="Bool"/>
-				<x path="Class"><c path="motion.actuators.GenericActuator"><c path="update.T"/></c></x>
-				<c path="motion.actuators.GenericActuator"><c path="update.T"/></c>
-			</f>
-			<meta>
-				<m n=":noCompletion"/>
-				<m n=":noUsing"/>
-			</meta>
-		</tween_update_T>
-		<tween_motion__Actuate_TweenTimer public="1" set="method" line="318" static="1">
-			<f a="target:duration:properties:?overwrite:?customActuator" v=":::true:null">
-				<c path="motion._Actuate.TweenTimer"/>
-				<x path="Float"/>
-				<d/>
-				<x path="Bool"/>
-				<x path="Class"><c path="motion.actuators.GenericActuator"><c path="motion._Actuate.TweenTimer"/></c></x>
-				<c path="motion.actuators.GenericActuator"><c path="motion._Actuate.TweenTimer"/></c>
-			</f>
-			<meta>
-				<m n=":noCompletion"/>
-				<m n=":noUsing"/>
-			</meta>
-		</tween_motion__Actuate_TweenTimer>
-		<tween_motionPath_T public="1" set="method" line="318" static="1">
-			<f a="target:duration:properties:?overwrite:?customActuator" v=":::true:null">
-				<c path="motionPath.T"/>
-				<x path="Float"/>
-				<d/>
-				<x path="Bool"/>
-				<x path="Class"><c path="motion.actuators.GenericActuator"><c path="motionPath.T"/></c></x>
-				<c path="motion.actuators.GenericActuator"><c path="motionPath.T"/></c>
-			</f>
-			<meta>
-				<m n=":noCompletion"/>
-				<m n=":noUsing"/>
-			</meta>
-		</tween_motionPath_T>
-		<apply_tween_T public="1" set="method" line="37" static="1">
-			<f a="target:properties:?customActuator" v="::null">
-				<c path="tween.T"/>
-				<d/>
-				<x path="Class"><c path="motion.actuators.GenericActuator"><c path="tween.T"/></c></x>
-				<c path="motion.actuators.GenericActuator"><c path="tween.T"/></c>
-			</f>
-			<meta>
-				<m n=":noCompletion"/>
-				<m n=":noUsing"/>
-			</meta>
-		</apply_tween_T>
-		<stop_apply_T public="1" set="method" line="222" static="1">
-			<f a="target:?properties:?complete:?sendEvent" v=":null:false:true">
-				<c path="apply.T"/>
-				<d/>
-				<x path="Bool"/>
-				<x path="Bool"/>
-				<x path="Void"/>
-			</f>
-			<meta>
-				<m n=":noCompletion"/>
-				<m n=":noUsing"/>
-			</meta>
-		</stop_apply_T>
-		<unload_motion_actuators_GenericActuator_T public="1" set="method" line="364" static="1">
-			<f a="actuator">
-				<c path="motion.actuators.GenericActuator"><c path="motion.actuators.GenericActuator.T"/></c>
-				<x path="Void"/>
-			</f>
-			<meta>
-				<m n=":noCompletion"/>
-				<m n=":noUsing"/>
-			</meta>
-		</unload_motion_actuators_GenericActuator_T>
 		<defaultActuator public="1" line="24" static="1"><x path="Class"><c path="motion.actuators.IGenericActuator"/></x></defaultActuator>
 		<defaultEase public="1" line="25" static="1"><c path="motion.easing.IEasing"/></defaultEase>
 		<targetLibraries line="26" static="1"><c path="haxe.ds.ObjectMap">
 	<d/>
 	<c path="Array"><c path="motion.actuators.IGenericActuator"/></c>
 </c></targetLibraries>
-		<effects public="1" set="method" line="64" static="1">
+		<apply public="1" params="T" set="method" line="40" static="1">
+			<f a="target:properties:?customActuator" v="::null">
+				<c path="apply.T"/>
+				<d/>
+				<x path="Class"><c path="motion.actuators.GenericActuator"><c path="apply.T"/></c></x>
+				<c path="motion.actuators.GenericActuator"><c path="apply.T"/></c>
+			</f>
+			<haxe_doc><![CDATA[* Copies properties from one object to another. Conflicting tweens are stopped automatically
+	 * @example		<code>Actuate.apply (MyClip, { alpha: 1 } );</code>
+	 * @param	target		The object to copy to
+	 * @param	properties		The object to copy from
+	 * @param	customActuator		A custom actuator to use instead of the default (Optional)
+	 * @return		The current actuator instance, which can be used to apply properties like onComplete or onUpdate handlers]]></haxe_doc>
+		</apply>
+		<effects public="1" set="method" line="67" static="1">
 			<f a="target:duration:?overwrite" v="::true">
 				<c path="flash.display.DisplayObject"/>
 				<x path="Float"/>
@@ -5558,18 +5467,68 @@
 	 * @param	overwrite		Sets whether previous tweens for the same target and properties will be overwritten (Default is true)
 	 * @return		An EffectsOptions instance, which is used to select the kind of effect you would like to apply to the target</haxe_doc>
 		</effects>
-		<getLibrary params="T" set="method" line="73" static="1"><f a="target:?allowCreation" v=":true">
+		<getLibrary params="T" set="method" line="76" static="1"><f a="target:?allowCreation" v=":true">
 	<c path="getLibrary.T"/>
 	<x path="Bool"/>
 	<c path="Array"><c path="motion.actuators.IGenericActuator"/></c>
 </f></getLibrary>
-		<pauseAll public="1" set="method" line="132" static="1"><f a=""><x path="Void"/></f></pauseAll>
-		<reset public="1" set="method" line="150" static="1">
+		<isActive public="1" set="method" line="109" static="1">
+			<f a=""><x path="Bool"/></f>
+			<haxe_doc>* Checks if Actuate has any active tweens 
+	 * @return		Whether Actuate is active</haxe_doc>
+		</isActive>
+		<motionPath public="1" params="T" set="method" line="133" static="1">
+			<f a="target:duration:properties:?overwrite" v=":::true">
+				<c path="motionPath.T"/>
+				<x path="Float"/>
+				<d/>
+				<x path="Bool"/>
+				<c path="motion.actuators.GenericActuator"><c path="motionPath.T"/></c>
+			</f>
+			<haxe_doc>* Creates a new MotionPath tween
+	 * @param	target		The object to tween
+	 * @param	duration		The length of the tween in seconds
+	 * @param	properties		An object containing a motion path for each property you wish to tween
+	 * @param	overwrite		Sets whether previous tweens for the same target and properties will be overwritten (Default is true)
+	 * @return		The current actuator instance, which can be used to apply properties like ease, delay, onComplete or onUpdate</haxe_doc>
+		</motionPath>
+		<pause public="1" params="T" set="method" line="145" static="1">
+			<f a="target">
+				<c path="pause.T"/>
+				<x path="Void"/>
+			</f>
+			<haxe_doc>* Pauses tweens for the specified target objects
+	 * @param	... targets		The target objects which will have their tweens paused. Passing no value pauses tweens for all objects</haxe_doc>
+		</pause>
+		<pauseAll public="1" set="method" line="171" static="1"><f a=""><x path="Void"/></f></pauseAll>
+		<reset public="1" set="method" line="203" static="1">
 			<f a=""><x path="Void"/></f>
 			<haxe_doc>* Resets Actuate by stopping and removing tweens for all objects</haxe_doc>
 		</reset>
-		<resumeAll public="1" set="method" line="200" static="1"><f a=""><x path="Void"/></f></resumeAll>
-		<timer public="1" set="method" line="282" static="1">
+		<resume public="1" params="T" set="method" line="246" static="1">
+			<f a="target">
+				<c path="resume.T"/>
+				<x path="Void"/>
+			</f>
+			<haxe_doc>* Resumes paused tweens for the specified target objects
+	 * @param	... targets		The target objects which will have their tweens resumed. Passing no value resumes tweens for all objects</haxe_doc>
+		</resume>
+		<resumeAll public="1" set="method" line="272" static="1"><f a=""><x path="Void"/></f></resumeAll>
+		<stop public="1" params="T" set="method" line="308" static="1">
+			<f a="target:?properties:?complete:?sendEvent" v=":null:false:true">
+				<c path="stop.T"/>
+				<d/>
+				<x path="Bool"/>
+				<x path="Bool"/>
+				<x path="Void"/>
+			</f>
+			<haxe_doc>* Stops all tweens for an individual object
+	 * @param	target		The target object which will have its tweens stopped, or a generic actuator instance
+	 * @param	properties		A string, array or object which contains the properties you wish to stop, like "alpha", [ "x", "y" ] or { alpha: null }. Passing no value removes all tweens for the object (Optional)
+	 * @param	complete		If tweens should apply their final target values before stopping. Default is false (Optional) 
+	 * @param	sendEvent	If a complete() event should be dispatched for the specified target. Default is true (Optional)</haxe_doc>
+		</stop>
+		<timer public="1" set="method" line="368" static="1">
 			<f a="duration:?customActuator" v=":null">
 				<x path="Float"/>
 				<x path="Class"><c path="motion.actuators.GenericActuator"><c path="motion._Actuate.TweenTimer"/></c></x>
@@ -5581,13 +5540,67 @@
 	 * @param	customActuator		A custom actuator to use instead of the default (Optional)
 	 * @return		The current actuator instance, which can be used to apply properties like onComplete or to gain a reference to the target timer object]]></haxe_doc>
 		</timer>
+		<transform public="1" params="T" set="method" line="385" static="1">
+			<f a="target:?duration:?overwrite" v=":0:true">
+				<c path="transform.T"/>
+				<x path="Float"/>
+				<x path="Bool"/>
+				<c path="motion._Actuate.TransformOptions"><c path="transform.T"/></c>
+			</f>
+			<haxe_doc><![CDATA[* Creates a new transform tween
+	 * @example		<code>Actuate.transform (MyClip, 1).color (0xFF0000);</code>
+	 * @param	target		The object to tween
+	 * @param	duration		The length of the tween in seconds
+	 * @param	overwrite		Sets whether previous tweens for the same target and properties will be overwritten (Default is true)
+	 * @return		A TransformOptions instance, which is used to select the kind of transform you would like to apply to the target]]></haxe_doc>
+		</transform>
+		<tween public="1" params="T" set="method" line="404" static="1">
+			<f a="target:duration:properties:?overwrite:?customActuator" v=":::true:null">
+				<c path="tween.T"/>
+				<x path="Float"/>
+				<d/>
+				<x path="Bool"/>
+				<x path="Class"><c path="motion.actuators.GenericActuator"><c path="tween.T"/></c></x>
+				<c path="motion.actuators.GenericActuator"><c path="tween.T"/></c>
+			</f>
+			<haxe_doc><![CDATA[* Creates a new tween
+	 * @example		<code>Actuate.tween (MyClip, 1, { alpha: 1 } ).onComplete (trace, [ "MyClip is now visible" ]);</code>
+	 * @param	target		The object to tween
+	 * @param	duration		The length of the tween in seconds
+	 * @param	properties		The end values to tween the target to
+	 * @param	overwrite			Sets whether previous tweens for the same target and properties will be overwritten (Default is true)
+	 * @param	customActuator		A custom actuator to use instead of the default (Optional)
+	 * @return		The current actuator instance, which can be used to apply properties like ease, delay, onComplete or onUpdate]]></haxe_doc>
+		</tween>
+		<unload public="1" params="T" set="method" line="450" static="1"><f a="actuator">
+	<c path="motion.actuators.GenericActuator"><c path="unload.T"/></c>
+	<x path="Void"/>
+</f></unload>
+		<update public="1" params="T" set="method" line="501" static="1">
+			<f a="target:duration:?start:?end:?overwrite" v="::null:null:true">
+				<c path="update.T"/>
+				<x path="Float"/>
+				<c path="Array"><d/></c>
+				<c path="Array"><d/></c>
+				<x path="Bool"/>
+				<c path="motion.actuators.GenericActuator"><c path="update.T"/></c>
+			</f>
+			<haxe_doc><![CDATA[* Creates a new tween that updates a method rather than setting the properties of an object
+	 * @example		<code>Actuate.update (trace, 1, ["Value: ", 0], ["", 1]).onComplete (trace, [ "Finished tracing values between 0 and 1" ]);</code>
+	 * @param	target		The method to update		
+	 * @param	duration		The length of the tween in seconds
+	 * @param	start		The starting parameters of the method call. You may use both numeric and non-numeric values
+	 * @param	end		The ending parameters of the method call. You may use both numeric and non-numeric values, but the signature should match the start parameters
+	 * @param	overwrite		Sets whether previous tweens for the same target and properties will be overwritten (Default is true)
+	 * @return		The current actuator instance, which can be used to apply properties like ease, delay, onComplete or onUpdate]]></haxe_doc>
+		</update>
 		<meta><m n=":access"><e>'???'</e></m></meta>
 	</class>
 	<class path="motion._Actuate.EffectsOptions" params="" file="../motion/Actuate.hx" private="1" module="motion.Actuate">
 		<duration><x path="Float"/></duration>
 		<overwrite><x path="Bool"/></overwrite>
 		<target><c path="flash.display.DisplayObject"/></target>
-		<filter public="1" set="method" line="442">
+		<filter public="1" set="method" line="550">
 			<f a="reference:properties">
 				<d/>
 				<d/>
@@ -5598,7 +5611,7 @@
 	 * @param	properties		The end properties to use for the tween
 	 * @return		The current actuator instance, which can be used to apply properties like ease, delay, onComplete or onUpdate</haxe_doc>
 		</filter>
-		<new public="1" set="method" line="427"><f a="target:duration:overwrite">
+		<new public="1" set="method" line="535"><f a="target:duration:overwrite">
 	<c path="flash.display.DisplayObject"/>
 	<x path="Float"/>
 	<x path="Bool"/>
@@ -5609,7 +5622,7 @@
 		<duration><x path="Float"/></duration>
 		<overwrite><x path="Bool"/></overwrite>
 		<target><c path="motion._Actuate.TransformOptions.T"/></target>
-		<color public="1" set="method" line="478">
+		<color public="1" set="method" line="586">
 			<f a="?value:?strength:?alpha" v="0:1:null">
 				<x path="Float"/>
 				<x path="Float"/>
@@ -5622,7 +5635,7 @@
 	 * @param	alpha		The end alpha of the target. If you wish to tween alpha and tint simultaneously, you must do them both as part of the ColorTransform. A value of null will make no change to the alpha of the object (Default is null)
 	 * @return		The current actuator instance, which can be used to apply properties like ease, delay, onComplete or onUpdate</haxe_doc>
 		</color>
-		<sound public="1" set="method" line="499">
+		<sound public="1" set="method" line="607">
 			<f a="?volume:?pan" v="null:null">
 				<x path="Float"/>
 				<x path="Float"/>
@@ -5633,7 +5646,7 @@
 	 * @param	pan		The end pan for the target, or null if you would like to ignore this property (Default is null)
 	 * @return		The current actuator instance, which can be used to apply properties like ease, delay, onComplete or onUpdate</haxe_doc>
 		</sound>
-		<new public="1" set="method" line="462"><f a="target:duration:overwrite">
+		<new public="1" set="method" line="570"><f a="target:duration:overwrite">
 	<c path="motion._Actuate.TransformOptions.T"/>
 	<x path="Float"/>
 	<x path="Bool"/>
@@ -5642,7 +5655,7 @@
 	</class>
 	<class path="motion._Actuate.TweenTimer" params="" file="../motion/Actuate.hx" private="1" module="motion.Actuate">
 		<progress public="1"><x path="Float"/></progress>
-		<new public="1" set="method" line="531"><f a="progress">
+		<new public="1" set="method" line="639"><f a="progress">
 	<x path="Float"/>
 	<x path="Void"/>
 </f></new>
@@ -5803,12 +5816,8 @@
 		<currentParameters><c path="Array"><d/></c></currentParameters>
 		<tweenProperties><d/></tweenProperties>
 		<apply set="method" line="39" override="1"><f a=""><x path="Void"/></f></apply>
-		<complete set="method" line="46" override="1"><f a="?sendEvent" v="true">
-	<x path="Bool"/>
-	<x path="Void"/>
-</f></complete>
-		<initialize set="method" line="66" override="1"><f a=""><x path="Void"/></f></initialize>
-		<update set="method" line="94" override="1"><f a="currentTime">
+		<initialize set="method" line="46" override="1"><f a=""><x path="Void"/></f></initialize>
+		<update set="method" line="74" override="1"><f a="currentTime">
 	<x path="Float"/>
 	<x path="Void"/>
 </f></update>
