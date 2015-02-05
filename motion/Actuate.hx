@@ -53,14 +53,7 @@ class Actuate {
 		return actuator;
 		
 	}
-	public static function isRunning():Bool {
-		var result:Bool = false;
-		for (library in targetLibraries) {
-			result = true;
-			break;
-		}
-		return result;
-	}
+	
 	
 	#if (flash || nme || openfl)
 	
@@ -105,6 +98,26 @@ class Actuate {
 		}
 		
 		return targetLibraries.get (target);
+		
+	}
+	
+	
+	/**
+	 * Checks if Actuate has any active tweens 
+	 * @return		Whether Actuate is active
+	 */
+	public static function isActive ():Bool {
+		
+		var result = false;
+		
+		for (library in targetLibraries) {
+			
+			result = true;
+			break;
+			
+		}
+		
+		return result;
 		
 	}
 	
