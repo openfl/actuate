@@ -35,9 +35,8 @@ class UpdateTest {
 		
 		update (0);
 		
-		//Assert.areEqual (100, x);
-		Assert.areEqual (0, x);
-		
+		Assert.areEqual (100, x);
+				
 		update (0.5);
 		
 		Assert.areEqual (150, x);
@@ -65,8 +64,7 @@ class UpdateTest {
 		
 		update (0);
 		
-		//Assert.areEqual (100, objectClass.x);
-		Assert.areEqual (0, objectClass.x);
+		Assert.areEqual (100, objectClass.x);
 		
 		update (0.5);
 		

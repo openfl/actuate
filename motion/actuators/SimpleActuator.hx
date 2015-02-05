@@ -554,7 +554,7 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 			
 			if (actuator != null && actuator.active) {
 				
-				if (currentTime > actuator.timeOffset) {
+				if (currentTime >= actuator.timeOffset) {
 					
 					actuator.update (currentTime);
 					
