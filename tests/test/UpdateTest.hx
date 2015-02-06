@@ -1,22 +1,13 @@
 package;
 
 
-import massive.munit.util.Timer;
 import massive.munit.Assert;
-import massive.munit.async.AsyncFactory;
 import motion.actuators.SimpleActuator;
 import motion.easing.Linear;
 import motion.Actuate;
 
 
 class UpdateTest {
-	
-	
-	public function new () {
-		
-		
-		
-	}
 	
 	
 	@Test public function testDynamic ():Void {

@@ -1,9 +1,7 @@
 package;
 
 
-import massive.munit.util.Timer;
 import massive.munit.Assert;
-import massive.munit.async.AsyncFactory;
 import motion.actuators.SimpleActuator;
 import motion.easing.Linear;
 import motion.Actuate;
@@ -12,207 +10,191 @@ import motion.Actuate;
 class TweenTest {
 	
 	
-	private var objectClass:ObjectClass;
-	private var objectDynamic:Dynamic;
-	private var objectGetterSetter:ObjectGetterSetter;
-	private var objectSetter:ObjectSetter;
-	private var objectSubClassGetterSetter:ObjectSubClassGetterSetter;
-	private var objectSubClassSetter:ObjectSubClassSetter;
-	private var objectTypedef:ObjectTypedef;
-	private var timer:Timer;
-	
-	
-	public function new () {
-		
-		
-		
-	}
-	
-	
-	@Before public function setup ():Void {
-		
-		objectDynamic = { x: 100 };
-		objectTypedef = { x: 100 };
-		objectClass = new ObjectClass (100);
-		objectSetter = new ObjectSetter (100);
-		objectGetterSetter = new ObjectGetterSetter (100);
-		objectSubClassSetter = new ObjectSubClassSetter (100);
-		objectSubClassGetterSetter = new ObjectSubClassGetterSetter (100);
-		
-	}
-	
-	
 	@Test public function testDynamic ():Void {
 		
-		Assert.areEqual (100, objectDynamic.x);
+		var object:Dynamic = { x: 100 };
+		
+		Assert.areEqual (100, object.x);
 		
 		update (0);
 		
-		Actuate.tween (objectDynamic, 2, { x: 300 }).ease (Linear.easeNone);
+		Actuate.tween (object, 2, { x: 300 }).ease (Linear.easeNone);
 		
 		update (0.5);
 		
-		Assert.areEqual (150, objectDynamic.x);
+		Assert.areEqual (150, object.x);
 		
 		update (1);
 		
-		Assert.areEqual (200, objectDynamic.x);
+		Assert.areEqual (200, object.x);
 		
-		Actuate.stop (objectDynamic);
+		Actuate.stop (object);
 		
 		update (2);
 		
-		Assert.areEqual (200, objectDynamic.x);
+		Assert.areEqual (200, object.x);
 		
 	}
 	
 	
 	@Test public function testTypedef ():Void {
 		
-		Assert.areEqual (100, objectTypedef.x);
+		var object:ObjectTypedef = { x: 100 };
+		
+		Assert.areEqual (100, object.x);
 		
 		update (0);
 		
-		Actuate.tween (objectTypedef, 2, { x: 300 }).ease (Linear.easeNone);
+		Actuate.tween (object, 2, { x: 300 }).ease (Linear.easeNone);
 		
 		update (0.5);
 		
-		Assert.areEqual (150, objectTypedef.x);
+		Assert.areEqual (150, object.x);
 		
 		update (1);
 		
-		Assert.areEqual (200, objectTypedef.x);
+		Assert.areEqual (200, object.x);
 		
-		Actuate.stop (objectTypedef);
+		Actuate.stop (object);
 		
 		update (2);
 		
-		Assert.areEqual (200, objectTypedef.x);
+		Assert.areEqual (200, object.x);
 		
 	}
 	
 	
 	@Test public function testClass ():Void {
 		
-		Assert.areEqual (100, objectClass.x);
+		var object = new ObjectClass (100);
+		
+		Assert.areEqual (100, object.x);
 		
 		update (0);
 		
-		Actuate.tween (objectClass, 2, { x: 300 }).ease (Linear.easeNone);
+		Actuate.tween (object, 2, { x: 300 }).ease (Linear.easeNone);
 		
 		update (0.5);
 		
-		Assert.areEqual (150, objectClass.x);
+		Assert.areEqual (150, object.x);
 		
 		update (1);
 		
-		Assert.areEqual (200, objectClass.x);
+		Assert.areEqual (200, object.x);
 		
-		Actuate.stop (objectClass);
+		Actuate.stop (object);
 		
 		update (2);
 		
-		Assert.areEqual (200, objectClass.x);
+		Assert.areEqual (200, object.x);
 		
 	}
 	
 	
 	@Test public function testSetter ():Void {
 		
-		Assert.areEqual (100, objectSetter.x);
+		var object = new ObjectSetter (100);
+		
+		Assert.areEqual (100, object.x);
 		
 		update (0);
 		
-		Actuate.tween (objectSetter, 2, { x: 300 }).ease (Linear.easeNone);
+		Actuate.tween (object, 2, { x: 300 }).ease (Linear.easeNone);
 		
 		update (0.5);
 		
-		Assert.areEqual (150, objectSetter.x);
+		Assert.areEqual (150, object.x);
 		
 		update (1);
 		
-		Assert.areEqual (200, objectSetter.x);
+		Assert.areEqual (200, object.x);
 		
-		Actuate.stop (objectSetter);
+		Actuate.stop (object);
 		
 		update (2);
 		
-		Assert.areEqual (200, objectSetter.x);
+		Assert.areEqual (200, object.x);
 		
 	}
 	
 	
 	@Test public function testGetterSetter ():Void {
 		
-		Assert.areEqual (100, objectGetterSetter.x);
+		var object = new ObjectGetterSetter (100);
+		
+		Assert.areEqual (100, object.x);
 		
 		update (0);
 		
-		Actuate.tween (objectGetterSetter, 2, { x: 300 }).ease (Linear.easeNone);
+		Actuate.tween (object, 2, { x: 300 }).ease (Linear.easeNone);
 		
 		update (0.5);
 		
-		Assert.areEqual (150, objectGetterSetter.x);
+		Assert.areEqual (150, object.x);
 		
 		update (1);
 		
-		Assert.areEqual (200, objectGetterSetter.x);
+		Assert.areEqual (200, object.x);
 		
-		Actuate.stop (objectGetterSetter);
+		Actuate.stop (object);
 		
 		update (2);
 		
-		Assert.areEqual (200, objectGetterSetter.x);
+		Assert.areEqual (200, object.x);
 		
 	}
 	
 	
 	@Test public function testSubClassSetter ():Void {
 		
-		Assert.areEqual (100, objectSubClassSetter.x);
+		var object = new ObjectSubClassSetter (100);
+		
+		Assert.areEqual (100, object.x);
 		
 		update (0);
 		
-		Actuate.tween (objectSubClassSetter, 2, { x: 300 }).ease (Linear.easeNone);
+		Actuate.tween (object, 2, { x: 300 }).ease (Linear.easeNone);
 		
 		update (0.5);
 		
-		Assert.areEqual (150, objectSubClassSetter.x);
+		Assert.areEqual (150, object.x);
 		
 		update (1);
 		
-		Assert.areEqual (200, objectSubClassSetter.x);
+		Assert.areEqual (200, object.x);
 		
-		Actuate.stop (objectSubClassSetter);
+		Actuate.stop (object);
 		
 		update (2);
 		
-		Assert.areEqual (200, objectSubClassSetter.x);
+		Assert.areEqual (200, object.x);
 		
 	}
 	
 	
 	@Test public function testSubClassGetterSetter ():Void {
 		
-		Assert.areEqual (100, objectSubClassGetterSetter.x);
+		var object = new ObjectSubClassGetterSetter (100);
+		
+		Assert.areEqual (100, object.x);
 		
 		update (0);
 		
-		Actuate.tween (objectSubClassGetterSetter, 2, { x: 300 }).ease (Linear.easeNone);
+		Actuate.tween (object, 2, { x: 300 }).ease (Linear.easeNone);
 		
 		update (0.5);
 		
-		Assert.areEqual (150, objectSubClassGetterSetter.x);
+		Assert.areEqual (150, object.x);
 		
 		update (1);
 		
-		Assert.areEqual (200, objectSubClassGetterSetter.x);
+		Assert.areEqual (200, object.x);
 		
-		Actuate.stop (objectSubClassGetterSetter);
+		Actuate.stop (object);
 		
 		update (2);
 		
-		Assert.areEqual (200, objectSubClassGetterSetter.x);
+		Assert.areEqual (200, object.x);
 		
 	}
 	
