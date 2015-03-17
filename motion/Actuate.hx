@@ -583,7 +583,7 @@ private class TransformOptions<T> {
 	 * @param	alpha		The end alpha of the target. If you wish to tween alpha and tint simultaneously, you must do them both as part of the ColorTransform. A value of null will make no change to the alpha of the object (Default is null)
 	 * @return		The current actuator instance, which can be used to apply properties like ease, delay, onComplete or onUpdate
 	 */
-	public function color (value:Float = 0x000000, strength:Float = 1, alpha:Null <Float> = null):IGenericActuator {
+	public function color (value:Int = 0x000000, strength:Float = 1, alpha:Null <Float> = null):IGenericActuator {
 		
 		var properties:Dynamic = { colorValue: value, colorStrength: strength };
 		
