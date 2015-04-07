@@ -32,7 +32,6 @@ class MethodActuator<T> extends SimpleActuator<T, T> {
 			currentParameters.push (this.properties.start[i]);
 			
 		}
-		
 	}
 	
 	
@@ -75,7 +74,7 @@ class MethodActuator<T> extends SimpleActuator<T, T> {
 		
 		super.update (currentTime);
 		
-		if (active) {
+		if (active && !paused) {
 			
 			for (i in 0...properties.start.length) {
 				
