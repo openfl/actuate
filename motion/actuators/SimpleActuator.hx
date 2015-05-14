@@ -195,7 +195,14 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 			
 			if (Std.is (start, Float)) {
 				
-				details = new PropertyDetails (cast target, i, start, getField (properties, i) - start, isField);
+				var value = getField (properties, i);
+				
+				#if (neko || js)
+				if (start == null) start = 0;
+				if (value == null) value = 0;
+				#end
+				
+				details = new PropertyDetails (cast target, i, start, value - start, isField);
 				propertyDetails.push (details);
 				
 			}
