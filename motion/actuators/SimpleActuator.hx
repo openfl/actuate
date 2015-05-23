@@ -168,7 +168,7 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 	private function initialize ():Void {
 		
 		var details:PropertyDetails<U>;
-		var start:Float;
+		var start:Dynamic;
 		
 		for (i in Reflect.fields (properties)) {
 			
