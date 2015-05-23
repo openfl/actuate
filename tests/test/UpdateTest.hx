@@ -10,6 +10,61 @@ import motion.Actuate;
 class UpdateTest {
 	
 	
+	@Test public function testCallbacks ():Void {
+		
+		var x = 0.0;
+		
+		var callback = function (value:Float) {
+			
+			x = value;
+			
+		}
+		
+		var calledUpdate = 0;
+		var calledComplete = 0;
+		
+		var onUpdate = function () {
+			
+			calledUpdate++;
+			
+		}
+		
+		var onComplete = function () {
+			
+			calledComplete++;
+			
+		}
+		
+		update (0);
+		
+		Actuate.update (callback, 2, [ 100 ], [ 300 ]).ease (Linear.easeNone).onUpdate (onUpdate).onComplete (onComplete);
+		
+		Assert.areEqual (0, calledUpdate);
+		Assert.areEqual (0, calledComplete);
+		
+		update (0);
+		
+		Assert.areEqual (1, calledUpdate);
+		Assert.areEqual (0, calledComplete);
+		
+		update (0.5);
+		
+		Assert.areEqual (2, calledUpdate);
+		Assert.areEqual (0, calledComplete);
+		
+		update (1);
+		
+		Assert.areEqual (3, calledUpdate);
+		Assert.areEqual (0, calledComplete);
+		
+		update (2);
+		
+		Assert.areEqual (4, calledUpdate);
+		Assert.areEqual (1, calledComplete);
+		
+	}
+	
+	
 	@Test public function testDynamic ():Void {
 		
 		var x = 0.0;
@@ -27,7 +82,7 @@ class UpdateTest {
 		update (0);
 		
 		Assert.areEqual (100, x);
-				
+		
 		update (0.5);
 		
 		Assert.areEqual (150, x);
