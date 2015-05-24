@@ -63,7 +63,7 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 			#if (flash || nme || openfl)
 			startTime = Lib.getTimer () / 1000;
 			#elseif lime
-			startTime = System.getTimer ();
+			startTime = System.getTimer () / 1000;
 			#else
 			startTime = Timer.stamp ();
 			#end
