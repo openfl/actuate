@@ -195,7 +195,7 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 			
 			if (Std.is (start, Float)) {
 				
-				var value = getField (properties, i);
+				var value:Dynamic = getField (properties, i);
 				
 				#if (neko || js)
 				if (start == null) start = 0;
