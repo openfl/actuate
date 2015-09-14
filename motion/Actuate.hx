@@ -525,13 +525,13 @@ import flash.geom.Matrix;
 #if (flash || nme || openfl)
 
 private class EffectsOptions {
-
-
+	
+	
 	private var duration:Float;
 	private var overwrite:Bool;
 	private var target:DisplayObject;
-
-
+	
+	
 	public function new (target:DisplayObject, duration:Float, overwrite:Bool) {
 		
 		this.target = target;
@@ -539,8 +539,8 @@ private class EffectsOptions {
 		this.overwrite = overwrite;
 		
 	}
-
-
+	
+	
 	/**
 	 * Creates a new BitmapFilter tween
 	 * @param	reference		A reference to the target's filter, which can be an array index or the class of the filter
@@ -554,19 +554,19 @@ private class EffectsOptions {
 		return Actuate.tween (target, duration, properties, overwrite, FilterActuator);
 		
 	}
-
-
+	
+	
 }
 
 
 private class TransformOptions<T> {
-
-
+	
+	
 	private var duration:Float;
 	private var overwrite:Bool;
 	private var target:T;
-
-
+	
+	
 	public function new (target:T, duration:Float, overwrite:Bool) {
 		
 		this.target = target;
@@ -574,8 +574,8 @@ private class TransformOptions<T> {
 		this.overwrite = overwrite;
 		
 	}
-
-
+	
+	
 	/**
 	 * Creates a new ColorTransform tween
 	 * @param	color		The color value
@@ -596,8 +596,8 @@ private class TransformOptions<T> {
 		return Actuate.tween (target, duration, properties, overwrite, TransformActuator);
 		
 	}
-
-
+	
+	
 	/**
 	 * Creates a new SoundTransform tween
 	 * @param	volume		The end volume for the target, or null if you would like to ignore this property (Default is null)
@@ -623,31 +623,31 @@ private class TransformOptions<T> {
 		return Actuate.tween (target, duration, properties, overwrite, TransformActuator);
 		
 	}
-
-
+	
+	
 }
 
 #end
 
 
 private class TweenTimer {
-
-
+	
+	
 	public var progress:Float;
-
-
+	
+	
 	public function new (progress:Float):Void {
 		
 		this.progress = progress;
 		
 	}
-
-
+	
+	
 }
 
 
 #if neko
-private class KVPairMap<K, V>  {
+private class KVPairMap<K, V> {
 	var keyList:Array<K>;
 	var valList:Array<V>;
 	public function new() {
@@ -702,7 +702,7 @@ private class KVPairMap<K, V>  {
 	
 }
 
-       private class FunctionMap < K, V > extends KVPairMap < K, V > {
+private class FunctionMap < K, V > extends KVPairMap < K, V > {
                 override function equals(k1:K, k2:K):Bool {
                         return Reflect.compareMethods(k1, k2);
                 }
