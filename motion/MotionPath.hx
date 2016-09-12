@@ -28,7 +28,7 @@ class MotionPath {
 	 * @param	x		The x position of the end point for the curve
 	 * @param	y		The y position of the end point for the curve
 	 * @param	controlX		The x position of the control point for the curve, which affects the angle and midpoint
-	 * @param	controlX		The x position of the control point for the curve, which affects the angle and midpoint
+	 * @param	controlY		The y position of the control point for the curve, which affects the angle and midpoint
 	 * @param	strength		The degree of emphasis that should be placed on this segment. If a motion path contains multiple segments with the same strength, they all receive equal emphasis (Default is 1)
 	 * @return		The current motion path instance
 	 */
