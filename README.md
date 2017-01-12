@@ -25,7 +25,9 @@ To add Actuate to a standard Haxe project, use `-lib actuate` in your HXML
 
 It's simple to get started!
 
-	Actuate.tween (MySprite, 1, { alpha: 1 });
+	Actuate.tween (MySprite, 2, { alpha: 1 });
+
+This statement says: "Change MySprite's alpha value to 1 over a 2-second duration".
 
 Actuate is designed to be simple to use and to take advantage strong code completion support in code editors like FlashDevelop, which means no more "reserved" keywords or "special" properties
 
