@@ -9,6 +9,8 @@ import flash.Lib;
 #elseif lime
 import lime.app.Application;
 import lime.system.System;
+#elseif js
+import js.Browser;
 #else
 #if neko
 import haxe.Log;
@@ -31,7 +33,7 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 	private static var actuatorsLength = 0;
 	private static var addedEvent = false;
 	
-	#if (!flash && !nme && !openfl && !lime)
+	#if (!flash && !nme && !openfl && !lime && !js)
 	private static var timer:Timer;
 	#end
 	
@@ -64,6 +66,8 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 			startTime = Lib.getTimer () / 1000;
 			#elseif lime
 			startTime = System.getTimer () / 1000;
+			#elseif js
+			startTime = Browser.window.performance.now () / 1000;
 			#else
 			startTime = Timer.stamp ();
 			#end
@@ -81,6 +85,8 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 				Lib.current.stage.addEventListener (Event.ENTER_FRAME, stage_onEnterFrame);
 				#elseif lime
 				Application.current.onUpdate.add (stage_onEnterFrame);
+				#elseif js
+				Browser.window.requestAnimationFrame(stage_onEnterFrame);
 				#else
 				timer = new Timer (Std.int(1000 / 30));
 				timer.run = stage_onEnterFrame;
@@ -276,6 +282,8 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 				pauseTime = Lib.getTimer ();
 				#elseif lime
 				pauseTime = System.getTimer ();
+				#elseif js
+				pauseTime = Browser.window.performance.now () / 1000;
 				#else
 				pauseTime = Timer.stamp ();
 				#end
@@ -299,6 +307,8 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 				timeOffset += (Lib.getTimer () - pauseTime) / 1000;
 				#elseif lime
 				timeOffset += (System.getTimer () - pauseTime) / 1000;
+				#elseif js
+				timeOffset += (Browser.window.performance.now () - pauseTime) / 1000;
 				#else
 				timeOffset += (Timer.stamp () - pauseTime);
 				#end
@@ -549,18 +559,19 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 	#else 
 	private 
 	#end
-	static function stage_onEnterFrame (#if (flash || nme || openfl) event:Event #elseif lime deltaTime:Int #end):Void {
-		
+	static function stage_onEnterFrame (#if (flash || nme || openfl) event:Event #elseif lime deltaTime:Int #elseif js deltaTime:Float #end):Void {
 		#if !actuate_manual_time
 			#if (flash || nme || openfl)
 			var currentTime:Float = Lib.getTimer () / 1000;
 			#elseif lime
 			var currentTime = System.getTimer () / 1000;
+			#elseif js
+			var currentTime = deltaTime / 1000;
 			#else
 			var currentTime = Timer.stamp ();
 			#end
 		#else
-			var currentTime = getTime();
+			var currentTime = getTime ();
 		#end
 		
 		var actuator:SimpleActuator<Dynamic, Dynamic>;
@@ -590,6 +601,10 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 			}
 			
 		}
+		
+		#if (!actuate_manual_time && js)
+		Browser.window.requestAnimationFrame(stage_onEnterFrame);
+		#end
 		
 	}
 	
