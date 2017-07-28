@@ -204,6 +204,8 @@ class TweenTest {
 		SimpleActuator.getTime = function () return time;
 		#if flash
 		SimpleActuator.stage_onEnterFrame (null);
+		#elseif js
+		SimpleActuator.stage_onEnterFrame (0);
 		#else
 		SimpleActuator.stage_onEnterFrame ();
 		#end

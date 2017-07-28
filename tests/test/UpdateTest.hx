@@ -120,7 +120,7 @@ class UpdateTest {
 		
 		Assert.areEqual (200, objectClass.x);
 		
-		Actuate.stop (objectClass);
+		Actuate.stop (objectClass.update);
 		
 		update (2);
 		
@@ -134,6 +134,8 @@ class UpdateTest {
 		SimpleActuator.getTime = function () return time;
 		#if flash
 		SimpleActuator.stage_onEnterFrame (null);
+		#elseif js
+		SimpleActuator.stage_onEnterFrame (0);
 		#else
 		SimpleActuator.stage_onEnterFrame ();
 		#end
