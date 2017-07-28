@@ -15,15 +15,19 @@ jobs:
          command: haxelib run munit gen
      - run:
          name: Run Tests (Flash)
+         working_directory: tests
          command: haxelib run munit test -as3 -norun
      - run:
          name: Run Tests (HTML5)
+         working_directory: tests
          command: haxelib run munit test -browser phantomjs
      - run:
          name: Run Tests (Neko)
+         working_directory: tests
          command: haxelib run munit test -neko
      - run:
          name: Run Tests (C++)
+         working_directory: tests
          command: haxelib run munit test -cpp
   
   Tests (Haxe 3.4.x):
@@ -40,15 +44,19 @@ jobs:
          command: haxelib run munit gen
      - run:
          name: Run Tests (Flash)
+         working_directory: tests
          command: haxelib run munit test -as3 -norun
      - run:
          name: Run Tests (HTML5)
+         working_directory: tests
          command: haxelib run munit test -browser phantomjs
      - run:
          name: Run Tests (Neko)
+         working_directory: tests
          command: haxelib run munit test -neko
      - run:
          name: Run Tests (C++)
+         working_directory: tests
          command: haxelib run munit test -cpp
 
 
