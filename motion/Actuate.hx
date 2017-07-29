@@ -24,7 +24,7 @@ class Actuate {
 	public static var defaultActuator:Class<IGenericActuator> = SimpleActuator;
 	public static var defaultEase:IEasing = Expo.easeOut;
 	private static var targetLibraries = new ObjectMap<Dynamic, Array<IGenericActuator>> ();
-	#if neko
+	#if (neko || cpp)
 	private static var methodLibraries = new FunctionMap<Dynamic, Array<IGenericActuator>> ();
 	#end
 	
@@ -75,7 +75,7 @@ class Actuate {
 	
 	private static function getLibrary<T> (target:T, allowCreation:Bool = true):Array<IGenericActuator> {
 		
-		#if neko
+		#if (neko || cpp)
 		
 		if (Reflect.isFunction (target)) {
 			
@@ -108,16 +108,23 @@ class Actuate {
 	 */
 	public static function isActive ():Bool {
 		
-		var result = false;
+		#if (neko || cpp)
 		
-		for (library in targetLibraries) {
+		for (library in methodLibraries) {
 			
-			result = true;
-			break;
+			return true;
 			
 		}
 		
-		return result;
+		#end
+		
+		for (library in targetLibraries) {
+			
+			return true;
+			
+		}
+		
+		return false;
 		
 	}
 	
@@ -170,7 +177,7 @@ class Actuate {
 	
 	public static function pauseAll ():Void {
 		
-		#if neko
+		#if (neko || cpp)
 		
 		for (library in methodLibraries) {
 			
@@ -202,7 +209,7 @@ class Actuate {
 	 */
 	public static function reset ():Void {
 		
-		#if neko
+		#if (neko || cpp)
 		
 		for (library in methodLibraries) {
 			
@@ -271,7 +278,7 @@ class Actuate {
 	
 	public static function resumeAll ():Void {
 		
-		#if neko
+		#if (neko || cpp)
 		
 		for (library in methodLibraries) {
 			
@@ -451,7 +458,7 @@ class Actuate {
 		
 		var target = actuator.target;
 		
-		#if neko
+		#if (neko || cpp)
 		
 		if (Reflect.isFunction (target)) {
 			
@@ -646,7 +653,7 @@ private class TweenTimer {
 }
 
 
-#if neko
+#if (neko || cpp)
 private class KVPairMap<K, V> {
 	var keyList:Array<K>;
 	var valList:Array<V>;
