@@ -41,7 +41,7 @@ class FilterActuator extends SimpleActuator<DisplayObject, BitmapFilter> {
 		} else {
 			
 			filterIndex = properties.filter;
-			this.filter = target.filters [filterIndex];
+			this.filter = target.filters[filterIndex];
 			
 		}
 		
@@ -54,15 +54,13 @@ class FilterActuator extends SimpleActuator<DisplayObject, BitmapFilter> {
 			
 			if (propertyName != "filter") {
 				
-				Reflect.setField (filter, propertyName, Reflect.field (properties, propertyName));
+				Reflect.setProperty (filter, propertyName, Reflect.field (properties, propertyName));
 				
 			}
 			
 		}
 		
-		var filters:Array <BitmapFilter> = getField (target, "filters");
-		Reflect.setField (filters, properties.filter, filter);
-		setField (target, "filters", filters);
+		setFilter ();
 		
 	}
 	
@@ -77,7 +75,7 @@ class FilterActuator extends SimpleActuator<DisplayObject, BitmapFilter> {
 			if (propertyName != "filter") {
 				
 				start = getField (filter, propertyName);
-				details = new PropertyDetails (filter, propertyName, start, Reflect.field (properties, propertyName) - start);
+				details = new PropertyDetails (filter, propertyName, start, Reflect.field (properties, propertyName) - start, Reflect.hasField (filter, "set_" + propertyName));
 				propertyDetails.push (details);
 				
 			}
@@ -90,15 +88,13 @@ class FilterActuator extends SimpleActuator<DisplayObject, BitmapFilter> {
 	}
 	
 	
-	private override function update (currentTime:Float):Void {
-		
-		super.update (currentTime);
+	private function setFilter ():Void {
 		
 		var filters = target.filters;
 		
 		if (filterIndex > -1) {
 			
-			Reflect.setField (filters, properties.filter, filter);
+			filters[filterIndex] = filter;
 			
 		} else {
 			
@@ -115,6 +111,14 @@ class FilterActuator extends SimpleActuator<DisplayObject, BitmapFilter> {
 		}
 		
 		setField (target, "filters", filters);
+		
+	}
+	
+	
+	private override function update (currentTime:Float):Void {
+		
+		super.update (currentTime);
+		setFilter ();
 		
 	}
 	

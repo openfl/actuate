@@ -326,7 +326,7 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 	
 	@:generic private inline function setField<V> (target:V, propertyName:String, value:Dynamic):Void {
 		
-		if (Reflect.hasField (target, propertyName)) {
+		if (Reflect.hasField (target, propertyName) #if flash && !untyped (target).hasOwnProperty ("set_" + i) #elseif html5 && !(untyped (target).__properties__ && untyped (target).__properties__["set_" + i]) #end) {
 			
 			#if flash
 			untyped target[propertyName] = value;
