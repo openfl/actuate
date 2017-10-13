@@ -165,7 +165,7 @@ Calls a function when the tween is resumed after being paused. You can also defi
 ### onUpdate
 
 ```haxe
-Actuate.tween (MySprite, 1, { alpha: 1 }).onUpdate (trace, "Tween updated");
+Actuate.tween (MySprite, 1, { alpha: 1 }).onUpdate (trace, ["Tween updated"]);
 ```
 
 Calls a function every time the tween updates. You can also define parameters to be used when calling the function
