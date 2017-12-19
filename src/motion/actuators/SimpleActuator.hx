@@ -82,11 +82,6 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 			addedEvent = true;
 			#if !actuate_manual_update
 				#if (flash || nme || openfl)
-				trace ("hi");
-				trace (Lib);
-				trace (Lib.current);
-				trace (Lib.current.stage);
-				trace (Lib.current.name);
 				Lib.current.stage.addEventListener (Event.ENTER_FRAME, stage_onEnterFrame);
 				#elseif lime
 				Application.current.onUpdate.add (stage_onEnterFrame);
