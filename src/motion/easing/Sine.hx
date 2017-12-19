@@ -5,14 +5,27 @@
 
 
 package motion.easing;
-	
-	
+
+
 class Sine {
 	
 	
-	static public var easeIn (get_easeIn, never):IEasing;
-	static public var easeInOut (get_easeInOut, never):IEasing;
-	static public var easeOut (get_easeOut, never):IEasing;
+	static public var easeIn (get, never):IEasing;
+	static public var easeInOut (get, never):IEasing;
+	static public var easeOut (get, never):IEasing;
+	
+	
+	#if commonjs
+	private static function __init__ () {
+		
+		untyped Object.defineProperties (Sine, {
+			"easeIn": { get: function () { return Sine.get_easeIn (); } },
+			"easeInOut": { get: function () { return Sine.get_easeInOut (); } },
+			"easeOut": { get: function () { return Sine.get_easeOut (); } }
+		});
+		
+	}
+	#end
 	
 	
 	private static function get_easeIn ():IEasing {

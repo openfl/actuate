@@ -1,16 +1,29 @@
 ﻿package motion;
-	
-	
+
+
 class MotionPath {
 	
 	
-	public var rotation (get, null):RotationPath;
-	public var x (get, null):IComponentPath;
-	public var y (get, null):IComponentPath;
+	public var rotation (get, never):RotationPath;
+	public var x (get, never):IComponentPath;
+	public var y (get, never):IComponentPath;
 	
 	private var _rotation:RotationPath;
 	private var _x:ComponentPath;
 	private var _y:ComponentPath;
+	
+	
+	#if commonjs
+	private static function __init__ () {
+		
+		untyped Object.defineProperties (MotionPath.prototype, {
+			"rotation": { get: untyped __js__ ("function () { return this.get_rotation (); }") },
+			"x": { get: untyped __js__ ("function () { return this.get_x (); }") },
+			"y": { get: untyped __js__ ("function () { return this.get_y (); }") },
+		});
+		
+	}
+	#end
 	
 	
 	public function new () {
@@ -96,11 +109,11 @@ class MotionPath {
 }
 
 
-class ComponentPath implements IComponentPath {
+private class ComponentPath implements IComponentPath {
 	
 	
 	public var start:Float;
-	public var end (get, null):Float;
+	public var end (get, never):Float;
 	
 	private var paths:Array <BezierPath>;
 	private var totalStrength:Float;
@@ -193,7 +206,7 @@ interface IComponentPath {
 }
 
 
-class BezierPath {
+private class BezierPath {
 	
 	
 	public var control:Float;
@@ -220,7 +233,7 @@ class BezierPath {
 }
 
 
-class LinearPath extends BezierPath {
+private class LinearPath extends BezierPath {
 	
 	
 	public function new (end:Float, strength:Float) {
@@ -240,10 +253,10 @@ class LinearPath extends BezierPath {
 }
 
 
-class RotationPath implements IComponentPath {
+private class RotationPath implements IComponentPath {
 	
 	
-	public var end (get, null):Float;
+	public var end (get, never):Float;
 	public var offset:Float;
 	public var start:Float;
 	

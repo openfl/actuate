@@ -7,12 +7,26 @@
 
 package motion.easing;
 
-	
-class Bounce {
 
-	static public var easeIn (get_easeIn, never):IEasing;
-	static public var easeInOut (get_easeInOut, never):IEasing;
-	static public var easeOut (get_easeOut, never):IEasing;
+class Bounce {
+	
+	
+	static public var easeIn (get, never):IEasing;
+	static public var easeInOut (get, never):IEasing;
+	static public var easeOut (get, never):IEasing;
+	
+	
+	#if commonjs
+	private static function __init__ () {
+		
+		untyped Object.defineProperties (Bounce, {
+			"easeIn": { get: function () { return Bounce.get_easeIn (); } },
+			"easeInOut": { get: function () { return Bounce.get_easeInOut (); } },
+			"easeOut": { get: function () { return Bounce.get_easeOut (); } }
+		});
+		
+	}
+	#end
 	
 	
 	private static function get_easeIn ():IEasing {
@@ -46,10 +60,10 @@ class Bounce {
 
 class BounceEaseIn implements IEasing {
 	
-		
+	
 	public function new () {
 		
-			
+		
 	}
 	
 	
@@ -105,17 +119,17 @@ class BounceEaseInOut implements IEasing {
 
 class BounceEaseOut implements IEasing {
 	
-		
+	
 	public function new () {
 		
-			
+		
 	}
 	
 	
 	public function calculate (k:Float):Float {
 		
 		return BounceEaseOut._ease(k,0,1,1);
-				
+		
 	}
 	
 	
