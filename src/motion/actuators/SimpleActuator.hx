@@ -82,6 +82,11 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 			addedEvent = true;
 			#if !actuate_manual_update
 				#if (flash || nme || openfl)
+				trace ("hi");
+				trace (Lib);
+				trace (Lib.current);
+				trace (Lib.current.stage);
+				trace (Lib.current.name);
 				Lib.current.stage.addEventListener (Event.ENTER_FRAME, stage_onEnterFrame);
 				#elseif lime
 				Application.current.onUpdate.add (stage_onEnterFrame);
@@ -270,12 +275,11 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 	
 	private override function pause ():Void {
 		
-		if (!paused)
-		{
-			paused = true;
-		
-			super.pause();
+		if (!paused) {
 			
+			paused = true;
+			
+			super.pause();
 			
 			#if !actuate_manual_time
 				#if (flash || nme || openfl)
@@ -290,8 +294,8 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 			#else
 			pauseTime = getTime();
 			#end
+			
 		}
-		
 		
 	}
 	
@@ -316,8 +320,7 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 			timeOffset += (getTime() - pauseTime) / 1000;
 			#end
 			
-			super.resume();
-			
+			super.resume ();
 			
 		}
 		

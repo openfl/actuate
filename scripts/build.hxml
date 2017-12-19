@@ -1,0 +1,10 @@
+-js ../lib/_gen/_.js
+Import
+-lib actuate
+-lib hxgenjs
+# -D hxextern
+# -D tsextern
+-cp ../node_modules/openfl/lib/
+-D openfl
+--remap flash:openfl
+--no-inline

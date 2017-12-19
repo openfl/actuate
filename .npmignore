@@ -1,0 +1,6 @@
+*.DS_Store
+test
+package-lock.json
+npm-debug.log
+*.map
+*.tgz
