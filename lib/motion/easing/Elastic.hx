@@ -9,9 +9,9 @@ import motion.easing.IEasing;
 extern class Elastic {
 	
 	
-	public static var easeIn (get, never):IEasing;
-	public static var easeInOut (get, never):IEasing;
-	public static var easeOut (get, never):IEasing;
+	public static var easeIn (default, null):IEasing;
+	public static var easeInOut (default, null):IEasing;
+	public static var easeOut (default, null):IEasing;
 	
 	
 }

@@ -9,7 +9,7 @@ import motion.easing.IEasing;
 extern class Linear {
 	
 	
-	public static var easeNone (get, never):IEasing;
+	public static var easeNone (default, null):IEasing;
 	
 	
 }
