@@ -1,58 +1,22 @@
+package motion.easing;
+
+
 /**
  * @author Joshua Granick
  * @author Robert Penner / http://www.robertpenner.com/easing_terms_of_use.html
  */
-
-
-package motion.easing;
-
-
 class Quad {
 	
 	
-	static public var easeIn (get, never):IEasing;
-	static public var easeInOut (get, never):IEasing;
-	static public var easeOut (get, never):IEasing;
-	
-	
-	#if commonjs
-	private static function __init__ () {
-		
-		untyped Object.defineProperties (Quad, {
-			"easeIn": { get: function () { return Quad.get_easeIn (); } },
-			"easeInOut": { get: function () { return Quad.get_easeInOut (); } },
-			"easeOut": { get: function () { return Quad.get_easeOut (); } }
-		});
-		
-	}
-	#end
-	
-	
-	private static function get_easeIn ():IEasing {
-		
-		return new QuadEaseIn ();
-		
-	}
-	
-	
-	private static function get_easeInOut ():IEasing {
-		
-		return new QuadEaseInOut ();
-		
-	}
-	
-	
-	private static function get_easeOut ():IEasing {
-		
-		return new QuadEaseOut ();
-		
-	}
+	public static var easeIn (default, null):IEasing = new QuadEaseIn ();
+	public static var easeInOut (default, null):IEasing = new QuadEaseInOut ();
+	public static var easeOut (default, null):IEasing = new QuadEaseOut ();
 	
 	
 }
 
 
-class QuadEaseIn implements IEasing {
+private class QuadEaseIn implements IEasing {
 	
 	
 	public function new () {
@@ -79,7 +43,7 @@ class QuadEaseIn implements IEasing {
 }
 
 
-class QuadEaseInOut implements IEasing {
+private class QuadEaseInOut implements IEasing {
 	
 	
 	public function new () {
@@ -112,7 +76,7 @@ class QuadEaseInOut implements IEasing {
 }
 
 
-class QuadEaseOut implements IEasing {
+private class QuadEaseOut implements IEasing {
 	
 	
 	public function new () {

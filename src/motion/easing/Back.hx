@@ -1,59 +1,23 @@
-﻿/**
+﻿package motion.easing;
+
+
+/**
  * @author Joshua Granick
  * @author Zeh Fernando, Nate Chatellier
  * @author Robert Penner / http://www.robertpenner.com/easing_terms_of_use.html
  */
-
-
-package motion.easing;
-
-
 class Back {
 	
 	
-	static public var easeIn (get, never):IEasing;
-	static public var easeInOut (get, never):IEasing;
-	static public var easeOut (get, never):IEasing;
-	
-	
-	#if commonjs
-	private static function __init__ () {
-		
-		untyped Object.defineProperties (Back, {
-			"easeIn": { get: function () { return Back.get_easeIn (); } },
-			"easeInOut": { get: function () { return Back.get_easeInOut (); } },
-			"easeOut": { get: function () { return Back.get_easeOut (); } }
-		});
-		
-	}
-	#end
-	
-	
-	private static function get_easeIn ():IEasing {
-		
-		return new BackEaseIn (1.70158);
-		
-	}
-	
-	
-	private static function get_easeInOut ():IEasing {
-		
-		return new BackEaseInOut (1.70158);
-		
-	}
-	
-	
-	private static function get_easeOut ():IEasing {
-		
-		return new BackEaseOut (1.70158);
-		
-	}
+	public static var easeIn (default, null):IEasing = new BackEaseIn (1.70158);
+	public static var easeInOut (default, null):IEasing = new BackEaseInOut (1.70158);
+	public static var easeOut (default, null):IEasing = new BackEaseOut (1.70158);
 	
 	
 }
 
 
-class BackEaseIn implements IEasing {
+private class BackEaseIn implements IEasing {
 	
 	
 	public var s:Float;
@@ -83,7 +47,7 @@ class BackEaseIn implements IEasing {
 }
 
 
-class BackEaseInOut implements IEasing {
+private class BackEaseInOut implements IEasing {
 	
 	
 	public var s:Float;
@@ -115,7 +79,7 @@ class BackEaseInOut implements IEasing {
 }
 
 
-class BackEaseOut implements IEasing {
+private class BackEaseOut implements IEasing {
 	
 	
 	public var s:Float;

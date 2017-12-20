@@ -1,59 +1,23 @@
+package motion.easing;
+
+
 /**
  * @author Joshua Granick
  * @author Philippe / http://philippe.elsass.me
  * @author Robert Penner / http://www.robertpenner.com/easing_terms_of_use.html
  */
-
-
-package motion.easing;
-
-
 class Cubic {
 	
 	
-	static public var easeIn (get, never):IEasing;
-	static public var easeInOut (get, never):IEasing;
-	static public var easeOut (get, never):IEasing;
-	
-	
-	#if commonjs
-	private static function __init__ () {
-		
-		untyped Object.defineProperties (Cubic, {
-			"easeIn": { get: function () { return Cubic.get_easeIn (); } },
-			"easeInOut": { get: function () { return Cubic.get_easeInOut (); } },
-			"easeOut": { get: function () { return Cubic.get_easeOut (); } }
-		});
-		
-	}
-	#end
-	
-	
-	private static function get_easeIn ():IEasing {
-		
-		return new CubicEaseIn ();
-		
-	}
-	
-	
-	private static function get_easeInOut ():IEasing {
-		
-		return new CubicEaseInOut ();
-		
-	}
-	
-	
-	private static function get_easeOut ():IEasing {
-		
-		return new CubicEaseOut ();
-		
-	}
+	public static var easeIn (default, null):IEasing = new CubicEaseIn ();
+	public static var easeInOut (default, null):IEasing = new CubicEaseInOut ();
+	public static var easeOut (default, null):IEasing = new CubicEaseOut ();
 	
 	
 }
 
 
-class CubicEaseIn implements IEasing {
+private class CubicEaseIn implements IEasing {
 	
 	
 	public function new () {
@@ -80,7 +44,7 @@ class CubicEaseIn implements IEasing {
 }
 
 
-class CubicEaseInOut implements IEasing {
+private class CubicEaseInOut implements IEasing {
 	
 	
 	public function new () {
@@ -107,7 +71,7 @@ class CubicEaseInOut implements IEasing {
 }
 
 
-class CubicEaseOut implements IEasing {
+private class CubicEaseOut implements IEasing {
 	
 	
 	public function new () {

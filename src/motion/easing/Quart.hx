@@ -1,59 +1,23 @@
+package motion.easing;
+
+
 /**
  * @author Joshua Granick
  * @author Philippe / http://philippe.elsass.me
  * @author Robert Penner / http://www.robertpenner.com/easing_terms_of_use.html
  */
-
-
-package motion.easing;
-
-
 class Quart {
 	
 	
-	static public var easeIn (get, never):IEasing;
-	static public var easeInOut (get, never):IEasing;
-	static public var easeOut (get, never):IEasing;
-	
-	
-	#if commonjs
-	private static function __init__ () {
-		
-		untyped Object.defineProperties (Quart, {
-			"easeIn": { get: function () { return Quart.get_easeIn (); } },
-			"easeInOut": { get: function () { return Quart.get_easeInOut (); } },
-			"easeOut": { get: function () { return Quart.get_easeOut (); } }
-		});
-		
-	}
-	#end
-	
-	
-	private static function get_easeIn ():IEasing {
-		
-		return new QuartEaseIn ();
-		
-	}
-	
-	
-	private static function get_easeInOut ():IEasing {
-		
-		return new QuartEaseInOut ();
-		
-	}
-	
-	
-	private static function get_easeOut ():IEasing {
-		
-		return new QuartEaseOut ();
-		
-	}
+	public static var easeIn (default, null):IEasing = new QuartEaseIn ();
+	public static var easeInOut (default, null):IEasing = new QuartEaseInOut ();
+	public static var easeOut (default, null):IEasing = new QuartEaseOut ();
 	
 	
 }
 
 
-class QuartEaseIn implements IEasing {
+private class QuartEaseIn implements IEasing {
 	
 	
 	public function new () {
@@ -80,7 +44,7 @@ class QuartEaseIn implements IEasing {
 }
 
 
-class QuartEaseInOut implements IEasing {
+private class QuartEaseInOut implements IEasing {
 	
 	
 	public function new () {
@@ -111,7 +75,7 @@ class QuartEaseInOut implements IEasing {
 }
 
 
-class QuartEaseOut implements IEasing {
+private class QuartEaseOut implements IEasing {
 	
 	
 	public function new () {

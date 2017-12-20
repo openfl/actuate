@@ -1,59 +1,22 @@
-﻿/**
+﻿package motion.easing;
+
+
+/**
  * @author Joshua Granick
  * @author Robert Penner / http://www.robertpenner.com/easing_terms_of_use.html
  */
-
-
-package motion.easing;
-
-
-
 class Expo {
 	
 	
-	static public var easeIn (get, never):IEasing;
-	static public var easeInOut (get, never):IEasing;
-	static public var easeOut (get, never):IEasing;
-	
-	
-	#if commonjs
-	private static function __init__ () {
-		
-		untyped Object.defineProperties (Expo, {
-			"easeIn": { get: function () { return Expo.get_easeIn (); } },
-			"easeInOut": { get: function () { return Expo.get_easeInOut (); } },
-			"easeOut": { get: function () { return Expo.get_easeOut (); } }
-		});
-		
-	}
-	#end
-	
-	
-	private static function get_easeIn ():IEasing {
-		
-		return new ExpoEaseIn ();
-		
-	}
-	
-	
-	private static function get_easeInOut ():IEasing {
-		
-		return new ExpoEaseInOut ();
-		
-	}
-	
-	
-	private static function get_easeOut ():IEasing {
-		
-		return new ExpoEaseOut ();
-		
-	}
+	public static var easeIn (default, null):IEasing = new ExpoEaseIn ();
+	public static var easeInOut (default, null):IEasing = new ExpoEaseInOut ();
+	public static var easeOut (default, null):IEasing = new ExpoEaseOut ();
 	
 	
 }
 
 
-class ExpoEaseIn implements IEasing {
+private class ExpoEaseIn implements IEasing {
 	
 	
 	public function new () {
@@ -79,7 +42,7 @@ class ExpoEaseIn implements IEasing {
 }
 
 
-class ExpoEaseInOut implements IEasing {
+private class ExpoEaseInOut implements IEasing {
 	
 	
 	public function new () {
@@ -120,7 +83,7 @@ class ExpoEaseInOut implements IEasing {
 }
 
 
-class ExpoEaseOut implements IEasing {
+private class ExpoEaseOut implements IEasing {
 	
 	
 	public function new () {

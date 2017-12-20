@@ -1,47 +1,23 @@
+package motion.easing;
+
+
 /**
  * @author Joshua Granick
  * @author Philippe / http://philippe.elsass.me
  * @author Robert Penner / http://www.robertpenner.com/easing_terms_of_use.html
  */
-
-
-package motion.easing;
-
-
-
 class Elastic {
 	
 	
-	static public var easeIn (get_easeIn, never):IEasing;
-	static public var easeInOut (get_easeInOut, never):IEasing;
-	static public var easeOut (get_easeOut, never):IEasing;
-	
-	
-	private static function get_easeIn ():IEasing {
-		
-		return new ElasticEaseIn (0.1, 0.4);
-		
-	}
-	
-	
-	private static function get_easeInOut ():IEasing {
-		
-		return new ElasticEaseInOut (0.1, 0.4);
-		
-	}
-	
-	
-	private static function get_easeOut ():IEasing {
-		
-		return new ElasticEaseOut (0.1, 0.4);
-		
-	}
+	public static var easeIn (default, null):IEasing = new ElasticEaseIn (0.1, 0.4);
+	public static var easeInOut (default, null):IEasing = new ElasticEaseInOut (0.1, 0.4);
+	public static var easeOut (default, null):IEasing = new ElasticEaseOut (0.1, 0.4);
 	
 	
 }
 
 
-class ElasticEaseIn implements IEasing {
+private class ElasticEaseIn implements IEasing {
 	
 	
 	public var a:Float;
@@ -91,7 +67,7 @@ class ElasticEaseIn implements IEasing {
 }
 
 
-class ElasticEaseInOut implements IEasing {
+private class ElasticEaseInOut implements IEasing {
 	
 	
 	public var a:Float;
@@ -153,7 +129,7 @@ class ElasticEaseInOut implements IEasing {
 }
 
 
-class ElasticEaseOut implements IEasing {
+private class ElasticEaseOut implements IEasing {
 	
 	
 	public var a:Float;

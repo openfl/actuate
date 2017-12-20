@@ -1,58 +1,22 @@
-﻿/**
+﻿package motion.easing;
+
+
+/**
  * @author Joshua Granick
  * @author Robert Penner / http://www.robertpenner.com/easing_terms_of_use.html
  */
-
-
-package motion.easing;
-
-
 class Sine {
 	
 	
-	static public var easeIn (get, never):IEasing;
-	static public var easeInOut (get, never):IEasing;
-	static public var easeOut (get, never):IEasing;
-	
-	
-	#if commonjs
-	private static function __init__ () {
-		
-		untyped Object.defineProperties (Sine, {
-			"easeIn": { get: function () { return Sine.get_easeIn (); } },
-			"easeInOut": { get: function () { return Sine.get_easeInOut (); } },
-			"easeOut": { get: function () { return Sine.get_easeOut (); } }
-		});
-		
-	}
-	#end
-	
-	
-	private static function get_easeIn ():IEasing {
-		
-		return new SineEaseIn ();
-		
-	}
-	
-	
-	private static function get_easeInOut ():IEasing {
-		
-		return new SineEaseInOut ();
-		
-	}
-	
-	
-	private static function get_easeOut ():IEasing {
-		
-		return new SineEaseOut ();
-		
-	}
+	public static var easeIn (default, null):IEasing = new SineEaseIn ();
+	public static var easeInOut (default, null):IEasing = new SineEaseInOut ();
+	public static var easeOut (default, null):IEasing = new SineEaseOut ();
 	
 	
 }
 
 
-class SineEaseIn implements IEasing {
+private class SineEaseIn implements IEasing {
 	
 	
 	public function new () {
@@ -79,7 +43,7 @@ class SineEaseIn implements IEasing {
 }
 
 
-class SineEaseInOut implements IEasing {
+private class SineEaseInOut implements IEasing {
 	
 	
 	public function new () {
@@ -106,7 +70,7 @@ class SineEaseInOut implements IEasing {
 }
 
 
-class SineEaseOut implements IEasing {
+private class SineEaseOut implements IEasing {
 	
 	
 	public function new () {
