@@ -1,6 +1,7 @@
 -js ../lib/_gen/_.js
-Import
--lib actuate
+ImportAll
+# -lib actuate
+-cp ../src
 -lib hxgenjs
 # -D hxextern
 # -D tsextern
