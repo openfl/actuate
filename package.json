@@ -24,6 +24,8 @@
     "build": "cd scripts && haxe build.hxml",
     "prepublishOnly": "npm run build"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "openfl": "^6.5.3-alpha.6"
+  },
   "dependencies": {}
 }
