@@ -2,6 +2,7 @@
 samples/**/package-lock.json
 lib/_gen
 node_modules
+dist
 test/*/bundle.js
 package-lock.json
 npm-debug.log

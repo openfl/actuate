@@ -7,5 +7,6 @@ ImportAll
 # -D tsextern
 -cp ../node_modules/openfl/lib/
 -D openfl
+-D commonjs
 --remap flash:openfl
 --no-inline

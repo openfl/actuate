@@ -5,7 +5,6 @@ import motion.actuators.FilterActuator;
 import motion.actuators.GenericActuator;
 import motion.actuators.MethodActuator;
 import motion.actuators.MotionPathActuator;
-import motion.actuators.PropertyDetails;
 import motion.actuators.SimpleActuator;
 import motion.actuators.TransformActuator;
 import motion.easing.Back;
