@@ -14,11 +14,11 @@ module.exports = {
 		}
 	},
 	externals: {
-		openfl: {
-			commonjs: 'openfl',
-			commonjs2: 'openfl',
-			amd: 'openfl',
-			root: 'openfl'
-		}
+		"openfl/display/DisplayObject": "openfl.display.DisplayObject",
+		"openfl/display/Sprite": "openfl.display.Sprite",
+		"openfl/events/Event": "openfl.events.Event",
+		"openfl/geom/ColorTransform": "openfl.geom.ColorTransform",
+		"openfl/media/SoundTransform": "openfl.media.SoundTransform",
+		"openfl/Lib": "openfl.Lib"
 	}
 };
