@@ -31,25 +31,18 @@
     "build": "npm run build-lib && npm run build-dist",
     "build-dist": "webpack --config webpack.dev.js && webpack --config webpack.prod.js",
     "build-lib": "cd scripts && haxe build.hxml",
-    "prepublishOnly": "npm run build",
-    "install": "napa",
-    "prepare": "napa && npm run build"
+    "prepublishOnly": "npm run build"
   },
   "config": {
     "haxe": "3.4.4"
   },
   "devDependencies": {
     "haxe": "^4.1.0",
-    "napa": "^3.0.0",
+    "hxgenjs": "kevinresol/hxgenjs",
     "openfl": "^6.5.3-alpha.6",
     "uglifyjs-webpack-plugin": "^1.1.4",
     "webpack": "^3.10.0",
     "webpack-merge": "^4.1.1"
-  },
-  "napa": {
-    "hxgenjs": "kevinresol/hxgenjs",
-    "tink_macro": "haxetink/tink_macro#0.15.4",
-    "tink_core": "haxetink/tink_core#1.15.3"
   },
   "dependencies": {}
 }
