@@ -37,7 +37,7 @@ class MotionPath {
 	
 	
 	/**
-	 * Adds a bezier curve to the current motion path
+	 * Adds a quadratic bezier curve to the current motion path
 	 * @param	x		The x position of the end point for the curve
 	 * @param	y		The y position of the end point for the curve
 	 * @param	controlX		The x position of the control point for the curve, which affects the angle and midpoint
@@ -47,6 +47,22 @@ class MotionPath {
 	 */
 	public function bezier (x:Float, y:Float, controlX:Float, controlY:Float, strength:Float = 1):MotionPath {
 		
+		return bezierN (x, y, [controlX], [controlY], strength);
+		
+	}
+	
+	
+	/**
+	 * Adds a bezier curve of arbitrary degree to the current motion path
+	 * @param	x		The x position of the end point for the curve
+	 * @param	y		The y position of the end point for the curve
+	 * @param	controlX		The x positions of the control points for the curve, which affects the angle and midpoint. The number of control points determines the degree of the curve
+	 * @param	controlY		The y positions of the control points for the curve, which affects the angle and midpoint. The number of control points determines the degree of the curve
+	 * @param	strength		The degree of emphasis that should be placed on this segment. If a motion path contains multiple segments with the same strength, they all receive equal emphasis (Default is 1)
+	 * @return		The current motion path instance
+	 */
+	public function bezierN (x:Float, y:Float, controlX:Array<Float>, controlY:Array<Float>, strength:Float = 1):MotionPath {
+
 		_x.addPath (new BezierPath (x, controlX, strength));
 		_y.addPath (new BezierPath (y, controlY, strength));
 		
@@ -64,10 +80,7 @@ class MotionPath {
 	 */
 	public function line (x:Float, y:Float, strength:Float = 1):MotionPath {
 		
-		_x.addPath (new LinearPath (x, strength));
-		_y.addPath (new LinearPath (y, strength));
-		
-		return this;
+		return bezierN (x, y, [], [], strength);
 		
 	}
 	
@@ -209,12 +222,12 @@ interface IComponentPath {
 private class BezierPath {
 	
 	
-	public var control:Float;
+	public var control:Array<Float>;
 	public var end:Float;
 	public var strength:Float;
 	
 	
-	public function new (end:Float, control:Float, strength:Float) {
+	public function new (end:Float, control:Array<Float>, strength:Float) {
 		
 		this.end = end;
 		this.control = control;
@@ -225,27 +238,46 @@ private class BezierPath {
 	
 	public function calculate (start:Float, k:Float):Float {
 		
-		return (1 - k) * (1 - k) * start + 2 * (1 - k) * k * control + k * k * end;
-		
-	}
-	
-	
-}
+		// use faster formulas for the common (linear, quadratic, cubic) cases
 
+		var l = 1 - k;
 
-private class LinearPath extends BezierPath {
-	
-	
-	public function new (end:Float, strength:Float) {
-		
-		super (end, 0, strength);
-		
-	}
-	
-	
-	public override function calculate (start:Float, k:Float):Float {
-		
-		return start + k * (end - start);
+		switch (control.length) {
+
+			case 0:
+
+				return l * start + k * end;
+
+			case 1:
+
+				return l*l * start + 2*l*k * control[0] + k*k * end;
+
+			case 2:
+
+				return l*l*l * start + 3*l*l*k * control[0] + 3*l*k*k * control[1] + k*k*k * end;
+
+			default:
+
+				// General explicit form (https://en.wikipedia.org/wiki/B%C3%A9zier_curve#General_definition)
+				// To speed up we compute the coefficient (n i) l^(n-i) k^i from its previous value at every step.
+
+				if(l < 1e-7) {
+					return end;						// avoid numerical issues
+				}
+				var r = k / l;
+
+				var n = control.length + 1;			// degree
+				var coeff = Math.pow(l, n);			// at each step i, coeff == binom(n,i) l^(n-i) k^i
+				var res = coeff * start;
+
+				for (i in 1...n) {
+					coeff *= r * (n + 1 - i) / i;	// compute coeff from its (i-1)-th value
+					res += coeff * control[i-1];
+				}
+				coeff *= r / n;						// coeff now equals k^n
+				return res + coeff * end;
+
+		}
 		
 	}
 	
