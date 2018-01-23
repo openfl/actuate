@@ -1,4 +1,4 @@
-package motion;
+﻿package motion;
 
 
 class MotionPath {
@@ -65,6 +65,23 @@ class MotionPath {
 
 		_x.addPath (new BezierPath (x, controlX, strength));
 		_y.addPath (new BezierPath (y, controlY, strength));
+		
+		return this;
+		
+	}
+	
+	
+	/**
+	 * Adds a smooth bezier spline that passes through a given set of points
+	 * @param	x		The x positions of the points to pass through
+	 * @param	y		The y positions of the points to pass through
+	 * @param	strength		The degree of emphasis that should be placed on this segment. If a motion path contains multiple segments with the same strength, they all receive equal emphasis (Default is 1)
+	 * @return		The current motion path instance
+	 */
+	public function bezierSpline (x:Array<Float>, y:Array<Float>, strength:Float = 1):MotionPath {
+
+		_x.addPath (new BezierSplinePath (x, strength));
+		_y.addPath (new BezierSplinePath (y, strength));
 		
 		return this;
 		
@@ -333,6 +350,129 @@ private class BezierPath implements IComponentPath {
 	public function get_end ():Float {
 		
 		return _end;
+		
+	}
+	
+}
+
+
+private class BezierSplinePath extends ComponentPath {
+	
+	
+	public var through:Array<Float>;
+	
+	
+	public function new (through:Array<Float>, strength:Float) {
+		
+		// the whole path depends on the starting point, so we compute it in set_start
+
+		super();
+
+		this.through = through;
+		this.strength = strength;
+		
+	}
+	
+
+	// Compute the control points (cubic: 2 for each segment) of a smooth bezier spline
+	// that starts at 'start' and passes through all 'through' points.
+	// Code from: https://www.particleincell.com/wp-content/uploads/2012/06/bezier-spline.js 
+	// Explanation: http://www.particleincell.com/2012/bezier-splines/ 
+ 	// With correction from: http://www.jacos.nl/jacos_html/spline/
+	
+	private function computeControlPoints (start:Float):Array<Array<Float>> {
+
+		var K = [start].concat(through);
+		var n = K.length;
+
+		var control = [ for(_ in 0...n) [0.0, 0.0] ];	// 2 control points for each segment
+		
+		// rhs vector
+		var a = new Array<Float>();
+		var b = new Array<Float>();
+		var c = new Array<Float>();
+		var r = new Array<Float>();
+		
+		// left most segment
+		a[0] = 0;
+		b[0] = 2;
+		c[0] = 1;
+		r[0] = K[0] + 2 * K[1];
+		
+		// internal segments
+		for (i in 1...n - 1) {
+			a[i] = 1;
+			b[i] = 4;
+			c[i] = 1;
+			r[i] = 4 * K[i] + 2 * K[i+1];
+		}
+				
+		// right segment
+		a[n-1] = 1;
+		b[n-1] = 2;
+		c[n-1] = 0;
+		r[n-1] = 3 * K[n-1];
+		
+		// solves Ax = b with the Thomas algorithm (from Wikipedia)
+		for (i in 1...n) {
+			var m = a[i] / b[i-1];
+			b[i] -= m * c[i - 1];
+			r[i] -= m * r[i-1];
+		}
+	
+		control[n-1][0] = r[n-1] / b[n-1];
+		var i = n - 2;
+		while(i >= 0) {
+			control[i][0] = (r[i] - c[i] * control[i+1][0]) / b[i];
+			i--;
+		}
+			
+		// we have control[i][0], now compute control[i][1]
+		for (i in 0...n-1) {
+			control[i][1] = 2 * K[i+1] - control[i+1][0];
+		}
+		control[n-1][1] = 0.5 * (K[n] + control[n-1][0]);
+
+		control.pop();	// the last element is auxiliary for the computation
+		
+		return control;
+	}
+	
+
+	// Get & Set Methods
+	
+	
+	override public function set_start (value:Float):Float {
+
+		// when the start is first set (or when it changes), we compute the control
+		// points of the path and add the corresponding bezier segments
+
+		if (paths.length == 0 || Math.abs(value - start) > 1e-7) {
+
+			var control = computeControlPoints(value);
+
+			var pathStrength = strength / control.length;
+			strength = 0;						// will be rewritten by addPath
+			paths.splice(0, paths.length);		// reset
+	
+			for (i in 0...control.length) {
+				
+				addPath (new BezierPath (through[i], control[i], pathStrength));
+
+			}
+
+		}
+
+		return super.set_start (value);
+		
+	}
+	
+	
+	override public function get_end ():Float {
+
+		// this works even before computing the path segments
+		
+		return through[ through.length - 1 ];
 		
 	}
 	
