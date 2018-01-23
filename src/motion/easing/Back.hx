@@ -14,13 +14,33 @@ class Back {
 	public static var easeOut (default, null):IEasing = new BackEaseOut (1.70158);
 	
 	
+	public static function easeInWith (s:Float):IEasing {
+
+		return new BackEaseIn (s);
+
+	}
+
+
+	public static function easeInOutWith (s:Float):IEasing {
+
+		return new BackEaseInOut (s);
+
+	}
+
+
+	public static function easeOutWith (s:Float):IEasing {
+
+		return new BackEaseOut (s);
+
+	}
+
 }
 
 
 private class BackEaseIn implements IEasing {
 	
 	
-	public var s:Float;
+	public var s (default, null):Float;
 	
 	
 	public function new (s:Float) {

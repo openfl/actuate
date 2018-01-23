@@ -13,15 +13,35 @@ class Elastic {
 	public static var easeInOut (default, null):IEasing = new ElasticEaseInOut (0.1, 0.4);
 	public static var easeOut (default, null):IEasing = new ElasticEaseOut (0.1, 0.4);
 	
-	
+
+	public static function easeInWith (a:Float, p:Float):IEasing {
+
+		return new ElasticEaseIn (a, p);
+
+	}
+
+
+	public static function easeInOutWith (a:Float, p:Float):IEasing {
+
+		return new ElasticEaseInOut (a, p);
+
+	}
+
+
+	public static function easeOutWith (a:Float, p:Float):IEasing {
+
+		return new ElasticEaseOut (a, p);
+
+	}
+
 }
 
 
 private class ElasticEaseIn implements IEasing {
 	
 	
-	public var a:Float;
-	public var p:Float;
+	public var a (default, null):Float;
+	public var p (default, null):Float;
 	
 	
 	public function new (a:Float, p:Float) {
