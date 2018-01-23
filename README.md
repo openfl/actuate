@@ -98,7 +98,11 @@ Actuate.effects (MySprite, 1).filter (BlurFilter, { blurX: 10, blurY: 10 });
 You even can create bezier curves, and complete motion paths, like in the Flash IDE. Chain multiple path commands together to create one solid path you can tween your objects across using the MotionPathActuator
 
 ```haxe
-var path = new MotionPath ().bezier (100, 100, 50, 50).line (20, 20);
+var path = new MotionPath ()
+  .bezier (100, 100, 50, 50)                 // quadratic, 1 control point
+  .bezierN (200, 200, [50, 100], [50, 100])  // general, any number of control points
+  .bezierSpline ([100, 100], [50, 50])       // spline, passing through the given points
+  .line (20, 20);                            // linear
 Actuate.motionPath (MySprite, 1, { x: path.x, y: path.y });
 ```
 
