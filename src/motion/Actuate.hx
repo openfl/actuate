@@ -20,7 +20,10 @@ import flash.display.DisplayObject;
 
 class Actuate {
 	
-	
+	/**
+	 * global speed control (for bullet time effect, fast forward effect)
+	 */
+	public static var speedGlobal:Float = 1;
 	public static var defaultActuator:Class<IGenericActuator> = SimpleActuator;
 	public static var defaultEase:IEasing = Expo.easeOut;
 	private static var targetLibraries = new ObjectMap<Dynamic, Array<IGenericActuator>> ();
