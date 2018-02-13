@@ -7,5 +7,6 @@
   "version": "1.8.7",
   "releasenote": "Timer fix",
   "contributors": [ "singmajesty" ],
-  "dependencies": {}
+  "dependencies": {},
+  "classPath": "src"
 }
