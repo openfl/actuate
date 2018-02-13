@@ -100,6 +100,26 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 	/**
 	 * @inheritDoc
 	 */
+	private override function apply ():Void {
+		
+		super.apply();
+		
+		if (toggleVisible && Reflect.hasField (properties, "alpha")) {
+			
+			if (getField (target, "visible") != null) {
+				
+				setField (target, "visible", Reflect.field (properties, "alpha") > 0);
+				
+			}
+			
+		}
+		
+	}
+	
+	
+	/**
+	 * @inheritDoc
+	 */
 	public override function autoVisible (?value:Null<Bool>):GenericActuator<T> {
 		
 		if (value == null) {
