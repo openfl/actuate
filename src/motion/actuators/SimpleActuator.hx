@@ -393,7 +393,7 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 	}
 	
 	
-	private inline function setProperty (details:PropertyDetails<U>, value:Dynamic):Void {
+	private function setProperty (details:PropertyDetails<U>, value:Dynamic):Void {
 		
 		if (details.isField) {
 			
