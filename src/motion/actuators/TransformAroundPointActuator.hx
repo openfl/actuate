@@ -30,9 +30,9 @@ class TransformAroundPointActuator<T, U> extends SimpleActuator<T, U> {
 		originY = getField (target, "y");
 		
 		var transformAroundPointProps = Reflect.field (properties, "transformAroundPoint");
-		for (i in Reflect.fields (transformAroundPointProps)) {
+		for (propertyName in Reflect.fields (transformAroundPointProps)) {
 			
-			switch (i) {
+			switch (propertyName) {
 				case "point": 
 						var point = Reflect.field (transformAroundPointProps, "point");
 						var isLocal = Reflect.hasField (transformAroundPointProps, "pointIsLocal") && Reflect.field (transformAroundPointProps, "pointIsLocal");
@@ -51,8 +51,8 @@ class TransformAroundPointActuator<T, U> extends SimpleActuator<T, U> {
 						Reflect.setField (properties, "scaleY", value);
 						
 				case "rotation" | "scaleX" | "scaleY":
-						var value = Reflect.field (transformAroundPointProps, i);
-						Reflect.setField (properties, i, value);
+						var value = Reflect.field (transformAroundPointProps, propertyName);
+						Reflect.setField (properties, propertyName, value);
 				default:
 			}
 			
