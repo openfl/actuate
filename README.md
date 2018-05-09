@@ -1,4 +1,4 @@
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE.md) [![Haxelib Version](https://img.shields.io/github/tag/openfl/actuate.svg?style=flat&label=haxelib)](http://lib.haxe.org/p/actuate) [![Build Status](https://img.shields.io/circleci/project/github/openfl/actuate/master.svg)](https://circleci.com/gh/openfl/actuate)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE.md) [![Haxelib Version](https://img.shields.io/github/tag/openfl/actuate.svg?style=flat&label=haxelib)](http://lib.haxe.org/p/actuate) [![NPM](https://img.shields.io/npm/v/actuate.svg?style=flat)](http://npmjs.com/package/actuate) [![Build Status](https://img.shields.io/circleci/project/github/openfl/actuate/master.svg)](https://circleci.com/gh/openfl/actuate)
 
 # Actuate
 
@@ -98,7 +98,11 @@ Actuate.effects (MySprite, 1).filter (BlurFilter, { blurX: 10, blurY: 10 });
 You even can create bezier curves, and complete motion paths, like in the Flash IDE. Chain multiple path commands together to create one solid path you can tween your objects across using the MotionPathActuator
 
 ```haxe
-var path = new MotionPath ().bezier (100, 100, 50, 50).line (20, 20);
+var path = new MotionPath ()
+  .bezier (100, 100, 50, 50)                 // quadratic, 1 control point
+  .bezierN (200, 200, [50, 100], [50, 100])  // general, any number of control points
+  .bezierSpline ([100, 100], [50, 50])       // spline, passing through the given points
+  .line (20, 20);                            // linear
 Actuate.motionPath (MySprite, 1, { x: path.x, y: path.y });
 ```
 

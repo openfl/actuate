@@ -1,9 +1,6 @@
 *.DS_Store
-samples/**/package-lock.json
-lib/_gen
+test
 node_modules
-dist
-test/*/bundle.js
 package-lock.json
 npm-debug.log
 *.map

@@ -1,0 +1,48 @@
+{
+  "name": "actuate",
+  "version": "1.8.7-alpha.5",
+  "description": "Actuate is a flexible, fast \"tween\" library",
+  "keywords": [
+    "tween",
+    "animation",
+    "openfl"
+  ],
+  "homepage": "https://github.com/jgranick/actuate",
+  "bugs": {
+    "url": "https://github.com/jgranick/actuate/issues"
+  },
+  "license": "MIT",
+  "contributors": [
+    "Joshua Granick"
+  ],
+  "main": "dist/actuate.min.js",
+  "module": "lib/motion/index.js",
+  "files": [
+    "dist",
+    "lib",
+    "scripts",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jgranick/actuate.git"
+  },
+  "scripts": {
+    "build": "npm run build-lib && npm run build-dist",
+    "build-dist": "webpack --config webpack.dev.js && webpack --config webpack.prod.js",
+    "build-lib": "cd scripts && haxe build.hxml",
+    "prepublishOnly": "npm run build"
+  },
+  "config": {
+    "haxe": "3.4.4"
+  },
+  "devDependencies": {
+    "haxe": "^4.1.0",
+    "hxgenjs": "kevinresol/hxgenjs",
+    "openfl": "^6.5.3-alpha.6",
+    "uglifyjs-webpack-plugin": "^1.1.4",
+    "webpack": "^3.10.0",
+    "webpack-merge": "^4.1.1"
+  },
+  "dependencies": {}
+}
