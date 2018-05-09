@@ -1,10 +1,12 @@
 ﻿package motion.actuators;
 #if (flash || nme || openfl)
 
+
 import flash.display.DisplayObject;
 import Reflect;
 import flash.geom.Matrix;
 import flash.geom.Point;
+
 
 class TransformAroundPointActuator<T, U> extends SimpleActuator<T, U> {
 	
@@ -59,24 +61,26 @@ class TransformAroundPointActuator<T, U> extends SimpleActuator<T, U> {
 		Reflect.deleteField (properties, "transformAroundPoint");
 		
 		initialTransformPoint = new Point();
-		__getTransformedPoint (initialTransformPoint);
+		getTransformedPoint (initialTransformPoint);
 		
 		tweenedOffsetX = tweenedOffsetY = 0;
 	}
 	
+	
 	private override function apply ():Void {
 		
-		for (i in Reflect.fields (properties)) {
+		for (propertyName in Reflect.fields (properties)) {
 			
-			setField(target, i, Reflect.field (properties, i));
+			var value = Reflect.field (properties, propertyName);
+			setField(target, propertyName, value);
 			
-			if (i == "x") {
+			if (propertyName == "x") {
 			
-				tweenedOffsetX = Reflect.field (properties, i) - originX;
+				tweenedOffsetX = value - originX;
 			
-			} else if (i == "y") {
+			} else if (propertyName == "y") {
 				
-				tweenedOffsetY = Reflect.field (properties, i) - originY;
+				tweenedOffsetY = value - originY;
 				
 			}
 			
@@ -84,7 +88,6 @@ class TransformAroundPointActuator<T, U> extends SimpleActuator<T, U> {
 		
 		updatePosition ();
 	}
-	
 	
 	
 	private override function setProperty (details:PropertyDetails<U>, value:Dynamic):Void {
@@ -118,7 +121,8 @@ class TransformAroundPointActuator<T, U> extends SimpleActuator<T, U> {
 		
 	}
 	
-	private inline function __getTransformedPoint (result:Point): Void {
+	
+	private inline function getTransformedPoint (result:Point): Void {
 		
 			transformMatrix.identity ();
 			var scaleX = getField (target, "scaleX");
@@ -128,21 +132,22 @@ class TransformAroundPointActuator<T, U> extends SimpleActuator<T, U> {
 			transformMatrix.rotate (rotation * Math.PI / 180);
 			
 			result.copyFrom (transformPoint);
-			__transformPoint (result, transformMatrix);
+			transform (result, transformMatrix);
 	}
 	
 	
 	private function updatePosition ():Void {
 			
-			__getTransformedPoint (transformedPoint);
-			__subtractFromPoint (initialTransformPoint, transformedPoint, transformedPoint);
+			getTransformedPoint (transformedPoint);
+			subtract (initialTransformPoint, transformedPoint, transformedPoint);
 			
 			setField (target, "x", originX + transformedPoint.x + tweenedOffsetX);
 			setField (target, "y", originY + transformedPoint.y + tweenedOffsetY);
 			
 	}
 	
-	private inline function __transformPoint (point:Point, matrix: Matrix):Void {
+	
+	private inline function transform (point:Point, matrix: Matrix):Void {
 		
 		var px = point.x;
 		var py = point.y;
@@ -153,7 +158,7 @@ class TransformAroundPointActuator<T, U> extends SimpleActuator<T, U> {
 	}
 	
 	
-	private inline function __subtractFromPoint (p1:Point, p2:Point, ?result:Point):Point {
+	private inline function subtract (p1:Point, p2:Point, ?result:Point):Point {
 		
 		if (result == null) result = new Point ();
 		
@@ -163,6 +168,7 @@ class TransformAroundPointActuator<T, U> extends SimpleActuator<T, U> {
 		return result;
 		
 	}
+	
 	
 }
 #end
