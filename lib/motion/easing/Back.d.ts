@@ -1,21 +1,25 @@
-import motion_easing_BackEaseIn from "./../../motion/easing/BackEaseIn";
-import motion_easing_BackEaseInOut from "./../../motion/easing/BackEaseInOut";
-import motion_easing_BackEaseOut from "./../../motion/easing/BackEaseOut";
+import IEasing from "./IEasing";
+
 
 declare namespace motion.easing {
-
-export class Back {
-
-	static easeIn:any;
-	static easeInOut:any;
-	static easeOut:any;
-	static get_easeIn():any;
-	static get_easeInOut():any;
-	static get_easeOut():any;
-
-
+	
+	
+	export class Back {
+		
+		
+		public static readonly easeIn:IEasing;
+		public static readonly easeInOut:IEasing;
+		public static readonly easeOut:IEasing;
+		
+		public static easeInWith (s:number):IEasing;
+		public static easeInOutWith (s:number):IEasing;
+		public static easeOutWith (s:number):IEasing;
+		
+		
+	}
+	
+	
 }
 
-}
 
 export default motion.easing.Back;

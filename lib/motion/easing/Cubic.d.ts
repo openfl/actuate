@@ -1,21 +1,21 @@
-import motion_easing_CubicEaseIn from "./../../motion/easing/CubicEaseIn";
-import motion_easing_CubicEaseInOut from "./../../motion/easing/CubicEaseInOut";
-import motion_easing_CubicEaseOut from "./../../motion/easing/CubicEaseOut";
+import IEasing from "./IEasing";
+
 
 declare namespace motion.easing {
-
-export class Cubic {
-
-	static easeIn:any;
-	static easeInOut:any;
-	static easeOut:any;
-	static get_easeIn():any;
-	static get_easeInOut():any;
-	static get_easeOut():any;
-
-
+	
+	
+	export class Cubic {
+		
+		
+		public static readonly easeIn:IEasing;
+		public static readonly easeInOut:IEasing;
+		public static readonly easeOut:IEasing;
+		
+		
+	}
+	
+	
 }
 
-}
 
 export default motion.easing.Cubic;

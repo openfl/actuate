@@ -1,21 +1,21 @@
-import motion_easing_QuartEaseIn from "./../../motion/easing/QuartEaseIn";
-import motion_easing_QuartEaseInOut from "./../../motion/easing/QuartEaseInOut";
-import motion_easing_QuartEaseOut from "./../../motion/easing/QuartEaseOut";
+import IEasing from "./IEasing";
+
 
 declare namespace motion.easing {
-
-export class Quart {
-
-	static easeIn:any;
-	static easeInOut:any;
-	static easeOut:any;
-	static get_easeIn():any;
-	static get_easeInOut():any;
-	static get_easeOut():any;
-
-
+	
+	
+	export class Quart {
+		
+		
+		public static readonly easeIn:IEasing;
+		public static readonly easeInOut:IEasing;
+		public static readonly easeOut:IEasing;
+		
+		
+	}
+	
+	
 }
 
-}
 
 export default motion.easing.Quart;

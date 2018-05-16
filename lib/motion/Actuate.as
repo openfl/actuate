@@ -1,16 +1,19 @@
-import GenericActuator from "./actuators/GenericActuator";
-import IGenericActuator from "./actuators/IGenericActuator";
-import IEasing from "./easing/IEasing";
-
-
-declare namespace motion {
+package motion {
 	
 	
-	export class Actuate {
+	import motion.actuators.IGenericActuator;
+	import motion.actuators.GenericActuator;
+	import motion.easing.IEasing;
+	
+	
+	/**
+	 * @externs
+	 */
+	public class Actuate {
 		
 		
-		public static defaultActuator:any;
-		public static defaultEase:IEasing;
+		public static var defaultActuator:Class;
+		public static var defaultEase:IEasing;
 		
 		
 		/**
@@ -21,7 +24,7 @@ declare namespace motion {
 		 * @param	customActuator		A custom actuator to use instead of the default (Optional)
 		 * @return		The current actuator instance, which can be used to apply properties like onComplete or onUpdate handlers
 		 */
-		public static apply (target:any, properties:Object, customActuator?:any):GenericActuator;
+		public static function apply (target:*, properties:Object, customActuator:Class = null):GenericActuator { return null; }
 		
 		
 		/**
@@ -31,14 +34,14 @@ declare namespace motion {
 		 * @param	overwrite		Sets whether previous tweens for the same target and properties will be overwritten (Default is true)
 		 * @return		An EffectsOptions instance, which is used to select the kind of effect you would like to apply to the target
 		 */
-		public static effects (target:any, duration:number, overwrite?:boolean):EffectsOptions;
+		public static function effects (target:Object, duration:Number, overwrite:Boolean = true):EffectsOptions { return null; }
 		
 		
 		/**
 		 * Checks if Actuate has any active tweens 
 		 * @return		Whether Actuate is active
 		 */
-		public static isActive ():boolean;
+		public static function isActive ():Boolean { return false; }
 		
 		
 		/**
@@ -49,33 +52,33 @@ declare namespace motion {
 		 * @param	overwrite		Sets whether previous tweens for the same target and properties will be overwritten (Default is true)
 		 * @return		The current actuator instance, which can be used to apply properties like ease, delay, onComplete or onUpdate
 		 */
-		public static motionPath (target:any, duration:number, properties:Object, overwrite?:boolean):GenericActuator;
+		public static function motionPath (target:*, duration:Number, properties:Object, overwrite:Boolean = true):GenericActuator { return null; }
 		
 		
 		/**
 		 * Pauses tweens for the specified target objects
 		 * @param	... targets		The target objects which will have their tweens paused. Passing no value pauses tweens for all objects
 		 */
-		public static pause (target:any):void;
+		public static function pause (target:*):void {}
 		
 		
-		public static pauseAll ():void;
+		public static function pauseAll ():void {}
 		
 		
 		/**
 		 * Resets Actuate by stopping and removing tweens for all objects
 		 */
-		public static reset ():void;
+		public static function reset ():void {}
 		
 		
 		/**
 		 * Resumes paused tweens for the specified target objects
 		 * @param	... targets		The target objects which will have their tweens resumed. Passing no value resumes tweens for all objects
 		 */
-		public static resume (target:any):void;
+		public static function resume (target:*):void {}
 		
 		
-		public static resumeAll ():void;
+		public static function resumeAll ():void {}
 		
 		
 		/**
@@ -85,7 +88,7 @@ declare namespace motion {
 		 * @param	complete		If tweens should apply their final target values before stopping. Default is false (Optional) 
 		 * @param	sendEvent	If a complete() event should be dispatched for the specified target. Default is true (Optional)
 		 */
-		public static stop (target:any, properties?:Object, complete?:boolean, sendEvent?:boolean):void;
+		public static function stop (target:*, properties:Object = null, complete:Boolean = false, sendEvent:Boolean = true):void {}
 		
 		
 		
@@ -96,7 +99,7 @@ declare namespace motion {
 		 * @param	customActuator		A custom actuator to use instead of the default (Optional)
 		 * @return		The current actuator instance, which can be used to apply properties like onComplete or to gain a reference to the target timer object
 		 */
-		public static timer (duration:number, customActuator?:any):GenericActuator;
+		public static function timer (duration:Number, customActuator:Class = null):GenericActuator { return null; }
 		
 		
 		/**
@@ -107,7 +110,7 @@ declare namespace motion {
 		 * @param	overwrite		Sets whether previous tweens for the same target and properties will be overwritten (Default is true)
 		 * @return		A TransformOptions instance, which is used to select the kind of transform you would like to apply to the target
 		 */
-		public static transform (target:any, duration?:number, overwrite?:boolean):TransformOptions;
+		public static function transform (target:*, duration:Number = 0, overwrite:Boolean = true):TransformOptions { return null; }
 		
 		
 		/**
@@ -120,10 +123,10 @@ declare namespace motion {
 		 * @param	customActuator		A custom actuator to use instead of the default (Optional)
 		 * @return		The current actuator instance, which can be used to apply properties like ease, delay, onComplete or onUpdate
 		 */ 
-		public static tween (target:any, duration:number, properties:Object, overwrite?:boolean, customActuator?:any):GenericActuator;
+		public static function tween (target:*, duration:Number, properties:Object, overwrite:Boolean = true, customActuator:Class = null):GenericActuator { return null; }
 		
 		
-		public static unload (actuator:any):void;
+		public static function unload (actuator:GenericActuator):void {}
 		
 		
 		/**
@@ -136,16 +139,16 @@ declare namespace motion {
 		 * @param	overwrite		Sets whether previous tweens for the same target and properties will be overwritten (Default is true)
 		 * @return		The current actuator instance, which can be used to apply properties like ease, delay, onComplete or onUpdate
 		 */
-		public static update (target:any, duration:number, start?:Array<any>, end?:Array<any>, overwrite?:boolean):GenericActuator;
+		public static function update (target:*, duration:Number, start:Array = null, end:Array = null, overwrite:Boolean = true):GenericActuator { return null; }
 		
-
+		
 	}
 	
 	
-	class EffectsOptions {
+	internal class EffectsOptions {
 		
 		
-		// public function new (target:DisplayObject, duration:Float, overwrite:Bool) {
+		// public function new (target:DisplayObject, duration:Number, overwrite:Bool) {
 		
 		
 		/**
@@ -154,16 +157,16 @@ declare namespace motion {
 		 * @param	properties		The end properties to use for the tween
 		 * @return		The current actuator instance, which can be used to apply properties like ease, delay, onComplete or onUpdate
 		 */
-		public filter (reference:any, properties:Object):IGenericActuator;
+		public function filter (reference:Object, properties:Object):IGenericActuator { return null; }
 		
 		
 	}
 	
 	
-	class TransformOptions {
+	internal class TransformOptions {
 		
 		
-		// public function new (target:T, duration:Float, overwrite:Bool) {
+		// public function new (target:T, duration:Number, overwrite:Bool) {
 		
 		
 		/**
@@ -173,7 +176,7 @@ declare namespace motion {
 		 * @param	alpha		The end alpha of the target. If you wish to tween alpha and tint simultaneously, you must do them both as part of the ColorTransform. A value of null will make no change to the alpha of the object (Default is null)
 		 * @return		The current actuator instance, which can be used to apply properties like ease, delay, onComplete or onUpdate
 		 */
-		public color (value?:number, strength?:number, alpha?:number):IGenericActuator;
+		public function color (value:uint = 0x000000, strength:Number = 1, alpha:Object = null):IGenericActuator { return null; }
 		
 		
 		/**
@@ -182,13 +185,10 @@ declare namespace motion {
 		 * @param	pan		The end pan for the target, or null if you would like to ignore this property (Default is null)
 		 * @return		The current actuator instance, which can be used to apply properties like ease, delay, onComplete or onUpdate
 		 */
-		public sound (volume?:number, pan?:number):IGenericActuator;
+		public function sound (volume:Object = null, pan:Object = null):IGenericActuator { return null; }
 		
 		
 	}
 	
 	
 }
-
-
-export default motion.Actuate;

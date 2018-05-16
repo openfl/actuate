@@ -15,25 +15,26 @@ class Back {
 	
 	
 	public static function easeInWith (s:Float):IEasing {
-
+		
 		return new BackEaseIn (s);
-
+		
 	}
-
-
+	
+	
 	public static function easeInOutWith (s:Float):IEasing {
-
+		
 		return new BackEaseInOut (s);
-
+		
 	}
-
-
+	
+	
 	public static function easeOutWith (s:Float):IEasing {
-
+		
 		return new BackEaseOut (s);
-
+	
 	}
-
+	
+	
 }
 
 

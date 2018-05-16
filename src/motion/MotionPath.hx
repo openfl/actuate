@@ -158,19 +158,19 @@ private class ComponentPath implements IComponentPath {
 	
 	
 	public function addPath (path:IComponentPath):Void {
-
+		
 		// Avoid setting the first segment's start, which we don't really know yet.
 		// It will be set later by our set_start.
-
+		
 		if (paths.length > 0) {
-
+			
 			path.start = paths[paths.length - 1].end;
-
+			
 		}
-
+		
 		paths.push (path);
 		strength += path.strength;
-
+		
 	}
 	
 	
@@ -287,44 +287,44 @@ private class BezierPath implements IComponentPath {
 	public function calculate (k:Float):Float {
 		
 		// use faster formulas for the common (linear, quadratic, cubic) cases
-
+		
 		var l = 1 - k;
-
+		
 		switch (control.length) {
-
+			
 			case 0:
-
+				
 				return l * _start + k * _end;
-
+			
 			case 1:
-
+				
 				return l*l * _start + 2*l*k * control[0] + k*k * _end;
-
+			
 			case 2:
-
+				
 				return l*l*l * _start + 3*l*l*k * control[0] + 3*l*k*k * control[1] + k*k*k * _end;
-
+			
 			default:
-
+				
 				// General explicit form (https://en.wikipedia.org/wiki/B%C3%A9zier_curve#General_definition)
 				// To speed up we compute the coefficient (n i) l^(n-i) k^i from its previous value at every step.
-
+				
 				if(l < 1e-7) {
 					return _end;						// avoid numerical issues
 				}
 				var r = k / l;
-
+				
 				var n = control.length + 1;			// degree
 				var coeff = Math.pow(l, n);			// at each step i, coeff == binom(n,i) l^(n-i) k^i
 				var res = coeff * _start;
-
+				
 				for (i in 1...n) {
 					coeff *= r * (n + 1 - i) / i;	// compute coeff from its (i-1)-th value
 					res += coeff * control[i-1];
 				}
 				coeff *= r / n;						// coeff now equals k^n
 				return res + coeff * _end;
-
+				
 		}
 		
 	}
@@ -332,13 +332,13 @@ private class BezierPath implements IComponentPath {
 	
 	// Get & Set Methods
 	
-
+	
 	public function get_start ():Float {
 		
 		return _start;
 		
 	}
-
+	
 	
 	public function set_start (value:Float):Float {
 		
@@ -365,15 +365,15 @@ private class BezierSplinePath extends ComponentPath {
 	public function new (through:Array<Float>, strength:Float) {
 		
 		// the whole path depends on the starting point, so we compute it in set_start
-
+		
 		super();
-
+		
 		this.through = through;
 		this.strength = strength;
 		
 	}
 	
-
+	
 	// Compute the control points (cubic: 2 for each segment) of a smooth bezier spline
 	// that starts at 'start' and passes through all 'through' points.
 	// Code from: https://www.particleincell.com/wp-content/uploads/2012/06/bezier-spline.js 
@@ -381,10 +381,10 @@ private class BezierSplinePath extends ComponentPath {
  	// With correction from: http://www.jacos.nl/jacos_html/spline/
 	
 	private function computeControlPoints (start:Float):Array<Array<Float>> {
-
+		
 		var K = [start].concat(through);
 		var n = K.length;
-
+		
 		var control = [ for(_ in 0...n) [0.0, 0.0] ];	// 2 control points for each segment
 		
 		// rhs vector
@@ -406,7 +406,7 @@ private class BezierSplinePath extends ComponentPath {
 			c[i] = 1;
 			r[i] = 4 * K[i] + 2 * K[i+1];
 		}
-				
+		
 		// right segment
 		a[n-1] = 1;
 		b[n-1] = 2;
@@ -426,50 +426,50 @@ private class BezierSplinePath extends ComponentPath {
 			control[i][0] = (r[i] - c[i] * control[i+1][0]) / b[i];
 			i--;
 		}
-			
+		
 		// we have control[i][0], now compute control[i][1]
 		for (i in 0...n-1) {
 			control[i][1] = 2 * K[i+1] - control[i+1][0];
 		}
 		control[n-1][1] = 0.5 * (K[n] + control[n-1][0]);
-
+		
 		control.pop();	// the last element is auxiliary for the computation
 		
 		return control;
 	}
 	
-
+	
 	// Get & Set Methods
 	
 	
 	override public function set_start (value:Float):Float {
-
+		
 		// when the start is first set (or when it changes), we compute the control
 		// points of the path and add the corresponding bezier segments
-
+		
 		if (paths.length == 0 || Math.abs(value - start) > 1e-7) {
-
+			
 			var control = computeControlPoints(value);
-
+			
 			var pathStrength = strength / control.length;
 			strength = 0;						// will be rewritten by addPath
 			paths.splice(0, paths.length);		// reset
-	
+			
 			for (i in 0...control.length) {
 				
 				addPath (new BezierPath (through[i], control[i], pathStrength));
-
+				
 			}
-
+			
 		}
-
+		
 		return super.set_start (value);
 		
 	}
 	
 	
 	override public function get_end ():Float {
-
+		
 		// this works even before computing the path segments
 		
 		return through[ through.length - 1 ];

@@ -1,21 +1,25 @@
-import motion_easing_ElasticEaseIn from "./../../motion/easing/ElasticEaseIn";
-import motion_easing_ElasticEaseInOut from "./../../motion/easing/ElasticEaseInOut";
-import motion_easing_ElasticEaseOut from "./../../motion/easing/ElasticEaseOut";
+import IEasing from "./IEasing";
+
 
 declare namespace motion.easing {
-
-export class Elastic {
-
-	static easeIn:any;
-	static easeInOut:any;
-	static easeOut:any;
-	static get_easeIn():any;
-	static get_easeInOut():any;
-	static get_easeOut():any;
-
-
+	
+	
+	export class Elastic {
+		
+		
+		public static readonly easeIn:IEasing;
+		public static readonly easeInOut:IEasing;
+		public static readonly easeOut:IEasing;
+		
+		public static easeInWith (s:number):IEasing;
+		public static easeInOutWith (s:number):IEasing;
+		public static easeOutWith (s:number):IEasing;
+		
+		
+	}
+	
+	
 }
 
-}
 
 export default motion.easing.Elastic;

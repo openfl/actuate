@@ -6,16 +6,10 @@ import motion.actuators.SimpleActuator;
 @:jsRequire("motion/actuators/FilterActuator", "default")
 
 
-extern class FilterActuator extends motion.actuators.SimpleActuator implements Dynamic {
-
-	function new(target:Dynamic, duration:Dynamic, properties:Dynamic);
+extern class FilterActuator extends SimpleActuator {
 	
-	var filterClass:Dynamic;
-	var filterIndex:Dynamic;
-	override function apply():Dynamic;
-	override function initialize():Dynamic;
-	function setFilter():Dynamic;
-	override function update(currentTime:Dynamic):Dynamic;
-
-
+	
+	public function new (target:Dynamic, duration:Float, properties:Dynamic);
+	
+	
 }

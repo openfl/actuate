@@ -4,15 +4,11 @@ import motion.actuators.SimpleActuator;
 
 @:jsRequire("motion/actuators/MethodActuator", "default")
 
-extern class MethodActuator extends motion.actuators.SimpleActuator implements Dynamic {
 
-	function new(target:Dynamic, duration:Dynamic, properties:Dynamic);
-	var currentParameters:Dynamic;
+extern class MethodActuator extends SimpleActuator {
 	
-	override function apply():Dynamic;
-	override function complete(?sendEvent:Dynamic):Dynamic;
-	override function initialize():Dynamic;
-	override function update(currentTime:Dynamic):Dynamic;
-
-
+	
+	public function new (target:Dynamic, duration:Float, properties:Dynamic);
+	
+	
 }
