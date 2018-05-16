@@ -5,7 +5,6 @@ const common = require ("./webpack.common.js");
 const package = require ("./package.json");
 
 var banner = "/*! Actuate v" + package.version + " | MIT (c) Joshua Granick | https://github.com/jgranick/actuate */\n"
- + "if (typeof window != 'undefined') { this['openfl.display.Sprite'] = window['openfl.display.Sprite']; this['openfl.events.Event'] = window['openfl.events.Event']; this['openfl.geom.ColorTransform'] = window['openfl.display.ColorTransform']; this['openfl.media.SoundTransform'] = window['openfl.media.SoundTransform']; this['openfl.Lib'] = window.openfl.Lib; }";
 
 module.exports = merge (common, {
 	output: {

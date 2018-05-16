@@ -10,7 +10,6 @@ var banner = "/*!\n"
  + " * Copyright Joshua Granick\n"
  + " * Released under the MIT license\n"
  + " */\n"
- + "if (typeof window != 'undefined') { this['openfl.display.Sprite'] = window['openfl.display.Sprite']; this['openfl.events.Event'] = window['openfl.events.Event']; this['openfl.geom.ColorTransform'] = window['openfl.display.ColorTransform']; this['openfl.media.SoundTransform'] = window['openfl.media.SoundTransform']; this['openfl.Lib'] = window.openfl.Lib; }";
 
 module.exports = merge (common, {
 	output: {
