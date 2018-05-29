@@ -1,6 +1,7 @@
 *.DS_Store
 samples/**/package-lock.json
 lib/_gen
+lib-esm/_gen
 node_modules
 dist
 test/*/bundle.js
