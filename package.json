@@ -18,7 +18,7 @@
   "types": "lib/motion/index.d.ts",
   "main": "dist/actuate.min.js",
   "module": "lib-esm/motion/index.js",
-  "sideEffects": false,
+  "sideEffects": ["lib-esm/motion/index.js"],
   "files": [
     "dist",
     "lib",
