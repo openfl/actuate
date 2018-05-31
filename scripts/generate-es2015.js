@@ -146,28 +146,43 @@ function startFind() {
     
     // ... then we look for circular imports that would cause a runtime error
     result.circulars.forEach(circular => {
-      analyzeCircular(circular);
+      analyzeCircular(result, circular);
     });
     
+    // Now output the possible circular issues
+    result.possibleCircularIssue.forEach((moduleBMap, moduleA) => {
+
+      moduleBMap.forEach((circularChain, moduleB) => {
+        console.log('');
+        console.log(moduleA.fullFilePath, 'depends on', moduleB.shortName);
+        console.log(circularChain.map(module => module.shortName).join(' -> ') + ' -> ' + circularChain[0].shortName);
+      });
+
+    });
     
   });
 }
 
 
-function analyzeCircular(circularChain) {
+function analyzeCircular(result, circularChain) {
   
   circularChain.map(module => {
     
     Array.from(module.directImports.values()).map(importedModuleInfo => {
       
-      if (circularChain.some(module => importedModuleInfo.module)) {
+
+      if (circularChain.some(module => module == importedModuleInfo.module)) {
         if (importedModuleInfo.inCircular) {
           
+          //console.log(circularChain.map(module => module.shortName).join(' -> ') + ' -> ' + circularChain[0].shortName);
           
           if (module.content.search(new RegExp(`\\$extend\\(${RegExp.escape(importedModuleInfo.localName)}\\.prototype`)) > -1) {
-            console.log('\nPossible runtime error:');
-            console.log(module.fullFilePath, 'extends', importedModuleInfo.localName);
-            console.log(circularChain.map(module => module.shortName).join(' -> ') + ' -> ' + circularChain[0].shortName);
+            //console.log('\nPossible runtime error:');
+            //console.log(module.fullFilePath, 'extends', importedModuleInfo.localName);
+            //console.log(circularChain.map(module => module.shortName).join(' -> ') + ' -> ' + circularChain[0].shortName);
+
+            result.addPossibleCircularIssue(module, importedModuleInfo.module, circularChain);
+            //possibleCircularIssue.set(moduleA, possibleCircularIssue.has(moduleA) ? possibleCircularIssue.get(moduleA) : ;
           }
           
           let initCommentLine = module.content.search(/^\/\/ Init/m);
@@ -188,9 +203,10 @@ function analyzeCircular(circularChain) {
             
             
             if (localNameUsedIndex > -1) {
-              console.log('\nPossible runtime error:');
-              console.log(module.fullFilePath, 'depends on', importedModuleInfo.localName);
-              console.log(circularChain.map(module => module.shortName).join(' -> ') + ' -> ' + circularChain[0].shortName);
+              //console.log('\nPossible runtime error:');
+              //console.log(module.fullFilePath, 'depends on', importedModuleInfo.localName);
+              //console.log(circularChain.map(module => module.shortName).join(' -> ') + ' -> ' + circularChain[0].shortName);
+              result.addPossibleCircularIssue(module, importedModuleInfo.module, circularChain);
             }
           }
           
@@ -232,12 +248,12 @@ function processModule(result, moduleFilePath) {
     module = moduleFilePath;
     
   if (module.importsProcessed) {
-    return;
+    //return;
   }
   if (module.isAbsolute)
     return;
   
-  
+  if (!module.importsProcessed) {
   let dirname = _path.dirname(module.fullFilePath);
   let content = _fs.readFileSync(module.fullFilePath, 'utf8');
   let regex = /^import \{ default as (.+?)[, ].*?} from "(.+?)";/gm;
@@ -271,11 +287,15 @@ function processModule(result, moduleFilePath) {
     let localName = matches[1];
     
     module.addDirectImport(importedModule, localName); 
+
+    //console.log(module.shortName, localName);
   }
   
   
+
   module.importsProcessed = true;
-  
+  }
+
   result.chain.push(module);
   module.directImports.forEach((importedModuleInfo, key) => {
     
@@ -337,10 +357,25 @@ class EsmModuleResult {
   constructor() {
     this.chain = new ImportChain();
     this.modules = new Map();
-    
+    this.possibleCircularIssue = new Map();
+
     this.circulars = [];
   }
   
+  addPossibleCircularIssue(moduleA, moduleB, circularChain) {
+
+    let map;
+    if (this.possibleCircularIssue.has(moduleA)) {
+      map = this.possibleCircularIssue.get(moduleA);
+    } else {
+      map = new Map();
+      this.possibleCircularIssue.set(moduleA, map);
+    }
+
+    map.set(moduleB, circularChain);
+
+  }
+
   foundCircular(chain, startModule, endModule) {
     
     let modules = chain.getModulesBetween(startModule, endModule);
@@ -559,7 +594,24 @@ function createEsmModule(content, filePath) {
   if (filePath.indexOf('GLMaskShader.') > -1) {
     result = importAndCallInit(result, 'openfl_display_BitmapData', 'GLMaskShader');
   }
-  
+
+
+
+  if (filePath.indexOf('FilterActuator.') > -1) {
+    result = importAndCallInit(result, 'motion_actuators_SimpleActuator', 'FilterActuator');
+  }
+  if (filePath.indexOf('MotionPathActuator.') > -1) {
+    result = importAndCallInit(result, 'motion_actuators_SimpleActuator', 'MotionPathActuator');
+  }
+  if (filePath.indexOf('TransformActuator.') > -1) {
+    result = importAndCallInit(result, 'motion_actuators_SimpleActuator', 'TransformActuator');
+  }
+  if (filePath.indexOf('SimpleActuator.') > -1) {
+    result = importAndCallInit(result, 'motion_actuators_GenericActuator', 'SimpleActuator');
+  }
+
+
+
   if (filePath.indexOf('openfl/display/DisplayObject.') > -1) {
     
     result = exportInit(result, 'DisplayObject');
@@ -586,8 +638,18 @@ function createEsmModule(content, filePath) {
   }
   
   
+  if (filePath.indexOf('motion/actuators/SimpleActuator.') > -1) {
+    result = exportInit(result, 'SimpleActuator');
+    /*
+    result = moveImportsToTop(result, [
+      'import { default as motion_actuators_GenericActuator } from "./../../motion/actuators/GenericActuator";'
+    ]);
+    */
+  }
   
-  
+  if (filePath.indexOf('motion/actuators/GenericActuator.') > -1) {
+    result = exportInit(result, 'GenericActuator');
+  }
   
   //
   // howler
@@ -853,6 +915,19 @@ function writeAllToFileSystem(dryRun) {
 
 
 
+function moveExportsToTop(content, importLines) {
+      
+  for (let importLine of importLines) {
+    content = content.replace(importLine, '');
+  }
+  
+  let importLineStr = importLines.reduce((prev, value) => {
+    return prev + "\n" + value;
+  }, '');
+  content = content.replace(/^/, importLineStr + '\n');
+  
+  return content; 
+}
 
 
 function moveImportsToTop(content, importLines) {
