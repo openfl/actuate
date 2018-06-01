@@ -22,6 +22,13 @@ interface IGenericActuator {
 	public function delay (duration:Float):IGenericActuator;
 	
 	/**
+	 * Starts the tween from the begining
+	 * @param	includeDelay	if the tween has delay this flag determines if the delay should be applied on restart or not
+	 * @return		The current actuator instance
+	 */
+	public function restart (includeDelay:Bool = true):IGenericActuator;
+	
+	/**
 	 * Sets the easing which is used when running the tween
 	 * @param	easing		An easing equation, like Elastic.easeIn or Quad.easeOut
 	 * @return		The current actuator instance

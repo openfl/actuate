@@ -73,6 +73,18 @@ class Actuate {
 	#end
 	
 	
+	private static function load<T> (actuator:GenericActuator<T>):Void {
+		
+		var library = getLibrary (actuator.target);
+		if (library.indexOf (actuator) == -1) {
+			
+			library.push (actuator);
+			
+		}
+		
+	}
+	
+	
 	private static function getLibrary<T> (target:T, allowCreation:Bool = true):Array<IGenericActuator> {
 		
 		#if neko

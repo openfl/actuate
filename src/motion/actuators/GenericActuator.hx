@@ -146,6 +146,8 @@ class GenericActuator<T> implements IGenericActuator {
 	
 	private function complete (sendEvent:Bool = true):Void {
 		
+		Actuate.unload (this);
+		
 		if (sendEvent) {
 			
 			change ();
@@ -158,7 +160,6 @@ class GenericActuator<T> implements IGenericActuator {
 			
 		}
 		
-		Actuate.unload (this);
 		
 	}
 	
@@ -172,6 +173,18 @@ class GenericActuator<T> implements IGenericActuator {
 		
 		_delay = duration;
 		
+		return this;
+		
+	}
+	
+	
+	/**
+	 * Starts the tween from the begining
+	 * @param	includeDelay	if the tween has delay this flag determines if the delay should be applied on restart or not
+	 * @return		The current actuator instance
+	 */
+	public function restart (includeDelay:Bool = true):GenericActuator<T> {
+	
 		return this;
 		
 	}
