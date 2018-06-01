@@ -1,0 +1,69 @@
+version: 2
+jobs:
+
+  Tests (Haxe 3.2.1):
+    docker:
+     - image: openfl/openfl-tests-unit-3.2:0.0.1
+    steps:
+     - checkout
+     - run:
+         name: Setup Development Directory
+         command: haxelib dev actuate .
+     - run:
+         name: Generate MUnit Test Runner
+         working_directory: test
+         command: haxelib run munit gen
+     - run:
+         name: Run Tests (Flash)
+         working_directory: test
+         command: haxelib run munit test -as3 -norun
+     - run:
+         name: Run Tests (HTML5)
+         working_directory: test
+         command: haxelib run munit test -browser phantomjs
+     - run:
+         name: Run Tests (Neko)
+         working_directory: test
+         command: haxelib run munit test -neko
+     - run:
+         name: Run Tests (C++)
+         working_directory: test
+         command: haxelib run munit test -cpp
+  
+  Tests (Haxe 3.4.x):
+    docker:
+     - image: openfl/openfl-tests-unit-3.4:0.0.2
+    steps:
+     - checkout
+     - run:
+         name: Setup Development Directory
+         command: haxelib dev actuate .
+     - run:
+         name: Generate MUnit Test Runner
+         working_directory: test
+         command: haxelib run munit gen
+     - run:
+         name: Run Tests (Flash)
+         working_directory: test
+         command: haxelib run munit test -as3 -norun
+     - run:
+         name: Run Tests (HTML5)
+         working_directory: test
+         command: haxelib run munit test -browser phantomjs
+     - run:
+         name: Run Tests (Neko)
+         working_directory: test
+         command: haxelib run munit test -neko
+     - run:
+         name: Run Tests (C++)
+         working_directory: test
+         command: haxelib run munit test -cpp
+
+
+workflows:
+  version: 2
+  
+  Tests:
+    jobs:
+     - Tests (Haxe 3.2.1)
+     - Tests (Haxe 3.4.x)
