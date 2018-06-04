@@ -168,7 +168,9 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 	/**
 	 * @inheritDoc
 	 */
-	public override function restart (includeDelay:Bool = true):GenericActuator<T> {
+	public override function restart (includeDelay:Bool = false):GenericActuator<T> {
+		
+		super.restart (includeDelay);
 		
 		startTime = __getPlatformTime ();
 		timeOffset = startTime + (includeDelay ? _delay : 0);

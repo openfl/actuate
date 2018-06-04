@@ -26,7 +26,7 @@ interface IGenericActuator {
 	 * @param	includeDelay	if the tween has delay this flag determines if the delay should be applied on restart or not
 	 * @return		The current actuator instance
 	 */
-	public function restart (includeDelay:Bool = true):IGenericActuator;
+	public function restart (includeDelay:Bool = false):IGenericActuator;
 	
 	/**
 	 * Sets the easing which is used when running the tween
