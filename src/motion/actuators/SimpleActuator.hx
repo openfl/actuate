@@ -332,7 +332,7 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 				timeOffset += (Timer.stamp () - pauseTime);
 				#end
 			#else
-			timeOffset += (getTime() - pauseTime) / 1000;
+			timeOffset += (getTime() - pauseTime);
 			#end
 			
 			super.resume ();
