@@ -96,6 +96,33 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 		
 	}
 	
+	//For instant transition to start state without shaking
+	override public function reverse(?value:Null<Bool>):GenericActuator<T> 
+	{
+		var ga = super.reverse(value);
+		
+		
+		var startTime:Float = 0;
+		#if !actuate_manual_time
+			#if (flash || nme || openfl)
+			startTime = Lib.getTimer () / 1000;
+			#elseif lime
+			startTime = System.getTimer () / 1000;
+			#elseif js
+			startTime = Browser.window.performance.now () / 1000;
+			#else
+			startTime = Timer.stamp ();
+			#end
+		#else
+		startTime = getTime();
+		#end
+		
+		
+		update(startTime);
+		
+		
+		return ga;
+	}
 	
 	/**
 	 * @inheritDoc
