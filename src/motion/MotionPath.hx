@@ -186,7 +186,8 @@ private class ComponentPath implements IComponentPath {
 			
 			for (path in paths) {
 				
-				if (ratio > path.strength) {
+				// numerical issues bugfix
+				if (ratio - path.strength > 1e-7) {
 					
 					ratio -= path.strength;
 					
