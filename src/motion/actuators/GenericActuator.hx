@@ -128,7 +128,7 @@ class GenericActuator<T> implements IGenericActuator {
 		
 		#end
 		
-		return method (params);
+		return Reflect.callMethod (#if hl null #else method #end, method, params);
 		
 	}
 	
