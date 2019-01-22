@@ -33,6 +33,7 @@ class GenericActuator<T> implements IGenericActuator {
 	private var _smartRotation:Bool;
 	private var _snapping:Bool;
 	private var special:Bool;
+	private var delayOverwrite:Bool;
 	
 	
 	public function new (target:T, duration:Float, properties:Dynamic) {
@@ -45,6 +46,7 @@ class GenericActuator<T> implements IGenericActuator {
 		_smartRotation = false;
 		_snapping = false;
 		special = false;
+		delayOverwrite = false;
 		
 		this.target = target;
 		this.properties = properties;
