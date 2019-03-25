@@ -620,7 +620,7 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 			
 		}
 		
-		#if (!flash && !nme && !openfl && !lime && !actuate_manual_time && js)
+		#if (!flash && !nme && !openfl && !lime && !actuate_manual_update && js)
 		Browser.window.requestAnimationFrame(stage_onEnterFrame);
 		#end
 		
