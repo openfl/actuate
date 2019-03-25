@@ -302,7 +302,7 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 				#elseif lime
 				pauseTime = System.getTimer ();
 				#elseif js
-				pauseTime = Browser.window.performance.now () / 1000;
+				pauseTime = Browser.window.performance.now ();
 				#else
 				pauseTime = Timer.stamp ();
 				#end
