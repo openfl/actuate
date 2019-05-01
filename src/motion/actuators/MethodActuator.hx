@@ -85,21 +85,17 @@ class MethodActuator<T> extends SimpleActuator<T, T> {
 	}
 	
 	
-	private override function update (currentTime:Float):Void {
+	public override function goto (position:Float):Void {
 		
-		super.update (currentTime);
+		super.goto (position);
 		
-		if (active && !paused) {
+		for (i in 0...properties.start.length) {
 			
-			for (i in 0...properties.start.length) {
-				
-				currentParameters[i] = Reflect.field (tweenProperties, "param" + i);
-				
-			}
-			
-			callMethod (target, currentParameters);
+			currentParameters[i] = Reflect.field (tweenProperties, "param" + i);
 			
 		}
+		
+		callMethod (target, currentParameters);
 		
 	}
 	
