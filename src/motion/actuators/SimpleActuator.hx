@@ -425,15 +425,89 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 		}
 		
 	}
+
+	override public function goto (tweenPosition:Float):Void {
+			
+		var details:PropertyDetails<U>;
+		var easing:Float;
+		var i:Int;
+			
+		if (!initialized) {
+			
+			initialize ();
+			
+		}
+		
+		if (!special) {
+			
+			easing = _ease.calculate (tweenPosition);
+			
+			for (i in 0...detailsLength) {
+				
+				details = propertyDetails[i];
+				setProperty (details, details.start + (details.change * easing));
+				
+			}
+			
+		} else {
+			
+			if (!_reverse) {
+				
+				easing = _ease.calculate (tweenPosition);
+				
+			} else {
+				
+				easing = _ease.calculate (1 - tweenPosition);
+				
+			}
+			
+			var endValue:Float;
+			
+			for (i in 0...detailsLength) {
+				
+				details = propertyDetails[i];
+				
+				if (_smartRotation && (details.propertyName == "rotation" || details.propertyName == "rotationX" || details.propertyName == "rotationY" || details.propertyName == "rotationZ")) {
+					
+					var rotation:Float = details.change % 360;
+					
+					if (rotation > 180) {
+						
+						rotation -= 360;
+						
+					} else if (rotation < -180) {
+						
+						rotation += 360;
+						
+					}
+					
+					endValue = details.start + rotation * easing;
+					
+				} else {
+					
+					endValue = details.start + (details.change * easing);
+					
+				}
+				
+				if (!_snapping) {
+					
+					setProperty (details, endValue);
+					
+				} else {
+					
+					setProperty (details, Math.round (endValue));
+					
+				}
+				
+			}
+			
+		}
+	}
 	
 	
 	private function update (currentTime:Float):Void {
 		
 		if (!paused) {
-			
-			var details:PropertyDetails<U>;
-			var easing:Float;
-			var i:Int;
 			
 			var tweenPosition:Float = (currentTime - timeOffset) / duration;
 			
@@ -442,77 +516,8 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 				tweenPosition = 1;
 				
 			}
-			
-			if (!initialized) {
-				
-				initialize ();
-				
-			}
-			
-			if (!special) {
-				
-				easing = _ease.calculate (tweenPosition);
-				
-				for (i in 0...detailsLength) {
-					
-					details = propertyDetails[i];
-					setProperty (details, details.start + (details.change * easing));
-					
-				}
-				
-			} else {
-				
-				if (!_reverse) {
-					
-					easing = _ease.calculate (tweenPosition);
-					
-				} else {
-					
-					easing = _ease.calculate (1 - tweenPosition);
-					
-				}
-				
-				var endValue:Float;
-				
-				for (i in 0...detailsLength) {
-					
-					details = propertyDetails[i];
-					
-					if (_smartRotation && (details.propertyName == "rotation" || details.propertyName == "rotationX" || details.propertyName == "rotationY" || details.propertyName == "rotationZ")) {
-						
-						var rotation:Float = details.change % 360;
-						
-						if (rotation > 180) {
-							
-							rotation -= 360;
-							
-						} else if (rotation < -180) {
-							
-							rotation += 360;
-							
-						}
-						
-						endValue = details.start + rotation * easing;
-						
-					} else {
-						
-						endValue = details.start + (details.change * easing);
-						
-					}
-					
-					if (!_snapping) {
-						
-						setProperty (details, endValue);
-						
-					} else {
-						
-						setProperty (details, Math.round (endValue));
-						
-					}
-					
-				}
-				
-			}
+
+			goto (tweenPosition);
 			
 			if (tweenPosition == 1) {
 				
