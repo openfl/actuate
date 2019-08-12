@@ -370,7 +370,7 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 			#if flash
 			untyped details.target[details.propertyName] = value;
 			#else
-			Reflect.setField (details.target, details.propertyName, value);
+			Reflect.setProperty (details.target, details.propertyName, value);
 			#end
 			
 		} else {
