@@ -44,7 +44,7 @@
   "devDependencies": {
     "@apache-royale/royale-js": "^0.9.3",
     "globby": "^8.0.1",
-    "haxe": "^4.1.0",
+    "haxe": "^5.2.1",
     "hxgenjs": "kevinresol/hxgenjs",
     "openfl": "^6.5.3-alpha.6",
     "uglifyjs-webpack-plugin": "^1.1.4",
