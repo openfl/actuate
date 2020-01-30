@@ -1,6 +1,6 @@
 {
   "name": "actuate",
-  "version": "1.8.8-beta",
+  "version": "1.8.9-beta",
   "description": "Actuate is a flexible, fast \"tween\" library",
   "keywords": [
     "tween",
