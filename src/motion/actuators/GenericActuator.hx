@@ -29,6 +29,7 @@ class GenericActuator<T> implements IGenericActuator {
 	private var _onPauseParams:Array <Dynamic>;
 	private var _reflect:Bool;
 	private var _repeat:Int;
+	private var _repeatTimes:Int;
 	private var _reverse:Bool;
 	private var _smartRotation:Bool;
 	private var _snapping:Bool;
@@ -40,6 +41,7 @@ class GenericActuator<T> implements IGenericActuator {
 		_autoVisible = true;
 		_delay = 0;
 		_reflect = false;
+		_repeatTimes = 0;
 		_repeat = 0;
 		_reverse = false;
 		_smartRotation = false;
@@ -146,6 +148,8 @@ class GenericActuator<T> implements IGenericActuator {
 	
 	private function complete (sendEvent:Bool = true):Void {
 		
+		Actuate.unload (this);
+		
 		if (sendEvent) {
 			
 			change ();
@@ -158,7 +162,6 @@ class GenericActuator<T> implements IGenericActuator {
 			
 		}
 		
-		Actuate.unload (this);
 		
 	}
 	
@@ -171,6 +174,21 @@ class GenericActuator<T> implements IGenericActuator {
 	public function delay (duration:Float):GenericActuator<T> {
 		
 		_delay = duration;
+		
+		return this;
+		
+	}
+	
+	
+	/**
+	 * Starts the tween from the begining
+	 * @param	includeDelay	if the tween has delay this flag determines if the delay should be applied on restart or not
+	 * @return		The current actuator instance
+	 */
+	public function restart (includeDelay:Bool = false):GenericActuator<T> {
+		
+		_reverse = false;
+		_repeat = _repeatTimes;
 		
 		return this;
 		
@@ -368,7 +386,7 @@ class GenericActuator<T> implements IGenericActuator {
 			times = -1;
 			
 		}
-		
+		_repeatTimes = times;
 		_repeat = times;
 		
 		return this;

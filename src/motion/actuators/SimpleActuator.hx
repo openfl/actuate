@@ -19,7 +19,7 @@ import haxe.PosInfos;
 import haxe.Timer;
 #end
 
-
+@:access(motion.Actuate)
 class SimpleActuator<T, U> extends GenericActuator<T> {
 	
 	
@@ -61,19 +61,7 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 		setVisible = false;
 		toggleVisible = false;
 		
-		#if !actuate_manual_time
-			#if (flash || nme || openfl)
-			startTime = Lib.getTimer () / 1000;
-			#elseif lime
-			startTime = System.getTimer () / 1000;
-			#elseif js
-			startTime = Browser.window.performance.now () / 1000;
-			#else
-			startTime = Timer.stamp ();
-			#end
-		#else
-		startTime = getTime();
-		#end
+		startTime = __getPlatformTime ();
 		
 		super (target, duration, properties);
 		
@@ -96,6 +84,23 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 		
 	}
 	
+	private static function __getPlatformTime ():Float {
+		
+		#if !actuate_manual_time
+			#if (flash || nme || openfl)
+			return Lib.getTimer () / 1000;
+			#elseif lime
+			return System.getTimer () / 1000;
+			#elseif js
+			return Browser.window.performance.now () / 1000;
+			#else
+			return Timer.stamp ();
+			#end
+		#else
+		return getTime();
+		#end
+		
+	}
 	
 	/**
 	 * @inheritDoc
@@ -154,6 +159,38 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 		
 		_delay = duration;
 		timeOffset = startTime + duration;
+		
+		return this;
+		
+	}
+	
+	
+	/**
+	 * @inheritDoc
+	 */
+	public override function restart (includeDelay:Bool = false):GenericActuator<T> {
+		
+		super.restart (includeDelay);
+		
+		startTime = __getPlatformTime ();
+		timeOffset = startTime + (includeDelay ? _delay : 0);
+		for (i in 0...detailsLength) {
+			
+			var details = propertyDetails[i];
+			setProperty (details, details.start);
+			
+		}
+		
+		if (!active && actuators.indexOf (this) == -1) {
+			
+			actuators.push (this);
+			++actuatorsLength;
+			
+		}
+		
+		active = true;
+		
+		Actuate.load (this);
 		
 		return this;
 		
