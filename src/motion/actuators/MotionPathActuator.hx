@@ -56,11 +56,14 @@ class MotionPathActuator<T> extends SimpleActuator<T, T> {
 				
 				#if (haxe_209 || haxe3)
 				
-				if (#if flash false && #end Reflect.hasField (target, propertyName)) {
+				#if (!flash && !neko && !hl)
+				if (Reflect.hasField (target, propertyName)) {
 					
 					path.start = Reflect.field (target, propertyName);
 					
-				} else {
+				} else
+				#end
+				{
 					
 					isField = false;
 					path.start = Reflect.getProperty (target, propertyName);

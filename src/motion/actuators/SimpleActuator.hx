@@ -202,11 +202,14 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 			
 			#if (haxe_209 || haxe3)
 			
+			#if (!neko && !hl)
 			if (Reflect.hasField (target, i) #if flash && !untyped (target).hasOwnProperty ("set_" + i) #elseif js && !(untyped (target).__properties__ && untyped (target).__properties__["set_" + i]) #end) {
 				
 				start = Reflect.field (target, i);
 				
-			} else {
+			} else
+			#end
+			{
 				
 				isField = false;
 				start = Reflect.getProperty (target, i);
@@ -370,7 +373,7 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 			#if flash
 			untyped details.target[details.propertyName] = value;
 			#else
-			Reflect.setProperty (details.target, details.propertyName, value);
+			Reflect.setField (details.target, details.propertyName, value);
 			#end
 			
 		} else {
