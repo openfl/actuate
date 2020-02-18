@@ -44,13 +44,15 @@ class MethodActuator<T> extends SimpleActuator<T, T> {
 	
 	private override function complete (sendEvent:Bool = true):Void {
 		
-		for (i in 0...properties.start.length) {
+		if (initialized) {
+			for (i in 0...properties.start.length) {
+				
+				currentParameters[i] = Reflect.field (tweenProperties, "param" + i);
+				
+			}
 			
-			currentParameters[i] = Reflect.field (tweenProperties, "param" + i);
-			
+			callMethod (target, currentParameters);
 		}
-		
-		callMethod (target, currentParameters);
 		
 		super.complete (sendEvent);
 		
