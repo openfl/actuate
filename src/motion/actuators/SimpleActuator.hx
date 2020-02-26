@@ -465,7 +465,7 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 			var easing:Float;
 			var i:Int;
 			
-			var tweenPosition:Float = (currentTime - timeOffset) / duration;
+			var tweenPosition:Float = (currentTime - timeOffset) * _timeScale / duration;
 			
 			if (tweenPosition > 1) {
 				

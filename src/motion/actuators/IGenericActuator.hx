@@ -110,6 +110,6 @@ interface IGenericActuator {
 	private function pause ():Void;
 	private function resume ():Void;
 	private function stop (properties:Dynamic, complete:Bool, sendEvent:Bool):Void;
-	
-	
+
+	var timeScale(get, set):Float;
 }
