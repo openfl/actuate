@@ -83,8 +83,10 @@ private class BackEaseInOut implements IEasing {
 	
 	public function calculate (k:Float):Float {
 		
-		if ((k /= 0.5) < 1) return 0.5 * (k * k * (((s *= (1.525)) + 1) * k - s));
-		return 0.5 * ((k -= 2) * k * (((s *= (1.525)) + 1) * k + s) + 2);
+		var t = s * 1.525;
+		return (k < 0.5)
+			? (Math.pow(2 * k, 2) * ((t + 1) * 2 * k - t)) / 2
+			: (Math.pow(2 * k - 2, 2) * ((t + 1) * (k * 2 - 2) + t) + 2) / 2;
 		
 	}
 	
