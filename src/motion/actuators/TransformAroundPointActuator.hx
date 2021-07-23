@@ -36,7 +36,7 @@ class TransformAroundPointActuator<T, U> extends SimpleActuator<T, U> {
 				case "point": 
 						var point = Reflect.field (transformAroundPointProps, "point");
 						var isLocal = Reflect.hasField (transformAroundPointProps, "pointIsLocal") && Reflect.field (transformAroundPointProps, "pointIsLocal");
-						if (Std.is (target, DisplayObject) && !isLocal) {
+						if (#if (haxe_ver >= 4.2) Std.isOfType #else Std.is #end (target, DisplayObject) && !isLocal) {
 						
 							transformPoint = Reflect.callMethod (target,  Reflect.field (target, "globalToLocal"), [point]);
 							

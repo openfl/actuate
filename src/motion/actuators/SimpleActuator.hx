@@ -249,7 +249,7 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 			
 			#end
 			
-			if (Std.is (start, Float)) {
+			if (#if (haxe_ver >= 4.2) Std.isOfType #else Std.is #end (start, Float)) {
 				
 				var value:Dynamic = getField (properties, i);
 				
@@ -274,7 +274,7 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 	private override function move ():Void {
 		
 		#if (flash || nme || openfl)
-		toggleVisible = (Reflect.hasField (properties, "alpha") && Std.is (target, DisplayObject));
+		toggleVisible = (Reflect.hasField (properties, "alpha") && #if (haxe_ver >= 4.2) Std.isOfType #else Std.is #end (target, DisplayObject));
 		#else
 		toggleVisible = (Reflect.hasField (properties, "alpha") && Reflect.hasField (properties, "visible"));
 		#end

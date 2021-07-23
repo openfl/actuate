@@ -144,7 +144,7 @@ class Actuate {
 	///*@:generic*/ public static function pause (... targets:Array):void {
 	/*@:generic*/ public static function pause<T> (target:T):Void {
 		
-		if (Std.is (target, IGenericActuator)) {
+		if (#if (haxe_ver >= 4.2) Std.isOfType #else Std.is #end (target, IGenericActuator)) {
 			
 			var actuator:IGenericActuator = cast target;
 			actuator.pause ();
@@ -245,7 +245,7 @@ class Actuate {
 	 */
 	/*@:generic*/ public static function resume<T> (target:T):Void {
 		
-		if (Std.is (target, IGenericActuator)) {
+		if (#if (haxe_ver >= 4.2) Std.isOfType #else Std.is #end (target, IGenericActuator)) {
 			
 			var actuator:IGenericActuator = cast target;
 			actuator.resume ();
@@ -309,7 +309,7 @@ class Actuate {
 		
 		if (target != null) {
 			
-			if (Std.is (target, IGenericActuator)) {
+			if (#if (haxe_ver >= 4.2) Std.isOfType #else Std.is #end (target, IGenericActuator)) {
 				
 				var actuator:IGenericActuator = cast target;
 				actuator.stop (null, complete, sendEvent);
@@ -320,13 +320,13 @@ class Actuate {
 				
 				if (library != null) {
 					
-					if (Std.is (properties, String)) {
+					if (#if (haxe_ver >= 4.2) Std.isOfType #else Std.is #end (properties, String)) {
 						
 						var temp = { };
 						Reflect.setField (temp, properties, null);
 						properties = temp;
 						
-					} else if (Std.is (properties, Array)) {
+					} else if (#if (haxe_ver >= 4.2) Std.isOfType #else Std.is #end (properties, Array)) {
 						
 						var temp = {};
 						

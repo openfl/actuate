@@ -20,7 +20,7 @@ class FilterActuator extends SimpleActuator<DisplayObject, BitmapFilter> {
 		
 		super (target, duration, properties);
 		
-		if (Std.is (properties.filter, Class)) {
+		if (#if (haxe_ver >= 4.2) Std.isOfType #else Std.is #end (properties.filter, Class)) {
 			
 			filterClass = properties.filter;
 			
@@ -30,7 +30,7 @@ class FilterActuator extends SimpleActuator<DisplayObject, BitmapFilter> {
 			
 			for (filter in target.filters) {
 				
-				if (Std.is (filter, filterClass)) {
+				if (#if (haxe_ver >= 4.2) Std.isOfType #else Std.is #end (filter, filterClass)) {
 					
 					this.filter = filter;
 					
@@ -100,7 +100,7 @@ class FilterActuator extends SimpleActuator<DisplayObject, BitmapFilter> {
 			
 			for (i in 0...filters.length) {
 				
-				if (Std.is (filters[i], filterClass)) {
+				if (#if (haxe_ver >= 4.2) Std.isOfType #else Std.is #end (filters[i], filterClass)) {
 					
 					filters[i] = filter;
 					

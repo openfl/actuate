@@ -47,7 +47,7 @@ class TransformActuator<T> extends SimpleActuator<T, Dynamic> {
 	
 	private override function initialize ():Void {
 		
-		if (Reflect.hasField (properties, "colorValue") && Std.is (target, DisplayObject)) {
+		if (Reflect.hasField (properties, "colorValue") && #if (haxe_ver >= 4.2) Std.isOfType #else Std.is #end (target, DisplayObject)) {
 			
 			initializeColor ();
 			
