@@ -31,7 +31,7 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 	
 	private static var actuators = new Array<SimpleActuator<Dynamic, Dynamic>> ();
 	private static var actuatorsLength = 0;
-	private static var addedEvent = false;
+	private static var time:Float;
 	
 	#if (!flash && !nme && !openfl && !lime && !js)
 	private static var timer:Timer;
@@ -49,6 +49,21 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 	private var startTime:Float;
 	private var toggleVisible:Bool;
 	
+	public static function setup()
+	{
+		#if !actuate_manual_update
+		#if (flash || nme || openfl)
+		Lib.current.stage.addEventListener(Event.ENTER_FRAME, stage_onEnterFrame);
+		#elseif lime
+		Application.current.onUpdate.add(stage_onEnterFrame);
+		#elseif js
+		Browser.window.requestAnimationFrame(stage_onEnterFrame);
+		#else
+		timer = new Timer(Std.int(1000 / 30));
+		timer.run = stage_onEnterFrame;
+		#end
+		#end
+	}
 	
 	public function new (target:T, duration:Float, properties:Dynamic) {
 		
@@ -61,39 +76,9 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 		setVisible = false;
 		toggleVisible = false;
 		
-		#if !actuate_manual_time
-			#if (flash || nme || openfl)
-			startTime = Lib.getTimer () / 1000;
-			#elseif lime
-			startTime = System.getTimer () / 1000;
-			#elseif js
-			startTime = Browser.window.performance.now () / 1000;
-			#else
-			startTime = Timer.stamp ();
-			#end
-		#else
-		startTime = getTime();
-		#end
+		startTime = time;
 		
 		super (target, duration, properties);
-		
-		if (!addedEvent) {
-			
-			addedEvent = true;
-			#if !actuate_manual_update
-				#if (flash || nme || openfl)
-				Lib.current.stage.addEventListener (Event.ENTER_FRAME, stage_onEnterFrame);
-				#elseif lime
-				Application.current.onUpdate.add (stage_onEnterFrame);
-				#elseif js
-				Browser.window.requestAnimationFrame(stage_onEnterFrame);
-				#else
-				timer = new Timer (Std.int(1000 / 30));
-				timer.run = stage_onEnterFrame;
-				#end
-			#end
-		}
-		
 	}
 	
 	//For instant transition to start state without shaking
@@ -621,6 +606,8 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 		#else
 			var currentTime = getTime ();
 		#end
+
+		time = currentTime;
 		
 		var actuator:SimpleActuator<Dynamic, Dynamic>;
 		

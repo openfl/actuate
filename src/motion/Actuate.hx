@@ -28,6 +28,10 @@ class Actuate {
 	private static var methodLibraries = new FunctionMap<Dynamic, Array<IGenericActuator>> ();
 	#end
 	
+	public static function initialize()
+	{
+		SimpleActuator.setup();
+	}
 	
 	/**
 	 * Copies properties from one object to another. Conflicting tweens are stopped automatically
