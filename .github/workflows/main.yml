@@ -1,0 +1,51 @@
+name: CI
+on: [push, pull_request]
+
+jobs:
+
+  package-haxelib:
+    runs-on: macos-latest
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: actuate-haxelib
+          path: |
+            ./
+            !test/
+            !haxe-*-*/
+            !neko-*-*/
+            !.git/
+          if-no-files-found: error
+
+  docs:
+    runs-on: macos-latest
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - uses: krdlab/setup-haxe@v1
+        with:
+          haxe-version: 4.0.5
+
+      - name: Set HAXEPATH
+        run: |
+          echo "HAXEPATH=$HAXE_STD_PATH/.." >> $GITHUB_ENV
+
+      - name: Install Haxe dependencies
+        run: |
+          haxelib install dox --quiet
+          haxelib dev actuate $GITHUB_WORKSPACE
+
+      - name: Build docs
+        working-directory: scripts
+        run: |
+          haxe docs.hxml
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: actuate-docs
+          path: docs
+          if-no-files-found: error
