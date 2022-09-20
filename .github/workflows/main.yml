@@ -15,9 +15,14 @@ jobs:
           path: |
             ./
             !test/
+            !scripts/
+            !lib/
+            !lib-esm/
             !haxe-*-*/
             !neko-*-*/
             !.git/
+            !webpack.*
+            !package.json
           if-no-files-found: error
 
   docs:
