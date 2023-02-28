@@ -76,23 +76,23 @@ private class BackEaseInOut implements IEasing {
 	
 	public function new (s:Float) {
 		
-		this.s = s;
+		this.s = s * 1.525;
 		
 	}
 	
 	
 	public function calculate (k:Float):Float {
 		
-		if ((k /= 0.5) < 1) return 0.5 * (k * k * (((s *= (1.525)) + 1) * k - s));
-		return 0.5 * ((k -= 2) * k * (((s *= (1.525)) + 1) * k + s) + 2);
+		if ((k /= 0.5) < 1) return 0.5 * (k * k * (((s) + 1) * k - s));
+		return 0.5 * ((k -= 2) * k * (((s) + 1) * k + s) + 2);
 		
 	}
 	
 	
 	public function ease (t:Float, b:Float, c:Float, d:Float):Float {
 		
-		if ((t/=d/2) < 1) return c/2*(t*t*(((s*=(1.525))+1)*t - s)) + b;
-		return c/2*((t-=2)*t*(((s*=(1.525))+1)*t + s) + 2) + b;
+		if ((t/=d/2) < 1) return c/2*(t*t*((s+1)*t - s)) + b;
+		return c/2*((t-=2)*t*((s+1)*t + s) + 2) + b;
 		
 	}
 	
