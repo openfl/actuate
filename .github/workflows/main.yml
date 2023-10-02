@@ -4,10 +4,10 @@ on: [push, pull_request]
 jobs:
 
   package-haxelib:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: actions/upload-artifact@v2
         with:
@@ -26,10 +26,10 @@ jobs:
           if-no-files-found: error
 
   docs:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: krdlab/setup-haxe@v1
         with:
@@ -54,3 +54,31 @@ jobs:
           name: actuate-docs
           path: docs
           if-no-files-found: error
+
+  build-npm:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+
+    - name: Install Dependencies
+      run: |
+        npm install
+
+    - name: Build Library
+      run: |
+        npm run build
+
+    - name: Package Library for npm
+      run: |
+        npm pack
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: actuate-npm
+        path: actuate-*.tgz
+        if-no-files-found: error
