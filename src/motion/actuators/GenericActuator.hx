@@ -454,4 +454,11 @@ class GenericActuator<T> implements IGenericActuator {
 	}
 	
 	
+	public function goto (position:Float):Void {
+		
+		
+		
+	}
+	
+	
 }
