@@ -9,8 +9,9 @@ import motion.Actuate;
 
 class GenericActuator<T> implements IGenericActuator {
 	
-	
-	private var duration:Float;
+	public var duration(get, set):Float;
+
+	private var _duration:Float;
 	private var id:String;
 	private var properties:Dynamic;
 	private var target:T;
@@ -453,5 +454,11 @@ class GenericActuator<T> implements IGenericActuator {
 		
 	}
 	
-	
+	public inline function get_duration ():Float {
+		return _duration / Actuate.speedGlobal;
+	}
+
+	public inline function set_duration (value:Float):Float {
+		return _duration = value;
+	}
 }
