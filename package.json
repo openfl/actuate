@@ -1,7 +1,7 @@
 {
   "name": "actuate",
   "version": "1.9.0",
-  "description": "Actuate is a flexible, fast \"tween\" library",
+  "description": "Actuate is a flexible, fast \"tween\" library for animations",
   "keywords": [
     "tween",
     "animation",
