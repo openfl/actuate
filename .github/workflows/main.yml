@@ -42,7 +42,7 @@ jobs:
       - name: Install Haxe dependencies
         run: |
           haxelib install dox --quiet
-          haxelib dev actuate $GITHUB_WORKSPACE
+          haxelib dev actuate ${{ github.workspace }}
 
       - name: Build docs
         working-directory: scripts
