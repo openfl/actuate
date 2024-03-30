@@ -1,19 +1,20 @@
 {
   "name": "actuate",
-  "version": "1.8.9-beta",
-  "description": "Actuate is a flexible, fast \"tween\" library",
+  "version": "1.9.0",
+  "description": "Actuate is a flexible, fast \"tween\" library for animations",
   "keywords": [
     "tween",
     "animation",
     "openfl"
   ],
-  "homepage": "https://github.com/jgranick/actuate",
+  "homepage": "https://github.com/openfl/actuate",
   "bugs": {
-    "url": "https://github.com/jgranick/actuate/issues"
+    "url": "https://github.com/openfl/actuate/issues"
   },
   "license": "MIT",
   "contributors": [
-    "Joshua Granick"
+    "Joshua Granick",
+    "Other OpenFL contributors"
   ],
   "types": "lib/motion/index.d.ts",
   "main": "dist/actuate.min.js",
@@ -27,7 +28,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/jgranick/actuate.git"
+    "url": "https://github.com/openfl/actuate.git"
   },
   "scripts": {
     "build": "npm run build-lib && npm run build-lib-esm && npm run build-dist && npm run build-swc",
@@ -38,18 +39,20 @@
     "build-swc": "compc -load-config=node_modules/@apache-royale/royale-js/royale-asjs/frameworks/js-config.xml -keep-as3-metadata=JSModule -include-sources=lib -compiler.targets=SWF -output=dist/actuate.swc",
     "prepublishOnly": "npm run build"
   },
-  "config": {
-    "haxe": "3.4.4"
-  },
   "devDependencies": {
-    "@apache-royale/royale-js": "^0.9.3",
-    "globby": "^8.0.1",
+    "@apache-royale/royale-js": "^0.9.11",
+    "brotli-webpack-plugin": "^1.1.0",
+    "compression-webpack-plugin": "^10.0.0",
+    "globby": "^11.1.0",
     "haxe": "^5.2.1",
     "hxgenjs": "kevinresol/hxgenjs",
-    "openfl": "^6.5.3-alpha.6",
-    "uglifyjs-webpack-plugin": "^1.1.4",
-    "webpack": "^3.10.0",
-    "webpack-merge": "^4.1.1"
+    "openfl": "^8.9.6",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4",
+    "webpack-merge": "^5.9.0"
+  },
+  "haxeDependencies": {
+    "haxe": "3.4.7"
   },
   "dependencies": {}
 }
