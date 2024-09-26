@@ -103,6 +103,12 @@ interface IGenericActuator {
 	 */
 	public function onResume (handler:Dynamic, ?parameters:Array <Dynamic>):IGenericActuator;
 	
+	/**
+	 * Adjusts the tween to a specific position.
+	 * @param	position	The new position of the tween, between 0.0 and 1.0
+	 */
+	public function goto (position:Float):Void;
+	
 	
 	//private var properties:Dynamic;
 	private function apply ():Void;
