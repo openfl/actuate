@@ -222,6 +222,12 @@ class SimpleActuator<T, U> extends GenericActuator<T> {
 		
 		var details:PropertyDetails<U>;
 		var start:Dynamic;
+
+		if (delayOverwrite) {
+
+			Actuate.doOverwrite (this);
+
+		}
 		
 		for (i in Reflect.fields (properties)) {
 			
