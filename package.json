@@ -52,7 +52,7 @@
     "webpack-merge": "^5.9.0"
   },
   "haxeDependencies": {
-    "haxe": "3.4.7"
+    "haxe": "4.0.5"
   },
   "dependencies": {}
 }
