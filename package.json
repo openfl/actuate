@@ -36,7 +36,7 @@
     "build-lib": "cd scripts && haxe build.hxml",
     "build-lib-esm": "cd scripts && node generate-es2015 gen",
     "build-lib-esm-reexports-barrels": "cd scripts && node generate-es2015 non-gen",
-    "build-swc": "compc -load-config=node_modules/@apache-royale/royale-js/royale-asjs/frameworks/js-config.xml -keep-as3-metadata=JSModule -include-sources=lib -compiler.targets=SWF -output=dist/actuate.swc",
+    "build-swc": "compc -load-config=node_modules/@apache-royale/royale-js/royale-asjs/frameworks/js-config.xml -keep-as3-metadata=JSModule -include-sources=lib -compiler.targets=SWF -external-library-path+=node_modules/openfl/dist/openfl.swc -output=dist/actuate.swc",
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {

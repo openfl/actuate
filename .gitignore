@@ -2,6 +2,7 @@
 samples/**/package-lock.json
 lib/_gen/
 lib-esm/_gen/
+lib/**/*.as
 node_modules/
 dist/
 test/*/bundle.js
