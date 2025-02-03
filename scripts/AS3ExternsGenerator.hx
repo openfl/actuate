@@ -249,9 +249,12 @@ class AS3ExternsGenerator {
 		result.add(generateDocs(classType.doc, true, ""));
 		var className = baseTypeToUnqualifiedName(classType);
 		result.add('public class $className');
+		var includeFieldsFrom:ClassType = null;
 		if (classType.superClass != null) {
 			var superClassType = classType.superClass.t.get();
-			if (!shouldSkipBaseType(superClassType, true)) {
+			if (shouldSkipBaseType(superClassType, true)) {
+				includeFieldsFrom = superClassType;
+			} else {
 				result.add(' extends ${baseTypeToQname(superClassType, classType.superClass.params)}');
 			}
 		}
@@ -276,6 +279,21 @@ class AS3ExternsGenerator {
 			if (!shouldSkipField(constructor, classType)) {
 				result.add(generateClassField(constructor, classType, false, null));
 			}
+		}
+		while (includeFieldsFrom != null) {
+			for (classField in includeFieldsFrom.fields.get()) {
+				if (shouldSkipField(classField, includeFieldsFrom)) {
+					continue;
+				}
+				if (Lambda.exists(classType.fields.get(), item -> item.name == classField.name)) {
+					continue;
+				}
+				result.add(generateClassField(classField, includeFieldsFrom, false, interfaces));
+			}
+			if (includeFieldsFrom.superClass == null) {
+				break;
+			}
+			includeFieldsFrom = includeFieldsFrom.superClass.t.get();
 		}
 		for (classField in classType.statics.get()) {
 			if (shouldSkipField(classField, classType)) {
