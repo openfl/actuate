@@ -3,6 +3,8 @@ samples/**/package-lock.json
 lib/_gen/
 lib-esm/_gen/
 lib/**/*.as
+lib/**/*.d.ts
+!lib/**/index.d.ts
 node_modules/
 dist/
 test/*/bundle.js
