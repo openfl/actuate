@@ -48,7 +48,7 @@ class AS3ExternsGenerator {
 		}
 	}
 
-	public static function generate(?options:GeneratorOptions):Void {
+	public static function generate(?options:AS3GeneratorOptions):Void {
 		var outputDirPath = Path.join([Path.directory(Compiler.getOutput()), "as3-externs"]);
 		if (options != null && options.outputPath != null) {
 			outputDirPath = options.outputPath;
@@ -62,9 +62,9 @@ class AS3ExternsGenerator {
 		});
 	}
 
-	private var options:GeneratorOptions;
+	private var options:AS3GeneratorOptions;
 
-	private function new(?options:GeneratorOptions) {
+	private function new(?options:AS3GeneratorOptions) {
 		this.options = options;
 	}
 
@@ -193,6 +193,11 @@ class AS3ExternsGenerator {
 			return false;
 		}
 		if (baseType.isPrivate || (baseType.isExtern && !asReference) || isInHiddenPackage(baseType.pack)) {
+			return true;
+		}
+		final qname = baseTypeToQname(baseType, []);
+		if ((options == null || options.renameSymbols == null || options.renameSymbols.indexOf(qname) == -1)
+				&& baseType.meta.has(":noCompletion")) {
 			return true;
 		}
 		if (options != null) {
@@ -1132,7 +1137,7 @@ class AS3ExternsGenerator {
 	}
 }
 
-typedef GeneratorOptions = {
+typedef AS3GeneratorOptions = {
 	/**
 		Externs will be generated for symbols in the specified packages only,
 		and no externs will be generated for symbols in other packages.
