@@ -19,6 +19,13 @@ import flash.display.DisplayObject;
 
 
 class Actuate {
+
+	#if commonjs
+	@:noCompletion private static function __init__()
+	{
+		untyped #if haxe4 js.Syntax.code #else __js__ #end ("$global.$haxeUID |= 0;");
+	}
+	#end
 	
 	
 	public static var defaultActuator:Class<IGenericActuator> = SimpleActuator;
