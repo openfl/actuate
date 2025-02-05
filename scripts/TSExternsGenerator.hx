@@ -607,12 +607,18 @@ class TSExternsGenerator {
 				var qname = baseTypeToQname(superClass, [], false);
 				qnames.set(qname, true);
 			}
+			for (param in classType.superClass.params) {
+				addMacroTypeQnamesForImport(param, qnames, classType.pack);
+			}
 		}
 		for (interfaceRef in classType.interfaces) {
 			var interfaceType = interfaceRef.t.get();
 			if (!shouldSkipBaseType(interfaceType, true) && !canSkipBaseTypeImport(interfaceType, classType.pack)) {
 				var qname = baseTypeToQname(interfaceType, [], false);
 				qnames.set(qname, true);
+			}
+			for (param in interfaceRef.params) {
+				addMacroTypeQnamesForImport(param, qnames, classType.pack);
 			}
 		}
 		if (classType.constructor != null) {
