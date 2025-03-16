@@ -78,7 +78,45 @@ class Actuate {
 	}
 	
 	#end
-	
+
+	public static var timeScale(get, set):Float;
+	private static var _timeScale:Float = 1.0;
+
+	private static function get_timeScale():Float
+	{
+		return _timeScale;
+	}
+
+	private static function set_timeScale(value:Float):Float
+	{
+		_timeScale = value;
+
+		#if neko
+
+		for (library in methodLibraries) {
+
+			for (actuator in library) {
+
+				actuator.timeScale = value;
+
+			}
+
+		}
+
+		#end
+
+		for (library in targetLibraries) {
+
+			for (actuator in library) {
+
+				actuator.timeScale = value;
+
+			}
+
+		}
+
+		return value;
+	}
 	
 	private static function getLibrary<T> (target:T, allowCreation:Bool = true):Array<IGenericActuator> {
 		
