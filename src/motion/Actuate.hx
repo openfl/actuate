@@ -30,6 +30,7 @@ class Actuate {
 	
 	public static var defaultActuator:Class<IGenericActuator> = SimpleActuator;
 	public static var defaultEase:IEasing = Expo.easeOut;
+	public static var delayOverwrite = false;
 	private static var targetLibraries = new ObjectMap<Dynamic, Array<IGenericActuator>> ();
 	#if neko
 	private static var methodLibraries = new FunctionMap<Dynamic, Array<IGenericActuator>> ();
@@ -422,21 +423,22 @@ class Actuate {
 				
 				var actuator:GenericActuator<T> = Type.createInstance (customActuator, [ target, duration, properties ]);
 				var library = getLibrary (actuator.target);
+				library.push (actuator);
 				
 				if (overwrite) {
 					
-					var i = library.length - 1;
-					
-					while (i >= 0) {
-						library[i].stop (actuator.properties, false, false);
-						i--;
+					if (delayOverwrite) {
+
+						actuator.delayOverwrite = true;
+
+					} else {
+
+						doOverwrite (actuator);
+
 					}
-					
-					library = getLibrary (actuator.target);
 					
 				}
 				
-				library.push (actuator);
 				actuator.move ();
 				
 				return actuator;
@@ -451,6 +453,21 @@ class Actuate {
 		
 		return null;
 		
+	}
+	
+
+	@:allow(motion.actuators)
+	private static function doOverwrite<T> (actuator:GenericActuator<T>):Void {
+					
+		// only overwrite actuators created earlier than ours
+		var library = getLibrary (actuator.target);
+		var i = library.indexOf (actuator) - 1;
+		
+		while (i >= 0) {
+			library[i].stop (actuator.properties, false, false);
+			i--;
+		}
+					
 	}
 	
 	
