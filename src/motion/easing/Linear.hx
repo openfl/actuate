@@ -10,26 +10,7 @@ package motion.easing;
 
 class Linear {
 	
-	
-	static public var easeNone (get, never):IEasing;
-	
-	
-	#if commonjs
-	private static function __init__ () {
-		
-		untyped Object.defineProperties (Linear, {
-			"easeNone": { get: function () { return Linear.get_easeNone (); } }
-		});
-		
-	}
-	#end
-	
-	
-	private static function get_easeNone ():IEasing {
-		
-		return new LinearEaseNone ();
-		
-	}
+	public static var easeNone (default, null):IEasing = new LinearEaseNone ();
 	
 	
 }
