@@ -8,8 +8,10 @@ import motion.Actuate;
 
 
 class GenericActuator<T> implements IGenericActuator {
-	
-	
+
+	public var timeScale(get, set):Float;
+	private var _timeScale:Float = 1.0;
+
 	private var duration:Float;
 	private var id:String;
 	private var properties:Dynamic;
@@ -36,7 +38,8 @@ class GenericActuator<T> implements IGenericActuator {
 	
 	
 	public function new (target:T, duration:Float, properties:Dynamic) {
-		
+
+		_timeScale = Actuate.timeScale;
 		_autoVisible = true;
 		_delay = 0;
 		_reflect = false;
@@ -452,6 +455,16 @@ class GenericActuator<T> implements IGenericActuator {
 		
 		
 	}
-	
-	
+
+	private function get_timeScale():Float
+	{
+		return _timeScale;
+	}
+
+	private function set_timeScale(value:Float):Float
+	{
+		_timeScale = value;
+
+		return value;
+	}
 }
